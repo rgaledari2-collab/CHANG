@@ -3,18 +3,21 @@
 @layer base {
   :root {
     --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
-    --color-paper: #F4F1EB;
-    --color-warm-black: #211F1E;
-    --color-vivid-red: #C93438;
-    --color-paper-pink: #F6E4E1;
-    --color-warm-gray: #D9D2CA;
+    --color-bg-base: #FCF8F8;
+    --color-card-surface: #FFFFFF;
+    --color-text-main: #202124;
+    --color-accent-primary: #B92B3A;
+    --color-accent-complement: #F3C7CA;
+    --color-neutral-complement: #8996A6;
+    --color-dark-bg: #3B1720;
+    --color-border-subtle: #E8DFE0;
   }
   
   html {
     scroll-behavior: smooth;
     font-family: var(--font-sans);
-    background-color: #F4F1EB;
-    color: #211F1E;
+    background-color: #FCF8F8;
+    color: #202124;
   }
   
   body {
@@ -22,25 +25,25 @@
     font-size: 17px;
     line-height: 1.47;
     letter-spacing: -0.015em;
-    background-color: #F4F1EB;
-    color: #211F1E;
+    background-color: #FCF8F8;
+    color: #202124;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background-color: #C93438;
+    background-color: #B92B3A;
     color: #FFFFFF;
   }
 }
 
 /* Editorial & Cultural Poster Shadow */
 .apple-product-shadow {
-  box-shadow: 0 16px 36px -10px rgba(33, 31, 30, 0.22);
+  box-shadow: 0 16px 36px -10px rgba(32, 33, 36, 0.16);
 }
 
 .apple-soft-shadow {
-  box-shadow: 0 12px 28px -8px rgba(33, 31, 30, 0.14);
+  box-shadow: 0 10px 24px -8px rgba(32, 33, 36, 0.08);
 }
 
 /* Scroll margin for fixed header */

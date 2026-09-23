@@ -1,3 +1,9 @@
+export interface CourseMilestone {
+  id: string;
+  title: string;
+  desc?: string;
+}
+
 export interface Course {
   id: string;
   title: string;
@@ -6,6 +12,8 @@ export interface Course {
   image?: string;
   ageGroup?: string;
   instrumentType: 'keyboard' | 'string' | 'child' | 'vocal' | 'wind' | 'percussion' | 'guitar' | 'violin';
+  level?: string;
+  milestones?: CourseMilestone[];
 }
 
 export interface Teacher {

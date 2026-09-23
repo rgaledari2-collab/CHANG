@@ -41,13 +41,13 @@ export const BackToTop: React.FC = () => {
           : 'opacity-0 translate-y-4 scale-90'
       }`}
     >
-      {/* Editorial circular control button */}
+      {/* Circular control button */}
       <button
         type="button"
         onClick={scrollToTop}
         aria-label="بازگشت به بالای صفحه"
         title="بازگشت به ابتدای صفحه"
-        className="w-11 h-11 rounded-full bg-[#F4F1EB]/95 hover:bg-[#F6E4E1] active:scale-95 text-[#211F1E] hover:text-[#C93438] hover:border-[#C93438] border border-[#D9D2CA] shadow-md flex items-center justify-center transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C93438]"
+        className="w-11 h-11 rounded-full bg-[#FCF8F8]/95 hover:bg-[#F3C7CA]/40 active:scale-95 text-[#202124] hover:text-[#B92B3A] hover:border-[#B92B3A] border border-[#E8DFE0] shadow-md flex items-center justify-center transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
       >
         <ChevronUp className="w-5 h-5 transition-transform duration-150 group-hover:-translate-y-0.5" />
       </button>
@@ -55,7 +55,7 @@ export const BackToTop: React.FC = () => {
       {/* Micro Tooltip */}
       <span
         aria-hidden="true"
-        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[#211F1E] text-[#F4F1EB] text-[11px] font-medium rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none border border-[#D9D2CA]/40"
+        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-[#3B1720] text-[#FCF8F8] text-[11px] font-medium rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none border border-white/20"
       >
         بالای صفحه
       </span>

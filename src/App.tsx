@@ -26,11 +26,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F1EB] text-[#211F1E] selection:bg-[#C93438] selection:text-white antialiased flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans">
       {/* Skip Link for Keyboard Accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#C93438] focus:text-white focus:rounded-full focus:shadow-lg focus:text-sm font-semibold"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#B92B3A] focus:text-white focus:rounded-full focus:shadow-lg focus:text-sm font-semibold"
       >
         رفتن به محتوای اصلی
       </a>

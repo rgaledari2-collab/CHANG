@@ -57,7 +57,7 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
         className="relative max-w-[94vw] max-h-[94vh] flex flex-col items-center cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Apple button-icon-circular: 44x44px circular translucent control button */}
+        {/* Circular translucent control button */}
         <button
           ref={closeBtnRef}
           type="button"
@@ -69,7 +69,7 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
           <X className="w-5 h-5" />
         </button>
 
-        {/* High-Resolution Image Frame with Apple-Product-Shadow */}
+        {/* High-Resolution Image Frame */}
         <div className="relative rounded-[18px] overflow-hidden apple-product-shadow border border-white/10 bg-black max-h-[76vh] sm:max-h-[80vh] flex items-center justify-center">
           <img
             src={data.src}
@@ -80,21 +80,21 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
           />
         </div>
 
-        {/* Apple Frosted Caption Bar */}
-        <div className="mt-3 sm:mt-4 w-full max-w-2xl bg-[#1d1d1f]/85 backdrop-blur-xl border border-white/10 rounded-[14px] p-4 text-white shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-right">
+        {/* Frosted Caption Bar */}
+        <div className="mt-3 sm:mt-4 w-full max-w-2xl bg-[#3B1720]/90 backdrop-blur-xl border border-white/15 rounded-[14px] p-4 text-[#FCF8F8] shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-right">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1 flex-wrap">
               <h3 className="text-[17px] font-semibold text-white leading-tight">
                 {data.title}
               </h3>
               {data.badge && (
-                <span className="text-[12px] text-[#C93438] font-bold">
+                <span className="text-[12px] text-[#F3C7CA] font-bold">
                   · {data.badge}
                 </span>
               )}
             </div>
             {data.subtitle && (
-              <p className="text-[14px] text-[#D9D2CA] leading-snug">
+              <p className="text-[14px] text-[#E8DFE0] leading-snug">
                 {data.subtitle}
               </p>
             )}
@@ -107,7 +107,7 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
                 onClose();
                 data.onAction?.();
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#C93438] hover:bg-[#B82A2E] active:scale-95 text-white text-[14px] font-semibold rounded-full transition-all shrink-0 shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white text-[14px] font-semibold rounded-full transition-all shrink-0 shadow-sm"
             >
               <span>{data.actionText}</span>
               <ArrowLeft className="w-3.5 h-3.5" />
