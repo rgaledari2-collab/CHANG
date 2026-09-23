@@ -1,0 +1,6 @@
+{
+  "name": "آموزشگاه موسیقی چنگ خرمشهر",
+  "description": "سایت رسمی و معرفی دوره‌های آموزشگاه موسیقی چنگ در خرمشهر؛ آموزش پیانو، تار و سه‌تار، موسیقی کودک، آواز و گیتار با نیم قرن سابقه.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
+    --color-paper: #F4F1EB;
+    --color-warm-black: #211F1E;
+    --color-vivid-red: #C93438;
+    --color-paper-pink: #F6E4E1;
+    --color-warm-gray: #D9D2CA;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    background-color: #F4F1EB;
+    color: #211F1E;
+  }
+  
+  body {
+    font-feature-settings: "ss01", "ss02", "cv01";
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.015em;
+    background-color: #F4F1EB;
+    color: #211F1E;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #C93438;
+    color: #FFFFFF;
+  }
+}
+
+/* Editorial & Cultural Poster Shadow */
+.apple-product-shadow {
+  box-shadow: 0 16px 36px -10px rgba(33, 31, 30, 0.22);
+}
+
+.apple-soft-shadow {
+  box-shadow: 0 12px 28px -8px rgba(33, 31, 30, 0.14);
+}
+
+/* Scroll margin for fixed header */
+#courses, #teachers, #story, #events, #contact, #top, #instruments-preview {
+  scroll-margin-top: 104px;
+}
+
+/* CSS Keyframes for .teacher-card smooth viewport scroll fade-in animation */
+@keyframes teacherFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.teacher-card {
+  opacity: 0;
+  transform: translateY(26px);
+  will-change: opacity, transform;
+}
+
+.teacher-card.is-visible {
+  animation: teacherFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger delay for cards in grid */
+.teacher-card:nth-child(1) { animation-delay: 0.05s; }
+.teacher-card:nth-child(2) { animation-delay: 0.15s; }
+.teacher-card:nth-child(3) { animation-delay: 0.25s; }
+.teacher-card:nth-child(4) { animation-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .teacher-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
