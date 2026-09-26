@@ -49,3 +49,18 @@ export interface ConsultationFormData {
   studentAge: string;
   message: string;
 }
+
+export interface Testimonial {
+  id: string;
+  author: string;
+  role: 'student' | 'parent';
+  roleTitle: string;
+  course: string;
+  quote: string;
+  duration?: string;
+  highlight?: string;
+  rating: number;
+  avatarInitials: string;
+  avatarBg: string;
+  dateSolar: string;
+}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
-  Volume2,
   CheckCircle2,
   Circle,
   ChevronDown,
@@ -12,7 +11,6 @@ import {
   CheckCheck
 } from 'lucide-react';
 import { COURSES_DATA } from '../data';
-import { playInstrumentSound } from '../utils/audio';
 import { Course } from '../types';
 
 interface CoursesProps {
@@ -23,7 +21,6 @@ const STORAGE_KEY_PROGRESS = 'changh_course_progress_v2';
 const STORAGE_KEY_MILESTONES = 'changh_course_milestones_v2';
 
 export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation }) => {
-  const [playingId, setPlayingId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
 
@@ -63,19 +60,6 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
       console.warn('Failed to save course milestones to localStorage', e);
     }
   }, [completedMilestones]);
-
-  const handlePlaySound = (
-    type: 'piano' | 'tar' | 'child' | 'guitar' | 'vocal' | 'violin' | 'percussion',
-    id: string,
-    e?: React.MouseEvent
-  ) => {
-    if (e) {
-      e.stopPropagation();
-    }
-    playInstrumentSound(type);
-    setPlayingId(id);
-    setTimeout(() => setPlayingId(null), 1400);
-  };
 
   const toggleAccordion = (courseId: string) => {
     setExpandedCards((prev) => ({
@@ -175,7 +159,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
               <span>کاتالوگ آموزشی و انتخاب ساز</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#202124] leading-[1.10] tracking-[-0.025em] mb-4 [text-wrap:balance]">
-              هر ساز، یک جهان تازه و طنین زنده.
+              هر ساز، یک جهان تازه از اصالت و هنر.
             </h2>
             <p className="text-[17px] text-[#5a626d] font-normal leading-[1.5] [text-wrap:pretty]">
               دوره‌های آموزشی با استاندارد آکادمیک تنظیم شده‌اند. با کلیک بر روی نشانگرهای دورانی هر ساز، علاقه‌مندی یا پیشرفت گام‌به‌گام خود را نشانه‌گذاری و ذخیره کنید.
@@ -240,8 +224,6 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
         {/* Accordion Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {filteredCourses.map((c) => {
-            const soundKey = (c.instrumentType as 'piano' | 'tar' | 'child' | 'guitar' | 'vocal' | 'violin' | 'percussion') || 'piano';
-            const isPlaying = playingId === c.id;
             const progress = courseProgress[c.id] || 0;
             const isSelected = progress === 100;
             const isInProgress = progress > 0 && progress < 100;
@@ -303,11 +285,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
 
                         {/* Concentric Circular Thumbnail Image */}
                         <div
-                          onClick={(e) => handlePlaySound(soundKey, c.id, e)}
-                          title="برای شنیدن صدای زنده ساز کلیک کنید"
-                          role="button"
-                          tabIndex={0}
-                          className={`w-[72px] h-[72px] sm:w-[78px] sm:h-[78px] rounded-full overflow-hidden relative cursor-pointer shadow-inner border border-[#E8DFE0] transition-transform duration-200 group-hover:scale-[1.03] ${
+                          className={`w-[72px] h-[72px] sm:w-[78px] sm:h-[78px] rounded-full overflow-hidden relative shadow-inner border border-[#E8DFE0] transition-transform duration-200 group-hover:scale-[1.03] ${
                             isSelected ? 'ring-2 ring-[#B92B3A] ring-offset-2' : ''
                           }`}
                         >
@@ -318,14 +296,6 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
                             loading="lazy"
                             referrerPolicy="no-referrer"
                           />
-                          {/* Overlay Sound Button */}
-                          <div
-                            className={`absolute inset-0 bg-[#3B1720]/50 flex items-center justify-center transition-opacity duration-200 ${
-                              isPlaying ? 'opacity-100' : 'opacity-0 hover:opacity-100'
-                            }`}
-                          >
-                            <Volume2 className={`w-4 h-4 text-white ${isPlaying ? 'text-[#F3C7CA] animate-bounce' : ''}`} />
-                          </div>
                         </div>
 
                         {/* Interactive Circular Progress Tag on Bottom Edge */}
@@ -413,18 +383,13 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
                     {c.description}
                   </p>
 
-                  {/* Sound Trigger Button in Card */}
+                  {/* Course Metadata Strip */}
                   <div className="flex items-center justify-between gap-2 py-2 px-3 rounded-[11px] bg-[#FCF8F8] border border-[#E8DFE0] mb-4">
-                    <button
-                      type="button"
-                      onClick={(e) => handlePlaySound(soundKey, c.id, e)}
-                      className="text-[13px] text-[#202124] hover:text-[#B92B3A] flex items-center gap-1.5 font-medium transition-colors"
-                    >
-                      <Volume2 className={`w-4 h-4 text-[#B92B3A] ${isPlaying ? 'animate-bounce' : ''}`} />
-                      <span>{isPlaying ? 'در حال پخش طنین ساز…' : 'شنیدن نمونه صدای این ساز'}</span>
-                    </button>
+                    <span className="text-[13px] text-[#202124] font-medium">
+                      رده سنی و پذیرش:
+                    </span>
                     {c.ageGroup && (
-                      <span className="text-[12px] text-[#8996A6] font-medium">
+                      <span className="text-[12px] text-[#B92B3A] font-bold">
                         {c.ageGroup}
                       </span>
                     )}

@@ -4,9 +4,11 @@ import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
 import { Courses } from './components/Courses';
 import { Story } from './components/Story';
+import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
 import { Manifesto } from './components/Manifesto';
 import { Events } from './components/Events';
+import { Testimonials } from './components/Testimonials';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
@@ -44,9 +46,11 @@ export default function App() {
         <ProofStrip />
         <Courses onSelectCourseForConsultation={handleSelectCourse} />
         <Story />
+        <Stats />
         <Teachers onOpenLightbox={setLightboxData} />
         <Manifesto />
         <Events onOpenLightbox={setLightboxData} />
+        <Testimonials />
         <ContactForm selectedCourse={selectedCourseForConsultation} />
       </main>
 

@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import { Menu, X, PhoneCall, Volume2 } from 'lucide-react';
-import { playInstrumentSound } from '../utils/audio';
+import { Menu, X, PhoneCall } from 'lucide-react';
+import { CHANG_HEADER_LOGO_DATA_URI } from '../assets/logoData';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [playedSample, setPlayedSample] = useState(false);
-
-  const handleTestSound = () => {
-    playInstrumentSound('tar');
-    setPlayedSample(true);
-    setTimeout(() => setPlayedSample(false), 1200);
-  };
 
   const navLinks = [
     { name: 'دوره‌ها', href: '#courses' },
     { name: 'اساتید', href: '#teachers' },
     { name: 'پیشینه و رسالت', href: '#story' },
     { name: 'کنسرت و صحنه', href: '#events' },
+    { name: 'نظرات هنرجویان', href: '#testimonials' },
     { name: 'مشاوره و تماس', href: '#contact' },
   ];
 
@@ -54,21 +48,6 @@ export const Header: React.FC = () => {
 
           {/* Utility Tools on Global Nav */}
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handleTestSound}
-              title="شنیدن کوک زنگ چنگ"
-              aria-label="پخش صدای تار نمادین چنگ"
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] rounded-full border transition-all duration-200 active:scale-95 ${
-                playedSample 
-                  ? 'bg-[#B92B3A] text-white border-[#B92B3A]' 
-                  : 'bg-white/10 text-[#E8DFE0] hover:text-white border-white/15 hover:border-white/30'
-              }`}
-            >
-              <Volume2 className="w-3 h-3 text-[#F3C7CA]" />
-              <span>{playedSample ? 'در حال پخش…' : 'طنین ساز'}</span>
-            </button>
-
             <a
               href="tel:06153522000"
               className="hidden lg:inline-flex items-center gap-1.5 text-[11px] text-[#E8DFE0] hover:text-white transition-colors"
@@ -113,6 +92,7 @@ export const Header: React.FC = () => {
               <a href="#courses" className="hover:text-[#B92B3A] transition-colors font-medium">انتخاب ساز</a>
               <a href="#teachers" className="hover:text-[#B92B3A] transition-colors font-medium">اساتید راهنما</a>
               <a href="#events" className="hover:text-[#B92B3A] transition-colors font-medium">کنسرت هنرجویی</a>
+              <a href="#testimonials" className="hover:text-[#B92B3A] transition-colors font-medium">روایت همراهان</a>
             </div>
 
             {/* Primary Button in Lacquer Red #B92B3A */}
@@ -140,17 +120,6 @@ export const Header: React.FC = () => {
             </a>
           ))}
           <div className="pt-2 flex flex-col gap-2.5">
-            <button
-              type="button"
-              onClick={() => {
-                handleTestSound();
-                setIsOpen(false);
-              }}
-              className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-[13px] font-medium bg-white text-[#202124] border border-[#E8DFE0] active:scale-95 shadow-sm"
-            >
-              <Volume2 className="w-4 h-4 text-[#B92B3A]" />
-              <span>شنیدن نمونه طنین ساز چنگ</span>
-            </button>
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
