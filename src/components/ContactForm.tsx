@@ -203,15 +203,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
           </div>
 
           {/* Form Card */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-[18px] p-6 sm:p-10 shadow-sm transition-colors">
-            <form onSubmit={handleSubmit} noValidate className="space-y-5 text-right">
+          <div className="lg:col-span-7 bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-[18px] p-4 sm:p-8 lg:p-10 shadow-sm transition-colors">
+            <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5 text-right">
               
               {/* Branch Selection Tabs */}
               <div>
                 <label className="block text-[14px] font-bold text-[#202124] dark:text-white mb-2">
                   انتخاب شعبه مورد نظر برای هماهنگی و کلاس <span className="text-[#B92B3A]">*</span>
                 </label>
-                <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="انتخاب شعبه">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3" role="radiogroup" aria-label="انتخاب شعبه">
                   <button
                     type="button"
                     onClick={() => setPreferredBranch('khorramshahr')}

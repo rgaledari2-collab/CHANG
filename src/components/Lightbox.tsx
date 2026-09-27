@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
 import { handleImageError } from '../utils/imageFallback';
+import { ResponsiveImage } from './ResponsiveImage';
 
 export interface LightboxData {
   src: string;
@@ -49,7 +50,7 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
       role="dialog"
       aria-modal="true"
       aria-label={`نمایش بزرگ‌نمایی تصویر ${data.title}`}
-      className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl transition-opacity duration-200 cursor-zoom-out select-none"
+      className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-2xl transition-opacity duration-200 cursor-zoom-out select-none"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -65,20 +66,21 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
           onClick={onClose}
           aria-label="بستن پنجره بزرگ‌نمایی تصویر"
           title="بستن (Esc)"
-          className="absolute -top-3.5 -left-3.5 sm:-top-4 sm:-left-4 z-50 w-11 h-11 rounded-full bg-white/20 hover:bg-white text-white hover:text-black border border-white/20 shadow-2xl flex items-center justify-center active:scale-95 transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+          className="absolute top-2 left-2 sm:-top-4 sm:-left-4 z-50 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 sm:bg-white/20 hover:bg-white text-white hover:text-black border border-white/30 shadow-2xl flex items-center justify-center active:scale-95 transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* High-Resolution Image Frame */}
         <div className="relative rounded-[18px] overflow-hidden apple-product-shadow border border-white/10 bg-black max-h-[76vh] sm:max-h-[80vh] flex items-center justify-center">
-          <img
+          <ResponsiveImage
             src={data.src}
             alt={data.title}
+            priority={true}
+            width={1200}
+            height={800}
+            sizes="(max-width: 640px) 94vw, (max-width: 1024px) 90vw, 1200px"
             className="w-auto h-auto max-w-[92vw] max-h-[76vh] sm:max-h-[80vh] object-contain select-none"
-            loading="eager"
-            referrerPolicy="no-referrer"
-            onError={handleImageError}
           />
         </div>
 

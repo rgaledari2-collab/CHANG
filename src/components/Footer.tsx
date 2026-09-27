@@ -1,4 +1,6 @@
 import React from 'react';
+import { CHANG_TRANSPARENT_LOGO_DATA_URI } from '../assets/logoData';
+import { ResponsiveImage } from './ResponsiveImage';
 
 export const Footer: React.FC = () => {
   return (
@@ -82,7 +84,20 @@ export const Footer: React.FC = () => {
 
         {/* Legal Row */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8996A6]">
-          <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
+          <div className="flex items-center gap-2.5">
+            <span className="w-7 h-7 rounded-lg overflow-hidden bg-black/5 dark:bg-white/10 flex items-center justify-center p-0.5 border border-black/10 dark:border-white/10 shrink-0">
+              <ResponsiveImage
+                src={CHANG_TRANSPARENT_LOGO_DATA_URI}
+                alt="لوگوی چنگ"
+                width={28}
+                height={28}
+                aspectRatio="1/1"
+                sizes="28px"
+                className="w-full h-full object-contain"
+              />
+            </span>
+            <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
+          </div>
           <div className="flex items-center gap-3">
             <span>آموزشگاه تخصصی موسیقی چنگ</span>
             <span>·</span>

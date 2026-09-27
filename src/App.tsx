@@ -19,7 +19,7 @@ function MainApp() {
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200">
+    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200 overflow-x-hidden w-full max-w-full">
       {/* Skip Link for Keyboard Accessibility */}
       <a
         href="#main-content"
@@ -32,7 +32,7 @@ function MainApp() {
       <Header />
 
       {/* Main Content Sections */}
-      <main id="main-content" className="flex-1">
+      <main id="main-content" className="flex-1 overflow-x-hidden w-full max-w-full">
         <Hero />
         <ProofStrip />
 

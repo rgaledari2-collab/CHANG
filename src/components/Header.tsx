@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { CHANG_TRANSPARENT_LOGO_DATA_URI } from '../assets/logoData';
 import { ThemeToggle } from './ThemeToggle';
+import { ResponsiveImage } from './ResponsiveImage';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,16 +71,24 @@ export const Header: React.FC = () => {
     },
   ];
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     setIsOpen(false);
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 120);
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full select-none bg-[#1A0A0F]/95 dark:bg-[#0B0D11]/95 backdrop-blur-md border-b border-white/10 shadow-md transition-colors duration-200">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[68px] flex items-center justify-between">
+    <header className="sticky top-0 z-40 w-full select-none bg-[#1A0A0F]/95 dark:bg-[#0B0D11]/95 backdrop-blur-md border-b border-white/10 shadow-md transition-colors duration-200">
+      <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-[68px] flex items-center justify-between">
         
         {/* Right Section: Mobile 3-Lines (Hamburger) Button + Brand Logo & Title */}
-        <div className="flex items-center gap-2.5 sm:gap-3.5">
+        <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
           {/* Mobile Hamburger / Sidebar Button - Placed firmly on the RIGHT in RTL */}
           <button
             type="button"
@@ -87,30 +96,35 @@ export const Header: React.FC = () => {
             aria-expanded={isOpen}
             aria-controls="mobile-drawer"
             aria-label="باز کردن منوی سایدبار و نویگیشن"
-            className="lg:hidden flex items-center gap-1.5 p-2 px-2.5 rounded-xl text-white bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] transition-all shadow-2xs group"
+            className="lg:hidden flex items-center gap-1.5 p-2 px-2.5 rounded-xl text-white bg-white/10 hover:bg-white/20 active:bg-white/25 border border-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] transition-all shadow-2xs group shrink-0"
           >
             <Menu className="w-5 h-5 text-white group-hover:scale-105 transition-transform" />
-            <span className="text-[12px] font-bold text-white/90">منو</span>
+            <span className="text-[12px] font-bold text-white/90 hidden min-[390px]:inline">منو</span>
           </button>
 
           {/* Brand Logo & Title */}
           <a 
             href="#top" 
-            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1"
+            className="flex items-center gap-2 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1 min-w-0"
             aria-label="آموزشگاه موسیقی چنگ خرمشهر - صفحه نخست"
           >
             <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center border border-white/20 shrink-0 transition-transform group-hover:scale-105 shadow-inner">
-              <img 
+              <ResponsiveImage 
                 src={CHANG_TRANSPARENT_LOGO_DATA_URI} 
                 alt="لوگوی آموزشگاه موسیقی چنگ" 
+                width={40}
+                height={40}
+                aspectRatio="1/1"
+                sizes="40px"
+                priority={true}
                 className="w-full h-full object-contain filter drop-shadow-sm" 
               />
             </span>
-            <div className="text-right">
-              <span className="block font-bold text-[14px] sm:text-[18px] text-white tracking-tight leading-none">
+            <div className="text-right min-w-0 truncate">
+              <span className="block font-bold text-[14px] sm:text-[18px] text-white tracking-tight leading-none truncate">
                 آموزشگاه موسیقی چنگ
               </span>
-              <span className="block text-[10px] sm:text-[11px] text-[#F3C7CA]/80 font-medium mt-1">
+              <span className="hidden sm:block text-[10px] sm:text-[11px] text-[#F3C7CA]/80 font-medium mt-1 truncate">
                 خرمشهر · تأسیس ۱۳۵۰
               </span>
             </div>
@@ -173,7 +187,7 @@ export const Header: React.FC = () => {
 
       {/* Modern Mobile Slide-over Drawer & Overlay (Opens From Right) */}
       {isOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" id="mobile-drawer">
+        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" id="mobile-drawer">
           
           {/* Backdrop Blur Overlay */}
           <div 
@@ -190,9 +204,14 @@ export const Header: React.FC = () => {
               <div className="p-5 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center border border-white/20 shrink-0 shadow-xs">
-                    <img 
+                    <ResponsiveImage 
                       src={CHANG_TRANSPARENT_LOGO_DATA_URI} 
                       alt="آموزشگاه چنگ" 
+                      width={40}
+                      height={40}
+                      aspectRatio="1/1"
+                      sizes="40px"
+                      priority={true}
                       className="w-full h-full object-contain"
                     />
                   </div>
@@ -225,7 +244,7 @@ export const Header: React.FC = () => {
                     <a
                       key={link.href}
                       href={link.href}
-                      onClick={handleLinkClick}
+                      onClick={(e) => handleLinkClick(e, link.href)}
                       className="group flex items-center gap-3.5 p-3 rounded-2xl hover:bg-white/10 active:bg-white/15 border border-transparent hover:border-white/10 transition-all duration-150"
                     >
                       <div className="w-10 h-10 rounded-xl bg-[#B92B3A]/25 border border-[#B92B3A]/30 flex items-center justify-center shrink-0 group-hover:bg-[#B92B3A] group-hover:scale-105 transition-all">
@@ -268,7 +287,7 @@ export const Header: React.FC = () => {
               {/* Consultation CTA */}
               <a
                 href="#contact"
-                onClick={handleLinkClick}
+                onClick={(e) => handleLinkClick(e, '#contact')}
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full text-[14px] font-bold bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white transition-all shadow-lg"
               >
                 <span>مشاوره و تعیین سطح حضوری</span>

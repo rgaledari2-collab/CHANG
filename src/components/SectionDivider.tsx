@@ -92,7 +92,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
 
   return (
     <div
-      className={`relative w-full overflow-hidden leading-none select-none pointer-events-none z-10 ${containerBg} ${className}`}
+      className={`relative w-full overflow-hidden leading-none select-none pointer-events-none z-0 ${containerBg} ${className}`}
       aria-hidden="true"
     >
       <div className={`w-full ${heightClass}`} style={transformStyles}>

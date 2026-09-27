@@ -5,6 +5,7 @@ import { Teacher } from '../types';
 import { LightboxData } from './Lightbox';
 import { handleImageError } from '../utils/imageFallback';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
+import { ResponsiveImage } from './ResponsiveImage';
 
 interface TeachersProps {
   onOpenLightbox?: (data: LightboxData) => void;
@@ -19,7 +20,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
   const openTeacherLightbox = (teacher: Teacher) => {
     if (onOpenLightbox) {
       onOpenLightbox({
-        src: teacher.image.replace('w=700', 'w=1800').replace('q=84', 'q=92'),
+        src: teacher.image,
         title: `استاد ${teacher.name}`,
         subtitle: teacher.role,
         badge: `${teacher.experienceYears} سال سابقه تدریس`,
@@ -106,7 +107,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
               className="teacher-card bg-white border border-[#E8DFE0] hover:border-[#B92B3A] rounded-[18px] p-5 flex flex-col justify-between transition-all duration-200 group apple-soft-shadow"
             >
               <div>
-                {/* Selective Black & White Portrait with Color Reveal on Hover */}
+                {/* Selective Portrait Frame with Responsive Image */}
                 <div
                   className="aspect-[4/5] relative rounded-[11px] overflow-hidden bg-[#FCF8F8] border border-[#E8DFE0] cursor-zoom-in mb-4"
                   onClick={() => openTeacherLightbox(teacher)}
@@ -120,14 +121,14 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                   }}
                   title={`بزرگ‌نمایی عکس ${teacher.name}`}
                 >
-                  <img
+                  <ResponsiveImage
                     src={teacher.image}
                     alt={`استاد ${teacher.name}`}
-                    className="w-full h-full object-cover filter grayscale-[88%] contrast-115 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500 ease-out"
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                    onError={handleImageError}
+                    width={400}
+                    height={500}
+                    aspectRatio="4/5"
+                    sizes="(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 280px"
+                    className="w-full h-full object-cover filter contrast-115 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500 ease-out"
                   />
                   
                   {/* Badge in Light Pink #F3C7CA with Lacquer Red #B92B3A text */}
@@ -182,7 +183,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
       {/* Profile Modal with Dark Crimson Backdrop */}
       {selectedTeacher && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3B1720]/75 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4 bg-[#3B1720]/80 backdrop-blur-md animate-fade-in"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-teacher-title"
@@ -190,23 +191,25 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
             if (e.target === e.currentTarget) setSelectedTeacher(null);
           }}
         >
-          <div className="bg-[#FCF8F8] rounded-[18px] border border-[#E8DFE0] shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+          <div className="bg-[#FCF8F8] dark:bg-[#150a0f] text-[#202124] dark:text-white rounded-[18px] border border-[#E8DFE0] dark:border-white/10 shadow-2xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col">
             
             {/* Modal Header */}
-            <div className="p-6 bg-[#F3C7CA]/30 border-b border-[#E8DFE0] flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <img
+            <div className="p-5 sm:p-6 bg-[#F3C7CA]/30 border-b border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-3.5 sm:gap-4">
+                <ResponsiveImage
                   src={selectedTeacher.image}
                   alt={selectedTeacher.name}
-                  className="w-14 h-14 rounded-full object-cover border-2 border-[#B92B3A]"
-                  decoding="async"
-                  onError={handleImageError}
+                  width={56}
+                  height={56}
+                  aspectRatio="1/1"
+                  sizes="56px"
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-[#B92B3A] shrink-0"
                 />
                 <div className="text-right">
-                  <h3 id="modal-teacher-title" className="text-[21px] font-bold text-[#202124]">
+                  <h3 id="modal-teacher-title" className="text-[19px] sm:text-[21px] font-bold text-[#202124] dark:text-white">
                     استاد {selectedTeacher.name}
                   </h3>
-                  <p className="text-[14px] text-[#B92B3A] font-semibold">
+                  <p className="text-[13px] sm:text-[14px] text-[#B92B3A] dark:text-[#F3C7CA] font-semibold">
                     {selectedTeacher.role} · {selectedTeacher.experienceYears} سال سابقه تدریس
                   </p>
                 </div>

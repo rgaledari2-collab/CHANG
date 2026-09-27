@@ -93,6 +93,15 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
       return;
     }
 
+    // On mobile screens, immediately reveal to prevent any loading delays
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    if (isMobile) {
+      setIsVisible(true);
+      setCurrentValue(item.targetValue);
+      setIsCompleted(true);
+      return;
+    }
+
     // Animation runner using RequestAnimationFrame with smooth Quintic Ease-Out
     const startCounterAnimation = () => {
       if (hasAnimatedRef.current) return;
@@ -250,6 +259,11 @@ export const Stats: React.FC = () => {
     const el = headerRef.current;
     if (!el) return;
 
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      setHeaderVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -259,7 +273,7 @@ export const Stats: React.FC = () => {
           }
         });
       },
-      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
     );
 
     observer.observe(el);

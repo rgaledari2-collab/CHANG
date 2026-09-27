@@ -3,6 +3,7 @@ import { MapPin, ArrowLeft, ZoomIn } from 'lucide-react';
 import { EVENTS_DATA } from '../data';
 import { LightboxData } from './Lightbox';
 import { handleImageError } from '../utils/imageFallback';
+import { ResponsiveImage } from './ResponsiveImage';
 
 interface EventsProps {
   onOpenLightbox?: (data: LightboxData) => void;
@@ -14,7 +15,7 @@ export const Events: React.FC<EventsProps> = ({ onOpenLightbox }) => {
   const handleOpenEventLightbox = () => {
     if (onOpenLightbox) {
       onOpenLightbox({
-        src: event.image.replace('w=1400', 'w=2000').replace('q=84', 'q=92'),
+        src: event.image,
         title: event.title,
         subtitle: `${event.daySolar} ${event.dateSolar} • ${event.location || 'سالن همایش خرمشهر'} • آموزشگاه موسیقی چنگ`,
         badge: event.type,
@@ -63,14 +64,14 @@ export const Events: React.FC<EventsProps> = ({ onOpenLightbox }) => {
             }}
             title="مشاهده پوستر کنسرت با وضوح بالا"
           >
-            <img
+            <ResponsiveImage
               src={event.image}
               alt={event.title}
+              width={1200}
+              height={600}
+              aspectRatio="16/7"
+              sizes="(max-width: 640px) 100vw, (max-width: 1200px) 94vw, 1200px"
               className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#3B1720]/95 via-[#3B1720]/40 to-transparent" />
 

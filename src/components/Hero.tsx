@@ -7,22 +7,22 @@ export const Hero: React.FC = () => {
       id="top"
       role="region"
       aria-labelledby="hero-heading"
-      className="relative bg-[#FCF8F8] dark:bg-[#0E1013] text-[#202124] dark:text-white pt-14 pb-18 lg:pt-20 lg:pb-24 border-b border-[#E8DFE0] dark:border-white/10 overflow-hidden transition-colors"
+      className="relative w-full max-w-full bg-[#FCF8F8] dark:bg-[#0E1013] text-[#202124] dark:text-white pt-14 pb-18 lg:pt-20 lg:pb-24 border-b border-[#E8DFE0] dark:border-white/10 overflow-hidden [contain:paint] transition-colors"
     >
-      {/* Subtle ambient light accents in the background (no logo) */}
+      {/* Subtle ambient light accents bounded strictly to viewport */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#B92B3A]/8 via-[#F3C7CA]/10 to-transparent dark:from-[#B92B3A]/10 dark:via-[#F3C7CA]/5 rounded-full blur-3xl pointer-events-none" 
-        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[520px] lg:w-[700px] h-[220px] sm:h-[300px] lg:h-[350px] max-w-full bg-gradient-to-tr from-[#B92B3A]/8 via-[#F3C7CA]/10 to-transparent dark:from-[#B92B3A]/10 dark:via-[#F3C7CA]/5 rounded-full blur-3xl pointer-events-none" 
+        aria-hidden="true" 
       />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
         {/* Main Hero Copy Container - Fully Centered and Balanced */}
-        <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
+        <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto w-full">
           
           {/* Animated 50 Years Legacy Badge */}
           <div 
-            className="relative group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#B92B3A]/10 to-amber-500/10 dark:from-amber-400/15 dark:via-[#B92B3A]/20 dark:to-amber-400/15 border border-amber-500/30 dark:border-amber-400/30 shadow-2xs mb-5 overflow-hidden select-none"
+            className="relative group inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#B92B3A]/10 to-amber-500/10 dark:from-amber-400/15 dark:via-[#B92B3A]/20 dark:to-amber-400/15 border border-amber-500/30 dark:border-amber-400/30 shadow-2xs mb-5 overflow-hidden select-none max-w-[calc(100vw-32px)]"
             title="آموزشگاه موسیقی چنگ خرمشهر؛ تأسیس ۱۳۵۰"
           >
             {/* Continuous Shimmer Light Sweep */}
@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
           <h1
             id="hero-heading"
             aria-label="آموزش اصیل موسیقی؛ از پایه تا شکوهِ صحنه."
-            className="text-3xl sm:text-5xl lg:text-[58px] font-black leading-[1.18] mb-4 [text-wrap:balance]"
+            className="text-[26px] sm:text-4xl lg:text-[56px] font-black leading-[1.2] mb-4 [text-wrap:balance]"
           >
             <span
               aria-hidden="true"
@@ -68,23 +68,23 @@ export const Hero: React.FC = () => {
           </h1>
 
           {/* Subhead / Lead - Compact & Focused */}
-          <p className="text-base sm:text-[20px] font-medium text-[#2d3036] dark:text-[#E8DFE0] leading-[1.5] tracking-[-0.01em] mb-3 max-w-xl [text-wrap:balance]">
+          <p className="text-[15px] sm:text-[20px] font-medium text-[#2d3036] dark:text-[#E8DFE0] leading-[1.6] tracking-[-0.01em] mb-3 max-w-xl [text-wrap:balance]">
             پداگوژی استاندارد و آموزش تخصصی انواع <strong className="font-bold text-[#1a1b1e] dark:text-white">سازهای ایرانی و جهانی</strong> در خرمشهر.
           </p>
 
           {/* Body Paragraph - Crisp & Non-cluttered */}
-          <p className="text-[14px] sm:text-[16px] text-[#555e6b] dark:text-[#9ca3af] font-normal leading-[1.75] mb-8 max-w-lg [text-wrap:pretty]">
+          <p className="text-[13px] sm:text-[16px] text-[#555e6b] dark:text-[#9ca3af] font-normal leading-[1.75] mb-8 max-w-lg [text-wrap:pretty]">
             یادگیری گام‌به‌گام نت‌خوانی، سلفژ و تکنیک با اساتید برجسته؛ همراه با تجربه واقعی اجرا در کنسرت‌های هنرجویی.
           </p>
 
           {/* Action Buttons Centered */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-4 w-full" role="group" aria-label="اقدامات شروع و مشاوره">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md sm:max-w-none" role="group" aria-label="اقدامات شروع و مشاوره">
             
             {/* Primary Lacquer Red Button */}
             <a
               href="#contact"
               aria-label="درخواست مشاوره رایگان و تعیین سطح حضوری در آموزشگاه موسیقی چنگ"
-              className="inline-flex items-center justify-center px-7 sm:px-9 py-3.5 sm:py-4 rounded-full text-[15px] sm:text-[16px] font-bold tracking-[-0.01em] bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#B92B3A]"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 sm:px-9 py-3.5 sm:py-4 rounded-full text-[15px] sm:text-[16px] font-bold tracking-[-0.01em] bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#B92B3A]"
             >
               مشاوره و تعیین سطح حضوری
             </a>
@@ -93,7 +93,7 @@ export const Hero: React.FC = () => {
             <a
               href="#teachers"
               aria-label="مشاهده اساتید و سوابق آموزشی آموزشگاه چنگ"
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-[15px] sm:text-[16px] font-semibold tracking-[-0.005em] text-[#202124] dark:text-white hover:text-[#B92B3A] border-2 border-[#202124] dark:border-white/30 hover:border-[#B92B3A] hover:bg-[#F3C7CA]/20 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#202124]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-[15px] sm:text-[16px] font-semibold tracking-[-0.005em] text-[#202124] dark:text-white hover:text-[#B92B3A] border-2 border-[#202124] dark:border-white/30 hover:border-[#B92B3A] hover:bg-[#F3C7CA]/20 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#202124]"
             >
               <span>آشنایی با اساتید و سوابق</span>
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />

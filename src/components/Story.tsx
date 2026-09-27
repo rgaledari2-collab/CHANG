@@ -2,6 +2,8 @@ import React from 'react';
 import { History, HeartHandshake } from 'lucide-react';
 import { handleImageError } from '../utils/imageFallback';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
+import { STORY_MAIN_IMAGE, STORY_SECONDARY_IMAGE } from '../assets/imagesData';
+import { ResponsiveImage } from './ResponsiveImage';
 
 export const Story: React.FC = () => {
   const sectionRef = useRevealOnScroll<HTMLElement>();
@@ -10,43 +12,43 @@ export const Story: React.FC = () => {
     <section 
       id="story" 
       ref={sectionRef}
-      className="py-20 lg:py-24 bg-[#3B1720] text-[#FCF8F8] overflow-hidden"
+      className="py-16 sm:py-20 lg:py-24 bg-[#3B1720] text-[#FCF8F8] overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
           {/* Visual Presentation with Selective Photography */}
           <div className="lg:col-span-5 relative reveal-on-scroll">
             <div className="relative rounded-[18px] overflow-hidden apple-product-shadow aspect-[4/5] bg-[#290f16] border border-white/15 group">
-              <img
-                src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=640&q=75&fm=webp"
+              <ResponsiveImage
+                src={STORY_MAIN_IMAGE}
                 alt="فضای سازها و آکوستیک آموزشگاه موسیقی چنگ خرمشهر"
-                className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-105 transition-all duration-700 ease-out"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                onError={handleImageError}
+                width={600}
+                height={750}
+                aspectRatio="4/5"
+                sizes="(max-width: 640px) 94vw, (max-width: 1024px) 44vw, 500px"
+                className="w-full h-full object-cover filter contrast-105 group-hover:scale-102 transition-all duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#3B1720]/90 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3B1720]/80 via-transparent to-transparent pointer-events-none" />
             </div>
 
             {/* Overlapping Secondary Image */}
             <div className="hidden sm:block absolute -bottom-6 -left-6 w-1/2 aspect-[3/4] rounded-[14px] overflow-hidden border border-white/20 apple-product-shadow bg-[#290f16] group/sec">
-              <img
-                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=400&q=75&fm=webp"
+              <ResponsiveImage
+                src={STORY_SECONDARY_IMAGE}
                 alt="تمرین و اجرای موسیقی در چنگ"
-                className="w-full h-full object-cover filter grayscale contrast-120 group-hover/sec:grayscale-0 transition-all duration-700"
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                onError={handleImageError}
+                width={400}
+                height={533}
+                aspectRatio="3/4"
+                sizes="(max-width: 640px) 45vw, 250px"
+                className="w-full h-full object-cover group-hover/sec:scale-105 transition-all duration-700"
               />
             </div>
 
             {/* Museum Editorial Label */}
-            <div className="absolute -top-3 right-6 bg-[#3B1720]/95 backdrop-blur-md text-white px-4 py-2 rounded-full border border-white/20 text-center flex items-center gap-2">
+            <div className="absolute -top-3 right-4 sm:right-6 bg-[#3B1720]/95 backdrop-blur-md text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20 text-center flex items-center gap-2 shadow-md">
               <span className="w-2 h-2 rounded-full bg-[#B92B3A]" />
-              <span className="text-[12px] text-[#FCF8F8] font-medium">آرشیو فرهنگی · از دهه ۱۳۵۰ خرمشهر</span>
+              <span className="text-[11px] sm:text-[12px] text-[#FCF8F8] font-medium">آرشیو فرهنگی · از دهه ۱۳۵۰ خرمشهر</span>
             </div>
           </div>
 
