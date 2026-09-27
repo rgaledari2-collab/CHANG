@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Menu,
   X,
   PhoneCall,
   Phone,
-  Music2,
   GraduationCap,
   History,
   BarChart3,
   Sparkles,
   ArrowLeft,
-  HeartHandshake
+  MapPin,
+  Clock
 } from 'lucide-react';
 import { CHANG_TRANSPARENT_LOGO_DATA_URI } from '../assets/logoData';
 import { ThemeToggle } from './ThemeToggle';
@@ -18,15 +18,61 @@ import { ThemeToggle } from './ThemeToggle';
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setIsOpen(false);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isOpen]);
+
   const navLinks = [
-    { name: 'سازها و دوره‌ها', href: '#courses', icon: Music2 },
-    { name: 'موسیقی و سلامت روان', href: '#mental-health', icon: HeartHandshake },
-    { name: 'اساتید', href: '#teachers', icon: GraduationCap },
-    { name: 'پیشینه و رسالت', href: '#story', icon: History },
-    { name: 'شاخص‌ها و آمار', href: '#stats', icon: BarChart3 },
-    { name: 'کنسرت‌ها', href: '#events', icon: Sparkles },
-    { name: 'تماس و مشاوره', href: '#contact', icon: PhoneCall },
+    { 
+      name: 'اساتید و کادر آموزشی', 
+      href: '#teachers', 
+      icon: GraduationCap,
+      description: 'آشنایی با اساتید کنسرواتواری و رزومه هنری'
+    },
+    { 
+      name: 'پیشینه و رسالت آموزشگاه', 
+      href: '#story', 
+      icon: History,
+      description: 'پنج دهه پداگوژی و تداوم فرهنگی خرمشهر'
+    },
+    { 
+      name: 'شاخص‌ها و آمار رسمی', 
+      href: '#stats', 
+      icon: BarChart3,
+      description: 'کارنامه عملکردی و سوابق فارغ‌التحصیلان'
+    },
+    { 
+      name: 'کنسرت‌ها و صحنه اجرا', 
+      href: '#events', 
+      icon: Sparkles,
+      description: 'رسیتال‌های صحنه‌ای و تجربه استیج زنده'
+    },
+    { 
+      name: 'تماس و تعیین سطح', 
+      href: '#contact', 
+      icon: PhoneCall,
+      description: 'مشاوره حضوری و تعیین سطح هنرجو'
+    },
   ];
+
+  const handleLinkClick = () => {
+    setIsOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full select-none bg-[#1A0A0F]/95 dark:bg-[#0B0D11]/95 backdrop-blur-md border-b border-white/10 shadow-md transition-colors duration-200">
@@ -55,7 +101,7 @@ export const Header: React.FC = () => {
           </div>
         </a>
 
-        {/* Desktop Nav Links with Visual Modern Icons */}
+        {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="ناوبری اصلی">
           {navLinks.map((link) => {
             const Icon = link.icon;
@@ -87,7 +133,7 @@ export const Header: React.FC = () => {
           {/* Theme Switcher */}
           <ThemeToggle variant="compact" />
 
-          {/* Primary CTA */}
+          {/* Primary CTA (Desktop & Tablet) */}
           <a
             href="#contact"
             className="hidden sm:inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-[13px] font-semibold bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white transition-all duration-150 shadow-md ring-1 ring-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
@@ -96,63 +142,141 @@ export const Header: React.FC = () => {
             <span>مشاوره و تعیین سطح</span>
           </a>
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Hamburger Trigger Button */}
           <button
             type="button"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpen(true)}
             aria-expanded={isOpen}
-            aria-controls="mobile-menu"
-            aria-label={isOpen ? "بستن منو" : "باز کردن منوی ناوبری"}
-            className="lg:hidden p-2 rounded-lg text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
+            aria-controls="mobile-drawer"
+            aria-label="باز کردن منوی ناوبری"
+            className="lg:hidden p-2 rounded-xl text-white bg-white/5 hover:bg-white/15 border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] transition-colors"
           >
-            {isOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
+            <Menu className="w-5 h-5 text-white" />
           </button>
         </div>
 
       </div>
 
-      {/* Mobile Drawer Dropdown in Sleek Dark Style */}
+      {/* Modern Mobile Slide-over Drawer & Overlay */}
       {isOpen && (
-        <nav 
-          id="mobile-menu" 
-          className="lg:hidden bg-[#1A0A0F] dark:bg-[#0B0D11] border-b border-white/10 px-6 py-4 flex flex-col gap-1.5 shadow-2xl transition-colors"
-        >
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 py-2.5 px-3 rounded-xl text-[14px] text-[#E8DFE0] hover:text-white hover:bg-white/10 font-medium transition-colors"
-              >
-                <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-[#F3C7CA]" />
+        <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" id="mobile-drawer">
+          
+          {/* Backdrop Blur Overlay */}
+          <div 
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Slide-out Drawer Panel (RTL: Slides from Right) */}
+          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-[360px] sm:max-w-[390px] bg-[#14080D] dark:bg-[#0B0D11] border-l border-white/15 text-white shadow-2xl flex flex-col justify-between overflow-y-auto z-10 transition-transform duration-300">
+            
+            {/* Drawer Header */}
+            <div>
+              <div className="p-5 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center border border-white/20 shrink-0 shadow-xs">
+                    <img 
+                      src={CHANG_TRANSPARENT_LOGO_DATA_URI} 
+                      alt="آموزشگاه چنگ" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="text-right">
+                    <span className="block font-bold text-[15px] text-white leading-tight">
+                      آموزشگاه موسیقی چنگ
+                    </span>
+                    <span className="block text-[11px] text-[#F3C7CA] font-medium mt-0.5">
+                      خرمشهر · تأسیس ۱۳۵۰
+                    </span>
+                  </div>
                 </div>
-                <span>{link.name}</span>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="بستن منو"
+                  className="w-9 h-9 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white active:scale-90 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              {/* Navigation Links with Descriptions */}
+              <nav className="p-4 space-y-1.5 text-right" aria-label="منوی موبایل">
+                {navLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      onClick={handleLinkClick}
+                      className="group flex items-center gap-3.5 p-3 rounded-2xl hover:bg-white/10 active:bg-white/15 border border-transparent hover:border-white/10 transition-all duration-150"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-[#B92B3A]/25 border border-[#B92B3A]/30 flex items-center justify-center shrink-0 group-hover:bg-[#B92B3A] group-hover:scale-105 transition-all">
+                        <Icon className="w-5 h-5 text-[#F3C7CA] group-hover:text-white transition-colors" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="block text-[14px] font-bold text-white group-hover:text-[#F3C7CA] transition-colors">
+                          {link.name}
+                        </span>
+                        <span className="block text-[11px] text-[#8E97A6] truncate mt-0.5">
+                          {link.description}
+                        </span>
+                      </div>
+                      <ArrowLeft className="w-4 h-4 text-white/40 group-hover:text-white group-hover:-translate-x-1 transition-all shrink-0" />
+                    </a>
+                  );
+                })}
+              </nav>
+
+              {/* Theme Toggle inside Drawer */}
+              <div className="px-4 py-2">
+                <ThemeToggle variant="drawer" />
+              </div>
+            </div>
+
+            {/* Drawer Footer Actions */}
+            <div className="p-5 border-t border-white/10 bg-white/[0.02] space-y-3 text-right">
+              {/* Phone Direct Call */}
+              <a
+                href="tel:06153522000"
+                className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-[13px] text-white transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-[#F3C7CA]" />
+                  <span className="font-medium text-[#E8DFE0]">تماس مستقیم با آموزشگاه:</span>
+                </div>
+                <span className="font-mono font-bold text-white dir-ltr">۰۶۱-۵۳۵۲۲۰۰۰</span>
               </a>
-            );
-          })}
 
-          <div className="pt-3 mt-2 border-t border-white/10 flex flex-col gap-2.5">
-            <a
-              href="tel:06153522000"
-              className="flex items-center justify-center gap-2 py-2 text-[14px] text-[#E8DFE0] font-medium border border-white/15 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
-            >
-              <Phone className="w-4 h-4 text-[#F3C7CA]" />
-              <span className="dir-ltr font-mono">۰۶۱-۵۳۵۲۲۰۰۰</span>
-            </a>
+              {/* Consultation CTA */}
+              <a
+                href="#contact"
+                onClick={handleLinkClick}
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-full text-[14px] font-bold bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white transition-all shadow-lg"
+              >
+                <span>مشاوره و تعیین سطح حضوری</span>
+                <ArrowLeft className="w-4 h-4" />
+              </a>
 
-            <a
-              href="#contact"
-              onClick={() => setIsOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-[14px] font-semibold bg-[#B92B3A] hover:bg-[#D9384A] text-white active:scale-95 shadow-md"
-            >
-              <span>مشاوره و تعیین سطح حضوری</span>
-              <ArrowLeft className="w-4 h-4" />
-            </a>
+              {/* Quick Academy Info */}
+              <div className="pt-2 flex flex-col gap-1 text-[11px] text-[#8E97A6]">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#B92B3A] shrink-0" />
+                  <span>خوزستان، خرمشهر، بلوار ساحلی، نبش خیابان فردوسی</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#B92B3A] shrink-0" />
+                  <span>شنبه تا پنج‌شنبه: ۹:۰۰ تا ۲۱:۰۰</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-        </nav>
+
+        </div>
       )}
     </header>
   );

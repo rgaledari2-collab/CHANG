@@ -3,14 +3,12 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
-import { Courses } from './components/Courses';
 import { Story } from './components/Story';
 import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
 import { SectionDivider } from './components/SectionDivider';
 import { Manifesto } from './components/Manifesto';
 import { Events } from './components/Events';
-import { MusicMentalHealth } from './components/MusicMentalHealth';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
@@ -19,15 +17,6 @@ import { Lightbox, LightboxData } from './components/Lightbox';
 function MainApp() {
   const [selectedCourseForConsultation, setSelectedCourseForConsultation] = useState<string>('');
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
-
-  const handleSelectCourse = (courseTitle: string) => {
-    setSelectedCourseForConsultation(courseTitle);
-    // Smooth scroll into contact section
-    const contactEl = document.getElementById('contact');
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200">
@@ -39,17 +28,13 @@ function MainApp() {
         رفتن به محتوای اصلی
       </a>
 
-      {/* Header */}
+      {/* Header with Mobile Drawer Menu */}
       <Header />
 
       {/* Main Content Sections */}
       <main id="main-content" className="flex-1">
         <Hero />
         <ProofStrip />
-        <Courses onSelectCourseForConsultation={handleSelectCourse} />
-
-        {/* Music and Mental Health Section */}
-        <MusicMentalHealth />
 
         {/* Decorative Wave Divider into Story Section */}
         <SectionDivider preset="courses-to-story" />
@@ -89,4 +74,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-

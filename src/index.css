@@ -205,7 +205,7 @@ html.dark .shadow-xl {
 }
 
 /* Scroll margin for fixed header */
-#courses, #teachers, #story, #events, #contact, #top, #instruments-preview, #mental-health {
+#teachers, #story, #stats, #events, #contact, #top, #instruments-preview {
   scroll-margin-top: 76px;
 }
 
@@ -376,6 +376,15 @@ html.dark .shadow-xl {
   50% { transform: translateY(0px) translateX(0px) rotate(0deg); }
   75% { transform: translateY(14px) translateX(-8px) rotate(-7deg); }
   100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+}
+
+@keyframes legacyShimmer {
+  0% { transform: translateX(180%); }
+  100% { transform: translateX(-180%); }
+}
+
+.animate-legacy-shimmer {
+  animation: legacyShimmer 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 

@@ -72,6 +72,7 @@ interface CounterCardProps {
 
 const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
   const [currentValue, setCurrentValue] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const hasAnimatedRef = useRef<boolean>(false);
@@ -86,6 +87,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
+      setIsVisible(true);
       setCurrentValue(item.targetValue);
       setIsCompleted(true);
       return;
@@ -95,6 +97,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
     const startCounterAnimation = () => {
       if (hasAnimatedRef.current) return;
       hasAnimatedRef.current = true;
+      setIsVisible(true);
 
       const duration = 2000; // 2 seconds animation
       let startTime: number | null = null;
@@ -102,7 +105,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
       const endValue = item.targetValue;
 
       // Small initial delay based on card index for a natural cascading wave effect
-      const startDelay = index * 120;
+      const startDelay = index * 140;
 
       const animate = (timestamp: number) => {
         if (!startTime) startTime = timestamp + startDelay;
@@ -133,7 +136,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
       requestAnimationFrame(animate);
     };
 
-    // IntersectionObserver to start counting as soon as card scrolls into view
+    // IntersectionObserver to trigger fade-in & counting animation on scroll into view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -144,7 +147,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
         });
       },
       {
-        threshold: 0.2, // 20% visible
+        threshold: 0.15, // Triggers when 15% of the card is visible in the viewport
         rootMargin: '0px 0px -40px 0px',
       }
     );
@@ -161,7 +164,14 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
   return (
     <div
       ref={cardRef}
-      className="bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#B92B3A]/40 dark:hover:border-[#B92B3A]/60 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"
+      style={{
+        transitionDelay: `${index * 130}ms`,
+      }}
+      className={`bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#B92B3A]/40 dark:hover:border-[#B92B3A]/60 hover:shadow-lg transition-all duration-700 ease-out group relative overflow-hidden will-change-transform ${
+        isVisible
+          ? 'opacity-100 translate-y-0 scale-100'
+          : 'opacity-0 translate-y-8 scale-[0.98] pointer-events-none'
+      }`}
     >
       {/* Top ambient highlight on hover */}
       <div 
@@ -233,15 +243,43 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
 };
 
 export const Stats: React.FC = () => {
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setHeaderVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="stats"
-      className="py-16 sm:py-20 lg:py-24 bg-[#FCF8F8] dark:bg-[#0E1013] border-b border-[#E8DFE0] dark:border-white/10 relative transition-colors"
+      className="py-16 sm:py-20 lg:py-24 bg-[#FCF8F8] dark:bg-[#0E1013] border-b border-[#E8DFE0] dark:border-white/10 relative transition-colors overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+        {/* Section Header with Scroll Fade-In */}
+        <div 
+          ref={headerRef}
+          className={`max-w-3xl mx-auto text-center mb-12 sm:mb-16 transition-all duration-700 ease-out ${
+            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+          }`}
+        >
           <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] tracking-tight bg-[#F3C7CA]/30 dark:bg-[#B92B3A]/20 px-4 py-1.5 rounded-full border border-[#E8DFE0] dark:border-white/10 shadow-2xs mb-3">
             <Award className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
             <span>شاخص‌های عملکردی و اعتبار آکادمیک</span>
@@ -256,7 +294,7 @@ export const Stats: React.FC = () => {
           </p>
         </div>
 
-        {/* Clean Responsive Grid with Animated Counters */}
+        {/* Clean Responsive Grid with Animated Counters and Staggered Fade-in */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {STATS_ITEMS.map((item, index) => (
             <CounterCard key={item.id} item={item} index={index} />

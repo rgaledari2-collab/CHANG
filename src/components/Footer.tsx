@@ -12,14 +12,14 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-[14px] font-bold text-[#202124] mb-3 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#B92B3A]" />
-              <span>انتخاب ساز و دوره‌ها</span>
+              <span>دسترسی و بخش‌ها</span>
             </h4>
             <ul className="text-[15px] font-medium leading-[2.41] text-[#5a626d]">
-              <li><a href="#courses" className="hover:text-[#B92B3A] transition-colors">پیانو و کیبورد</a></li>
-              <li><a href="#courses" className="hover:text-[#B92B3A] transition-colors">تار، سه‌تار و سنتور</a></li>
-              <li><a href="#courses" className="hover:text-[#B92B3A] transition-colors">گیتار کلاسیک و پاپ</a></li>
-              <li><a href="#courses" className="hover:text-[#B92B3A] transition-colors">آواز سنتی و صداسازی</a></li>
-              <li><a href="#courses" className="hover:text-[#B92B3A] transition-colors">ارف و ریتم کودکان</a></li>
+              <li><a href="#teachers" className="hover:text-[#B92B3A] transition-colors">اساتید و کادر آموزشی</a></li>
+              <li><a href="#story" className="hover:text-[#B92B3A] transition-colors">پیشینه و رسالت آموزشگاه</a></li>
+              <li><a href="#stats" className="hover:text-[#B92B3A] transition-colors">شاخص‌ها و آمار رسمی</a></li>
+              <li><a href="#events" className="hover:text-[#B92B3A] transition-colors">کنسرت‌ها و صحنه اجرا</a></li>
+              <li><a href="#contact" className="hover:text-[#B92B3A] transition-colors">مشاوره و تعیین سطح</a></li>
             </ul>
           </div>
 

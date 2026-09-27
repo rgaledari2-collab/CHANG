@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Award, Sparkles, HeartHandshake, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Award, Sparkles, ShieldCheck } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ export const Hero: React.FC = () => {
       id="top"
       role="region"
       aria-labelledby="hero-heading"
-      className="relative bg-[#FCF8F8] dark:bg-[#0E1013] text-[#202124] dark:text-white pt-14 pb-18 lg:pt-22 lg:pb-24 border-b border-[#E8DFE0] dark:border-white/10 overflow-hidden transition-colors"
+      className="relative bg-[#FCF8F8] dark:bg-[#0E1013] text-[#202124] dark:text-white pt-14 pb-18 lg:pt-20 lg:pb-24 border-b border-[#E8DFE0] dark:border-white/10 overflow-hidden transition-colors"
     >
       {/* Subtle ambient light accents in the background (no logo) */}
       <div 
@@ -20,42 +20,61 @@ export const Hero: React.FC = () => {
         {/* Main Hero Copy Container - Fully Centered and Balanced */}
         <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto">
           
-          {/* Clean Editorial Kicker */}
-          <div className="inline-flex items-center justify-center gap-2 text-[13px] font-semibold text-[#B92B3A] dark:text-[#F3C7CA] mb-6 tracking-tight bg-[#F3C7CA]/30 dark:bg-[#B92B3A]/20 px-4 py-1.5 rounded-full border border-[#E8DFE0] dark:border-white/10 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-[#B92B3A] animate-pulse" aria-hidden="true" />
-            <span>پذیرش هنرجو برای ترم جدید</span>
-            <span className="text-[#B92B3A]/40 dark:text-[#F3C7CA]/40 font-light" aria-hidden="true">·</span>
-            <span className="text-[#5a626d] dark:text-[#9ca3af] font-medium">آموزش تخصصی از پایه تا اجرای صحنه‌ای</span>
+          {/* Animated 50 Years Legacy Badge */}
+          <div 
+            className="relative group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-[#B92B3A]/10 to-amber-500/10 dark:from-amber-400/15 dark:via-[#B92B3A]/20 dark:to-amber-400/15 border border-amber-500/30 dark:border-amber-400/30 shadow-2xs mb-5 overflow-hidden select-none"
+            title="آموزشگاه موسیقی چنگ خرمشهر؛ تأسیس ۱۳۵۰"
+          >
+            {/* Continuous Shimmer Light Sweep */}
+            <div 
+              className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/50 dark:via-white/20 to-transparent pointer-events-none animate-legacy-shimmer"
+              aria-hidden="true"
+            />
+
+            {/* Glowing Golden Beacon */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-600 dark:bg-amber-400" />
+            </span>
+
+            <div className="flex items-center gap-1.5 text-[12px] sm:text-[13px] font-bold text-amber-950 dark:text-amber-200">
+              <Award className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
+              <span>۵۰ سال اصالت در آموزش موسیقی</span>
+              <span className="text-amber-600/40 dark:text-amber-400/40 font-light" aria-hidden="true">·</span>
+              <span className="font-mono text-[11px] sm:text-[12px] font-extrabold text-amber-800 dark:text-amber-300">
+                ۱۳۵۰ — اکنون
+              </span>
+            </div>
           </div>
 
-          {/* Dynamic Headline with Screen-Reader Accessible Name and Visual Typography Contrast */}
+          {/* Dynamic Headline - Short, Punchy, Musical & Attractive */}
           <h1
             id="hero-heading"
-            aria-label="صدایت را پیدا کن؛ جسور، زنده و روی صحنه."
-            className="text-3xl sm:text-5xl lg:text-[58px] font-black leading-[1.18] mb-6 [text-wrap:balance]"
+            aria-label="آموزش اصیل موسیقی؛ از پایه تا شکوهِ صحنه."
+            className="text-3xl sm:text-5xl lg:text-[58px] font-black leading-[1.18] mb-4 [text-wrap:balance]"
           >
             <span
               aria-hidden="true"
               className="block font-extrabold text-[#1a1b1e] dark:text-white tracking-[-0.025em]"
             >
-              صدایت را پیدا کن؛
+              آموزش اصیل موسیقی؛
             </span>
             <span
               aria-hidden="true"
-              className="block font-black text-[#B92B3A] dark:text-[#F3C7CA] tracking-[-0.03em] mt-2 drop-shadow-[0_1px_3px_rgba(185,43,58,0.15)]"
+              className="block font-black text-[#B92B3A] dark:text-[#F3C7CA] tracking-[-0.03em] mt-1.5 drop-shadow-[0_1px_3px_rgba(185,43,58,0.15)]"
             >
-              جسور، زنده و روی صحنه.
+              از پایه تا شکوهِ صحنه.
             </span>
           </h1>
 
-          {/* Subhead / Lead */}
-          <p className="text-lg sm:text-[22px] font-medium text-[#2d3036] dark:text-[#E8DFE0] leading-[1.6] tracking-[-0.01em] mb-4 max-w-2xl [text-wrap:balance]">
-            موسیقی فقط یک مهارت نیست؛ <strong className="font-bold text-[#1a1b1e] dark:text-white">بیانی اصیل</strong> از افکار، آرامش درونی و کاراکتر توست.
+          {/* Subhead / Lead - Compact & Focused */}
+          <p className="text-base sm:text-[20px] font-medium text-[#2d3036] dark:text-[#E8DFE0] leading-[1.5] tracking-[-0.01em] mb-3 max-w-xl [text-wrap:balance]">
+            پداگوژی استاندارد و آموزش تخصصی انواع <strong className="font-bold text-[#1a1b1e] dark:text-white">سازهای ایرانی و جهانی</strong> در خرمشهر.
           </p>
 
-          {/* Body Paragraph */}
-          <p className="text-[15px] sm:text-[17px] text-[#515964] dark:text-[#9ca3af] font-normal leading-[1.85] tracking-normal mb-9 max-w-2xl [text-wrap:pretty]">
-            آموزش نظام‌مند انواع <strong className="font-semibold text-[#202328] dark:text-white">سازهای اصیل ایرانی و کلاسیک جهانی</strong> از سطوح پایه تا پیشرفته؛ همراه با اساتید کنسرواتواری، مبانی علمی سلفژ و امکان اجرای زنده در سالن اختصاصی کنسرت‌های هنرجویی خرمشهر.
+          {/* Body Paragraph - Crisp & Non-cluttered */}
+          <p className="text-[14px] sm:text-[16px] text-[#555e6b] dark:text-[#9ca3af] font-normal leading-[1.75] mb-8 max-w-lg [text-wrap:pretty]">
+            یادگیری گام‌به‌گام نت‌خوانی، سلفژ و تکنیک با اساتید برجسته؛ همراه با تجربه واقعی اجرا در کنسرت‌های هنرجویی.
           </p>
 
           {/* Action Buttons Centered */}
@@ -72,21 +91,12 @@ export const Hero: React.FC = () => {
 
             {/* Secondary Ghost Button */}
             <a
-              href="#courses"
-              aria-label="مشاهده کاتالوگ دوره‌های آموزشی و سازهای موسیقی آموزشگاه چنگ"
+              href="#teachers"
+              aria-label="مشاهده اساتید و سوابق آموزشی آموزشگاه چنگ"
               className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-[15px] sm:text-[16px] font-semibold tracking-[-0.005em] text-[#202124] dark:text-white hover:text-[#B92B3A] border-2 border-[#202124] dark:border-white/30 hover:border-[#B92B3A] hover:bg-[#F3C7CA]/20 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#202124]"
             >
-              <span>مشاهده کاتالوگ سازها</span>
+              <span>آشنایی با اساتید و سوابق</span>
               <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-            </a>
-
-            {/* Mental Health Link Button */}
-            <a
-              href="#mental-health"
-              className="inline-flex items-center justify-center gap-1.5 text-[14px] font-semibold text-[#515964] dark:text-[#d1d5db] hover:text-[#B92B3A] dark:hover:text-[#F3C7CA] px-4 py-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all"
-            >
-              <HeartHandshake className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
-              <span>موسیقی و سلامت روان</span>
             </a>
           </div>
 
