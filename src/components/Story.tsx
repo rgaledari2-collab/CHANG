@@ -1,15 +1,22 @@
 import React from 'react';
 import { History, HeartHandshake } from 'lucide-react';
 import { handleImageError } from '../utils/imageFallback';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 
 export const Story: React.FC = () => {
+  const sectionRef = useRevealOnScroll<HTMLElement>();
+
   return (
-    <section id="story" className="py-20 lg:py-24 bg-[#3B1720] text-[#FCF8F8] border-b border-white/10 overflow-hidden">
+    <section 
+      id="story" 
+      ref={sectionRef}
+      className="py-20 lg:py-24 bg-[#3B1720] text-[#FCF8F8] overflow-hidden"
+    >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Visual Presentation with Selective Photography */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative reveal-on-scroll">
             <div className="relative rounded-[18px] overflow-hidden apple-product-shadow aspect-[4/5] bg-[#290f16] border border-white/15 group">
               <img
                 src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=640&q=75&fm=webp"
@@ -45,28 +52,30 @@ export const Story: React.FC = () => {
 
           {/* Story Copy & Timeline */}
           <div className="lg:col-span-7 text-right">
-            <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#F3C7CA] mb-3">
-              <span className="font-mono text-[14px]">۰۲</span>
-              <span>/</span>
-              <History className="w-3.5 h-3.5 text-[#F3C7CA]" />
-              <span>پیشینه و رسالت چنگ</span>
+            <div className="reveal-on-scroll reveal-delay-1">
+              <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#F3C7CA] mb-3">
+                <span className="font-mono text-[14px]">۰۲</span>
+                <span>/</span>
+                <History className="w-3.5 h-3.5 text-[#F3C7CA]" />
+                <span>پیشینه و رسالت چنگ</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-white leading-[1.10] tracking-[-0.025em] mb-4 [text-wrap:balance]">
+                ریشه در خرمشهر، <br className="hidden sm:inline" />
+                <span className="text-[#F3C7CA]">نگاه رو به صحنه‌های آینده.</span>
+              </h2>
+
+              <p className="text-[20px] text-[#FCF8F8] font-normal mb-4 leading-[1.35] [text-wrap:pretty]">
+                آموزشگاه چنگ در گذر پنج دهه، پلی استوار بوده است میان شور و استعداد نسل‌های مختلف خرمشهر و زبان رهایی‌بخش موسیقی.
+              </p>
+
+              <p className="text-[16px] text-[#E8DFE0] leading-[1.5] mb-8 font-normal">
+                ما باور داریم آموزش اصولی، تنها به انتقال تکنیک‌های مکانیکی ساز خلاصه نمی‌شود؛ بلکه خلق فضایی امن برای رشد کاراکتر، درک شنیداری عمیق، تقویت جسارت صحنه و ارتباط شخصی هنرجو با ساز است.
+              </p>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-white leading-[1.10] tracking-[-0.025em] mb-4 [text-wrap:balance]">
-              ریشه در خرمشهر، <br className="hidden sm:inline" />
-              <span className="text-[#F3C7CA]">نگاه رو به صحنه‌های آینده.</span>
-            </h2>
-
-            <p className="text-[20px] text-[#FCF8F8] font-normal mb-4 leading-[1.35] [text-wrap:pretty]">
-              آموزشگاه چنگ در گذر پنج دهه، پلی استوار بوده است میان شور و استعداد نسل‌های مختلف خرمشهر و زبان رهایی‌بخش موسیقی.
-            </p>
-
-            <p className="text-[16px] text-[#E8DFE0] leading-[1.5] mb-8 font-normal">
-              ما باور داریم آموزش اصولی، تنها به انتقال تکنیک‌های مکانیکی ساز خلاصه نمی‌شود؛ بلکه خلق فضایی امن برای رشد کاراکتر، درک شنیداری عمیق، تقویت جسارت صحنه و ارتباط شخصی هنرجو با ساز است.
-            </p>
-
             {/* Editorial Timeline with Lacquer Red Indicator Dots */}
-            <div className="space-y-6 border-r-2 border-white/15 pr-6 mb-10">
+            <div className="space-y-6 border-r-2 border-white/15 pr-6 mb-10 reveal-on-scroll reveal-delay-2">
               <div className="relative">
                 <span className="absolute -right-[31px] top-1.5 w-3 h-3 rounded-full bg-[#B92B3A] ring-4 ring-[#3B1720]" />
                 <h3 className="text-[17px] font-bold text-white mb-1">
@@ -99,7 +108,7 @@ export const Story: React.FC = () => {
             </div>
 
             {/* CTA Button in Lacquer Red #B92B3A */}
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4 reveal-on-scroll reveal-delay-3">
               <a
                 href="#contact"
                 className="inline-flex items-center justify-center px-[24px] py-[12px] rounded-full text-[17px] font-semibold bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md"

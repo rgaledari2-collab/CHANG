@@ -42,7 +42,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
   });
 
   return (
-    <section id="courses" className="py-20 lg:py-24 bg-[#FCF8F8] border-b border-[#E8DFE0]">
+    <section id="courses" className="py-20 lg:py-24 bg-[#FCF8F8]">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Section Header */}

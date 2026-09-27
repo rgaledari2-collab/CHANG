@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Award, ArrowLeft, X, Trophy, BookOpen, Music, ZoomIn } from 'lucide-react';
 import { TEACHERS_DATA } from '../data';
 import { Teacher } from '../types';
 import { LightboxData } from './Lightbox';
 import { handleImageError } from '../utils/imageFallback';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 
 interface TeachersProps {
   onOpenLightbox?: (data: LightboxData) => void;
@@ -11,42 +12,9 @@ interface TeachersProps {
 
 export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Viewport trigger for .teacher-card smooth fade-in as user scrolls down
-  useEffect(() => {
-    const sectionEl = sectionRef.current;
-    if (!sectionEl) return;
-
-    const cards = sectionEl.querySelectorAll<HTMLElement>('.teacher-card');
-    if (!cards.length) return;
-
-    if (!('IntersectionObserver' in window)) {
-      cards.forEach((c) => c.classList.add('is-visible'));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -40px 0px',
-      }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  
+  // Viewport trigger for .teacher-card & .reveal-on-scroll smooth fade-in as user scrolls down
+  const sectionRef = useRevealOnScroll<HTMLElement>();
 
   const openTeacherLightbox = (teacher: Teacher) => {
     if (onOpenLightbox) {
@@ -106,7 +74,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Section Header with Numbering */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal-on-scroll">
           <div className="max-w-xl text-right">
             <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] mb-2 tracking-tight">
               <span className="font-mono text-[14px]">۰۳</span>

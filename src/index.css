@@ -205,15 +205,15 @@ html.dark .shadow-xl {
 }
 
 /* Scroll margin for fixed header */
-#courses, #teachers, #story, #events, #contact, #top, #instruments-preview {
-  scroll-margin-top: 104px;
+#courses, #teachers, #story, #events, #contact, #top, #instruments-preview, #mental-health {
+  scroll-margin-top: 76px;
 }
 
-/* CSS Keyframes for .teacher-card smooth viewport scroll fade-in animation */
-@keyframes teacherFadeIn {
+/* CSS Keyframes for .teacher-card & .reveal-on-scroll smooth viewport scroll fade-in animation */
+@keyframes sectionFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(24px);
   }
   100% {
     opacity: 1;
@@ -221,28 +221,162 @@ html.dark .shadow-xl {
   }
 }
 
-.teacher-card {
+.teacher-card,
+.reveal-on-scroll {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(24px);
   will-change: opacity, transform;
 }
 
-.teacher-card.is-visible {
-  animation: teacherFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.teacher-card.is-visible,
+.reveal-on-scroll.is-visible {
+  animation: sectionFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Stagger delay for cards in grid */
-.teacher-card:nth-child(1) { animation-delay: 0.05s; }
-.teacher-card:nth-child(2) { animation-delay: 0.15s; }
-.teacher-card:nth-child(3) { animation-delay: 0.25s; }
-.teacher-card:nth-child(4) { animation-delay: 0.35s; }
+/* Stagger delays for teacher cards & grid elements */
+.teacher-card:nth-child(1), .reveal-delay-1 { animation-delay: 0.06s; }
+.teacher-card:nth-child(2), .reveal-delay-2 { animation-delay: 0.16s; }
+.teacher-card:nth-child(3), .reveal-delay-3 { animation-delay: 0.26s; }
+.teacher-card:nth-child(4), .reveal-delay-4 { animation-delay: 0.36s; }
+.reveal-delay-5 { animation-delay: 0.46s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .teacher-card {
+  .teacher-card,
+  .reveal-on-scroll {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
   }
 }
+
+/* =========================================================================
+   3D HERO STAGE & FLOATING LOGO ANIMATIONS
+   ========================================================================= */
+.staff-line {
+  position: absolute;
+  width: 90%;
+  height: 1.5px;
+  background: rgba(253, 246, 236, 0.12);
+  overflow: hidden;
+  transform: scaleX(0);
+  animation: drawStaff 0.8s ease-out forwards;
+}
+
+@keyframes drawStaff {
+  to { transform: scaleX(1); }
+}
+
+.staff-line::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 32%;
+  background: linear-gradient(90deg, transparent, rgba(232, 194, 122, 0.7), transparent);
+  animation: staffShimmer 3.2s ease-in-out infinite;
+  animation-delay: 1.2s;
+  opacity: 0;
+}
+
+@keyframes staffShimmer {
+  0% { left: -32%; opacity: 0; }
+  15% { opacity: 0.95; }
+  50% { left: 60%; opacity: 0.95; }
+  85% { opacity: 0; }
+  100% { left: 110%; opacity: 0; }
+}
+
+.animate-staff-shimmer {
+  animation: staffShimmerFree 3.4s ease-in-out infinite;
+}
+
+@keyframes staffShimmerFree {
+  0% { transform: translateX(-150%); opacity: 0; }
+  20% { opacity: 0.9; }
+  60% { opacity: 0.9; }
+  85% { opacity: 0; }
+  100% { transform: translateX(350%); opacity: 0; }
+}
+
+.animate-aura-pulse {
+  animation: auraPulse 4.5s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.animate-reveal-in {
+  animation: revealInKeyframe 0.85s cubic-bezier(0.2, 0.9, 0.25, 1.15) forwards;
+}
+
+@keyframes revealInKeyframe {
+  0% { opacity: 0; transform: scale(0.6); filter: blur(5px); }
+  60% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+.animate-logo-bob {
+  animation: logoBob 3.6s ease-in-out infinite;
+}
+
+@keyframes logoBob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-16px); }
+}
+
+.animate-logo-breathe {
+  animation: logoBreathe 3.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes logoBreathe {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.03) rotate(-1.5deg); }
+  50% { transform: scale(0.985) rotate(0deg); }
+  75% { transform: scale(1.03) rotate(1.5deg); }
+}
+
+.animate-shadow-pulse {
+  animation: shadowPulseKeyframe 3.6s ease-in-out infinite;
+}
+
+@keyframes shadowPulseKeyframe {
+  0%, 100% { transform: scale(1); opacity: 0.65; }
+  50% { transform: scale(0.8); opacity: 0.35; }
+}
+
+.note-enter {
+  opacity: 0;
+  animation: noteDropKeyframe 0.5s ease-out forwards;
+}
+
+@keyframes noteDropKeyframe {
+  0% { opacity: 0; transform: translateY(-20px) scale(0.5); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.note-n1 { animation-delay: 0.15s; }
+.note-n2 { animation-delay: 0.25s; }
+.note-n3 { animation-delay: 0.35s; }
+.note-n4 { animation-delay: 0.45s; }
+.note-n5 { animation-delay: 0.55s; }
+.note-n6 { animation-delay: 0.65s; }
+
+.animate-orbit-1 { animation: noteOrbit 8.5s ease-in-out infinite; }
+.animate-orbit-2 { animation: noteOrbit 7s ease-in-out infinite reverse; }
+.animate-orbit-3 { animation: noteOrbit 8s ease-in-out infinite reverse; }
+.animate-orbit-4 { animation: noteOrbit 9.5s ease-in-out infinite; }
+.animate-orbit-5 { animation: noteOrbit 6.5s ease-in-out infinite; }
+.animate-orbit-6 { animation: noteOrbit 7.5s ease-in-out infinite reverse; }
+
+@keyframes noteOrbit {
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  25% { transform: translateY(-14px) translateX(8px) rotate(7deg); }
+  50% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  75% { transform: translateY(14px) translateX(-8px) rotate(-7deg); }
+  100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+}
+
 
 

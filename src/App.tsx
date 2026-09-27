@@ -7,8 +7,10 @@ import { Courses } from './components/Courses';
 import { Story } from './components/Story';
 import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
+import { SectionDivider } from './components/SectionDivider';
 import { Manifesto } from './components/Manifesto';
 import { Events } from './components/Events';
+import { MusicMentalHealth } from './components/MusicMentalHealth';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
@@ -45,8 +47,23 @@ function MainApp() {
         <Hero />
         <ProofStrip />
         <Courses onSelectCourseForConsultation={handleSelectCourse} />
+
+        {/* Music and Mental Health Section */}
+        <MusicMentalHealth />
+
+        {/* Decorative Wave Divider into Story Section */}
+        <SectionDivider preset="courses-to-story" />
+
         <Story />
+
+        {/* Decorative Architectural Slant Divider from Story into Stats Section */}
+        <SectionDivider preset="story-to-stats" />
+
         <Stats />
+
+        {/* Decorative Layered Soundwave Divider between Stats and Teachers */}
+        <SectionDivider preset="stats-to-teachers" />
+
         <Teachers onOpenLightbox={setLightboxData} />
         <Manifesto />
         <Events onOpenLightbox={setLightboxData} />

@@ -17,11 +17,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ variant = 'pill', clas
         onClick={toggleTheme}
         aria-label={isDark ? 'تغییر به حالت روز (روشن)' : 'تغییر به حالت شب (تاریک)'}
         title={isDark ? 'تغییر به حالت روز' : 'تغییر به حالت شب'}
-        className={`relative inline-flex items-center justify-center p-2 rounded-full transition-all duration-200 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] ${
-          isDark
-            ? 'bg-[#262A34] text-[#F3C7CA] hover:text-white hover:bg-[#323745] border border-[#3D4354]'
-            : 'bg-white/10 text-[#E8DFE0] hover:text-white hover:bg-white/20 border border-white/15'
-        } ${className}`}
+        className={`relative inline-flex items-center justify-center p-2 rounded-full transition-all duration-200 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] bg-white/10 hover:bg-white/20 border border-white/15 text-white ${className}`}
       >
         {isDark ? (
           <Sun className="w-4 h-4 text-[#FFD166] transition-transform duration-300 rotate-0 hover:rotate-45" />
