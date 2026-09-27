@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { handleImageError } from '../utils/imageFallback';
 
 export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -18,11 +18,11 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
 /**
  * ResponsiveImage Component
  * 
- * Implements modern mobile-first responsive image loading:
- * - Proper `srcset` and `sizes` attributes for multi-screen adaptation
+ * Implements clean, reliable responsive image loading:
+ * - Direct real image loading with high-availability fallbacks
  * - Zero Cumulative Layout Shift (CLS) via explicit width, height & aspect-ratio
  * - Native lazy loading with asynchronous decoding
- * - Smart graceful fallback on network / CORS errors
+ * - Tolerant to network / ISP restrictions
  */
 export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
@@ -40,16 +40,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   style,
   ...props
 }) => {
-  const [hasError, setHasError] = useState(false);
-
-  // Generate responsive srcset if not explicitly provided
-  const computedSrcSet = srcSet || (src ? `${src} 400w, ${src} 800w, ${src} 1200w` : undefined);
-
-  // Mobile-first default sizes matching common responsive breakpoints
-  const computedSizes = sizes || '(max-width: 640px) 94vw, (max-width: 1024px) 48vw, 400px';
-
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    setHasError(true);
     if (fallbackSrc) {
       e.currentTarget.onerror = null;
       e.currentTarget.src = fallbackSrc;
@@ -62,8 +53,8 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   const imageElement = (
     <img
       src={src}
-      srcSet={computedSrcSet}
-      sizes={computedSizes}
+      srcSet={srcSet || undefined}
+      sizes={sizes || undefined}
       alt={alt}
       width={width}
       height={height}

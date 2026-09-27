@@ -1,11 +1,4 @@
 import { Course, Teacher, SchoolEvent, Testimonial } from './types';
-import {
-  TEACHER_NEGAR_IMAGE,
-  TEACHER_MEHDI_IMAGE,
-  TEACHER_SARA_IMAGE,
-  TEACHER_ALI_IMAGE,
-  EVENT_STAGE_IMAGE,
-} from './assets/imagesData';
 
 export const COURSES_DATA: Course[] = [
   {
@@ -128,7 +121,7 @@ export const TEACHERS_DATA: Teacher[] = [
     name: 'نگار احمدی',
     role: 'مدرس ارشد پیانو و موسیقی کودک (متد اُرف)',
     specialty: 'فارغ‌التحصیل کنسرواتوار و متخصص شیوه ارف',
-    image: TEACHER_NEGAR_IMAGE,
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80',
     experienceYears: 12,
     courseName: 'پیانو',
     education: 'کارشناسی ارشد نوازندگی پیانو از دانشگاه هنر تهران، دارنده گواهینامه رسمی پداگوژی موسیقی کودک (کارل ارف) از موسسه سالزبورگ اتریش.',
@@ -148,7 +141,7 @@ export const TEACHERS_DATA: Teacher[] = [
     name: 'مهدی رضایی',
     role: 'مدرس تار، سه‌تار و ردیف موسیقی دستگاهی',
     specialty: 'راوی ردیف میرزا عبدالله و نوازنده ارکستر',
-    image: TEACHER_MEHDI_IMAGE,
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
     experienceYears: 18,
     courseName: 'تار و سه‌تار',
     education: 'کارشناسی ارشد اتنوموزیکولوژی (موسیقی‌شناسی) از دانشکده هنرهای زیبا دانشگاه تهران، تلمذ نزد استادان طراز اول موسیقی ردیف-دستگاهی ایران.',
@@ -168,7 +161,7 @@ export const TEACHERS_DATA: Teacher[] = [
     name: 'سارا کریمی',
     role: 'مدرس آواز اصیل، آواز کلاسیک و صداسازی (سلفژ)',
     specialty: 'تکنیک تنفس دیافراگمی و تسلط بر تصانیف معاصر',
-    image: TEACHER_SARA_IMAGE,
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
     experienceYears: 10,
     courseName: 'آواز',
     education: 'کارشناسی موسیقی با گرایش آواز جهانی، دوره‌های تکمیلی پداگوژی وکال و آناتومی حنجره زیر نظر مدرسان انجمن بین‌المللی صداسازان.',
@@ -188,7 +181,7 @@ export const TEACHERS_DATA: Teacher[] = [
     name: 'علی مرادی',
     role: 'مدرس گیتار (کلاسیک، فلامنکو، پاپ) و آنسامبل',
     specialty: 'تئوری هارمونی و سرپرست آنسامبل هنرجویان',
-    image: TEACHER_ALI_IMAGE,
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
     experienceYears: 14,
     courseName: 'گیتار',
     education: 'کارشناسی نوازندگی ساز جهانی (گیتار کلاسیک)، حضور در مسترکلاس‌های بین‌المللی سبک‌های فلامنکو و گیتار آکوستیک، عضو رسمی خانه موسیقی ایران.',
@@ -213,7 +206,7 @@ export const EVENTS_DATA: SchoolEvent[] = [
     dateSolar: 'مهر ۱۴۰۵',
     daySolar: '۲۵',
     description: 'اجرای منتخبی از هنرجویان مستعد پیانو، گیتار کلاسیک، تار و همنوازی ارکستر کودک چنگ با حضور خانواده‌ها.',
-    image: EVENT_STAGE_IMAGE,
+    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80',
     location: 'سالن همایش خرمشهر',
   },
 ];

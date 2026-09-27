@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Menu,
   X,
@@ -185,19 +186,19 @@ export const Header: React.FC = () => {
 
       </div>
 
-      {/* Modern Mobile Slide-over Drawer & Overlay (Opens From Right) */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" id="mobile-drawer">
+      {/* Modern Mobile Slide-over Drawer & Overlay (Portaled to document.body to escape header containing block) */}
+      {isOpen && typeof document !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" id="mobile-drawer">
           
           {/* Backdrop Blur Overlay */}
           <div 
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
 
           {/* Slide-out Drawer Panel (Firmly on the RIGHT) */}
-          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-[360px] sm:max-w-[390px] bg-[#14080D] dark:bg-[#0B0D11] border-l border-white/15 text-white shadow-2xl flex flex-col justify-between overflow-y-auto z-10 transition-transform duration-300">
+          <div className="fixed inset-y-0 right-0 w-[85vw] max-w-[340px] sm:max-w-[380px] bg-[#14080D] dark:bg-[#0B0D11] border-l border-white/15 text-white shadow-2xl flex flex-col justify-between overflow-y-auto z-10 transition-transform duration-300 h-full">
             
             {/* Drawer Header */}
             <div>
@@ -319,7 +320,8 @@ export const Header: React.FC = () => {
 
           </div>
 
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );
