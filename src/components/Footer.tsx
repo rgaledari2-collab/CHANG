@@ -56,19 +56,24 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-[14px] font-bold text-[#202124] mb-3 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#B92B3A]" />
-              <span>ارتباط و نشانی</span>
+              <span>ارتباط و شعب</span>
             </h4>
-            <div className="text-[15px] font-medium leading-[2.41] text-[#5a626d]">
-              <p>
-                <a href="tel:06153522000" className="hover:text-[#B92B3A] font-bold text-[#202124] transition-colors dir-ltr inline-block">
-                  ۰۶۱-۵۳۵۲۲۰۰۰
+            <div className="text-[14px] font-medium leading-[2.1] text-[#5a626d]">
+              <p className="mb-2">
+                <a href="tel:09359352738" className="hover:text-[#B92B3A] font-extrabold text-[16px] text-[#202124] transition-colors dir-ltr inline-block font-mono">
+                  ۰۹۳۵-۹۳۵-۲۷۳۸
                 </a>
               </p>
-              <p className="leading-relaxed text-[14px] text-[#8996A6] mt-1">
-                خوزستان، خرمشهر، بلوار ساحلی، نبش خیابان فردوسی
-              </p>
-              <p className="text-[13px] text-[#8996A6] mt-2">
-                شنبه تا پنج‌شنبه: ۹:۰۰ تا ۲۱:۰۰
+              <div className="space-y-1.5 text-[13px] text-[#515964]">
+                <p>
+                  <strong className="text-[#202124]">شعبه خرمشهر:</strong> میدان فرمانداری - مجتمع فرهنگی هنری خلیج فارس
+                </p>
+                <p>
+                  <strong className="text-[#202124]">شعبه آبادان:</strong> سه‌راه شاملو، نبش زمین چمن
+                </p>
+              </div>
+              <p className="text-[12px] text-[#8996A6] mt-2.5">
+                شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰
               </p>
             </div>
           </div>
@@ -77,11 +82,11 @@ export const Footer: React.FC = () => {
 
         {/* Legal Row */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8996A6]">
-          <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ خرمشهر محفوظ است.</p>
+          <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
           <div className="flex items-center gap-3">
-            <span>هویت دیداری نوین چنگ</span>
+            <span>آموزشگاه تخصصی موسیقی چنگ</span>
             <span>·</span>
-            <span>خرمشهر، خوزستان</span>
+            <span>خرمشهر و آبادان، خوزستان</span>
           </div>
         </div>
 
