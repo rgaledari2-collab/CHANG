@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, PhoneCall } from 'lucide-react';
 import { CHANG_HEADER_LOGO_DATA_URI } from '../assets/logoData';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,24 +11,27 @@ export const Header: React.FC = () => {
     { name: 'اساتید', href: '#teachers' },
     { name: 'پیشینه و رسالت', href: '#story' },
     { name: 'کنسرت و صحنه', href: '#events' },
-    { name: 'نظرات هنرجویان', href: '#testimonials' },
     { name: 'مشاوره و تماس', href: '#contact' },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full select-none">
-      {/* 1. Global Editorial Top Bar: Dark Crimson #3B1720 with Lacquer Red #B92B3A accent */}
+      {/* 1. Global Editorial Top Bar: Dark Crimson with Lacquer Red accent */}
       <div className="bg-[#3B1720] text-[#E8DFE0] h-[44px] border-b border-white/10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1440px] mx-auto h-full flex items-center justify-between text-[12px] tracking-[-0.01em]">
           
           {/* Brand Mark on Global Nav */}
           <a 
             href="#top" 
-            className="flex items-center gap-2.5 text-white hover:text-[#F3C7CA] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#B92B3A] rounded py-1"
+            className="flex items-center gap-2 text-white hover:text-[#F3C7CA] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#B92B3A] rounded py-1"
             aria-label="صفحه اصلی آموزشگاه موسیقی چنگ"
           >
-            <span className="w-5 h-5 rounded-md overflow-hidden bg-white/10 flex items-center justify-center border border-white/10">
-              <img src="/chang_music_logo.jpg" alt="چنگ" className="w-full h-full object-cover" />
+            <span className="w-6 h-6 rounded-md overflow-hidden bg-white/10 flex items-center justify-center border border-white/15 shrink-0">
+              <img 
+                src={CHANG_HEADER_LOGO_DATA_URI} 
+                alt="لوگوی چنگ" 
+                className="w-full h-full object-contain" 
+              />
             </span>
             <span className="font-semibold tracking-tight text-[13px] text-white">چَـنـگ</span>
             <span className="text-[10px] text-[#8996A6] hidden sm:inline">| خرمشهر</span>
@@ -48,6 +52,9 @@ export const Header: React.FC = () => {
 
           {/* Utility Tools on Global Nav */}
           <div className="flex items-center gap-3">
+            {/* Quick compact theme switch on top bar */}
+            <ThemeToggle variant="compact" className="sm:hidden" />
+
             <a
               href="tel:06153522000"
               className="hidden lg:inline-flex items-center gap-1.5 text-[11px] text-[#E8DFE0] hover:text-white transition-colors"
@@ -71,29 +78,39 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. Sub-Nav Frosted Surface: 52px height, Pale Pink-White #FCF8F8 with 90% opacity & border */}
+      {/* 2. Sub-Nav Frosted Surface: Pale Pink-White in light mode, Dark Slate in dark mode */}
       <div className="bg-[#FCF8F8]/90 backdrop-blur-xl border-b border-[#E8DFE0] h-[52px] px-4 sm:px-6 lg:px-8 shadow-sm">
         <div className="max-w-[1440px] mx-auto h-full flex items-center justify-between">
           
           {/* Sub-nav Category / Title */}
-          <div className="flex items-center gap-3">
-            <h2 className="text-[19px] sm:text-[21px] font-semibold text-[#202124] tracking-tight leading-none flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#B92B3A]" />
-              <span>آموزشگاه موسیقی چنگ</span>
-            </h2>
-            <span className="hidden sm:inline-block text-[12px] text-[#8996A6] font-medium">
-              کانون آموزش تخصصی ساز، آواز و اجرای زنده
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <span className="w-8 h-8 rounded-lg overflow-hidden bg-[#3B1720]/10 flex items-center justify-center border border-[#E8DFE0] shrink-0">
+              <img 
+                src={CHANG_HEADER_LOGO_DATA_URI} 
+                alt="لوگوی چنگ" 
+                className="w-full h-full object-contain" 
+              />
             </span>
+            <div>
+              <h2 className="text-[17px] sm:text-[20px] font-bold text-[#202124] tracking-tight leading-none flex items-center gap-1.5">
+                <span>آموزشگاه موسیقی چنگ</span>
+              </h2>
+              <span className="hidden sm:inline-block text-[11px] text-[#8996A6] font-medium mt-0.5">
+                کانون آموزش تخصصی ساز، آواز و اجرای زنده
+              </span>
+            </div>
           </div>
 
-          {/* Sub-nav Secondary Links + Primary Button */}
-          <div className="flex items-center gap-4">
+          {/* Sub-nav Secondary Links + Theme Switcher + Primary Button */}
+          <div className="flex items-center gap-3 sm:gap-4">
             <div className="hidden lg:flex items-center gap-6 text-[14px] text-[#202124]">
               <a href="#courses" className="hover:text-[#B92B3A] transition-colors font-medium">انتخاب ساز</a>
               <a href="#teachers" className="hover:text-[#B92B3A] transition-colors font-medium">اساتید راهنما</a>
               <a href="#events" className="hover:text-[#B92B3A] transition-colors font-medium">کنسرت هنرجویی</a>
-              <a href="#testimonials" className="hover:text-[#B92B3A] transition-colors font-medium">روایت همراهان</a>
             </div>
+
+            {/* Optional Theme Switcher (Light / Dark) */}
+            <ThemeToggle variant="pill" className="hidden sm:inline-flex" />
 
             {/* Primary Button in Lacquer Red #B92B3A */}
             <a
@@ -109,6 +126,21 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       {isOpen && (
         <nav id="mobile-menu" className="md:hidden bg-[#FCF8F8] border-b border-[#E8DFE0] px-6 py-4 flex flex-col gap-3 shadow-xl">
+          {/* Mobile Drawer Header with Logo */}
+          <div className="flex items-center gap-3 pb-3 border-b border-[#E8DFE0]/80">
+            <span className="w-10 h-10 rounded-xl overflow-hidden bg-[#3B1720]/10 flex items-center justify-center border border-[#E8DFE0] shrink-0">
+              <img 
+                src={CHANG_HEADER_LOGO_DATA_URI} 
+                alt="آموزشگاه موسیقی چنگ" 
+                className="w-full h-full object-contain" 
+              />
+            </span>
+            <div className="text-right">
+              <span className="block text-[15px] font-bold text-[#202124]">آموزشگاه موسیقی چنگ</span>
+              <span className="block text-[11px] text-[#8996A6]">خرمشهر · سابقه آموزش از دهه ۱۳۵۰</span>
+            </div>
+          </div>
+
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -119,7 +151,10 @@ export const Header: React.FC = () => {
               {link.name}
             </a>
           ))}
-          <div className="pt-2 flex flex-col gap-2.5">
+          <div className="pt-2 flex flex-col gap-3">
+            {/* Optional Theme Toggle inside Mobile Drawer */}
+            <ThemeToggle variant="drawer" />
+
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
@@ -133,3 +168,4 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+

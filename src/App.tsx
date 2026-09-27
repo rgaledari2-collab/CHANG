@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
@@ -8,13 +9,12 @@ import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
 import { Manifesto } from './components/Manifesto';
 import { Events } from './components/Events';
-import { Testimonials } from './components/Testimonials';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
 import { Lightbox, LightboxData } from './components/Lightbox';
 
-export default function App() {
+function MainApp() {
   const [selectedCourseForConsultation, setSelectedCourseForConsultation] = useState<string>('');
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
 
@@ -28,7 +28,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans">
+    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200">
       {/* Skip Link for Keyboard Accessibility */}
       <a
         href="#main-content"
@@ -50,7 +50,6 @@ export default function App() {
         <Teachers onOpenLightbox={setLightboxData} />
         <Manifesto />
         <Events onOpenLightbox={setLightboxData} />
-        <Testimonials />
         <ContactForm selectedCourse={selectedCourseForConsultation} />
       </main>
 
@@ -65,3 +64,12 @@ export default function App() {
     </div>
   );
 }
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
+  );
+}
+

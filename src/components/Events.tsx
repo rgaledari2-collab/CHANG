@@ -2,6 +2,7 @@ import React from 'react';
 import { MapPin, ArrowLeft, ZoomIn } from 'lucide-react';
 import { EVENTS_DATA } from '../data';
 import { LightboxData } from './Lightbox';
+import { handleImageError } from '../utils/imageFallback';
 
 interface EventsProps {
   onOpenLightbox?: (data: LightboxData) => void;
@@ -67,7 +68,9 @@ export const Events: React.FC<EventsProps> = ({ onOpenLightbox }) => {
               alt={event.title}
               className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
+              onError={handleImageError}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#3B1720]/95 via-[#3B1720]/40 to-transparent" />
 

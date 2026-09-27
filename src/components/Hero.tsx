@@ -1,43 +1,75 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Award, Sparkles } from 'lucide-react';
+import { CHANG_HEADER_LOGO_DATA_URI } from '../assets/logoData';
 
 export const Hero: React.FC = () => {
   return (
-    <section id="top" className="relative bg-[#FCF8F8] text-[#202124] pt-16 pb-20 lg:py-24 border-b border-[#E8DFE0] overflow-hidden">
+    <section
+      id="top"
+      role="region"
+      aria-labelledby="hero-heading"
+      className="relative bg-[#FCF8F8] text-[#202124] pt-16 pb-16 lg:pt-24 lg:pb-24 border-b border-[#E8DFE0] overflow-hidden"
+    >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Main Hero Copy */}
+        {/* Main Hero Copy Container */}
         <div className="max-w-3xl text-right">
           
-          {/* Eyebrow Badge (Light Pink #F3C7CA background + Lacquer Red #B92B3A text) */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F3C7CA]/40 border border-[#E8DFE0] text-[#B92B3A] text-[13px] font-bold mb-4 tracking-tight">
-            <span className="w-2 h-2 rounded-full bg-[#B92B3A] animate-pulse" />
-            <span>آموزشگاه موسیقی چنگ خرمشهر · از ۱۳۵۰ تا امروز</span>
+          {/* Eyebrow Badge with semantic label and official logo */}
+          <div
+            role="status"
+            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#F3C7CA]/40 border border-[#E8DFE0] text-[#B92B3A] text-[13px] mb-5 shadow-xs"
+          >
+            <span className="w-5 h-5 rounded-full overflow-hidden bg-white flex items-center justify-center border border-[#B92B3A]/30 shrink-0">
+              <img 
+                src={CHANG_HEADER_LOGO_DATA_URI} 
+                alt="لوگوی چنگ" 
+                className="w-full h-full object-contain" 
+              />
+            </span>
+            <span className="font-bold tracking-tight">آموزشگاه موسیقی چنگ خرمشهر</span>
+            <span className="text-[#B92B3A]/60 font-light" aria-hidden="true">·</span>
+            <span className="font-medium text-[#8E1C29] tracking-normal">از ۱۳۵۰ تا امروز</span>
           </div>
 
-          {/* Editorial Bold Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-bold text-[#202124] leading-[1.08] tracking-[-0.03em] mb-6 [text-wrap:balance]">
-            صدایت را پیدا کن؛ <br className="hidden sm:inline" />
-            <span className="text-[#B92B3A]">جسور، زنده و روی صحنه.</span>
+          {/* Dynamic Headline with Screen-Reader Accessible Name and Visual Typography Contrast */}
+          <h1
+            id="hero-heading"
+            aria-label="صدایت را پیدا کن؛ جسور، زنده و روی صحنه."
+            className="text-4xl sm:text-5xl lg:text-[62px] leading-[1.18] mb-6 [text-wrap:balance]"
+          >
+            <span
+              aria-hidden="true"
+              className="block font-extrabold text-[#1a1b1e] tracking-[-0.02em]"
+            >
+              صدایت را پیدا کن؛
+            </span>
+            <span
+              aria-hidden="true"
+              className="block font-black text-[#B92B3A] tracking-[-0.028em] mt-1.5 drop-shadow-[0_1px_2px_rgba(185,43,58,0.12)]"
+            >
+              جسور، زنده و روی صحنه.
+            </span>
           </h1>
 
-          {/* Lead */}
-          <p className="text-xl sm:text-[22px] font-semibold text-[#202124] leading-[1.35] mb-4 [text-wrap:balance]">
-            موسیقی فقط یک مهارت نیست؛ بیانی اصیل از افکار، شور و کاراکتر توست.
+          {/* Subhead / Lead: Medium-bold hierarchy bridge with tuned line-height */}
+          <p className="text-lg sm:text-[22px] font-medium text-[#2d3036] leading-[1.6] tracking-[-0.01em] mb-4 [text-wrap:balance]">
+            موسیقی فقط یک مهارت نیست؛ <strong className="font-bold text-[#1a1b1e]">بیانی اصیل</strong> از افکار، شور و کاراکتر توست.
           </p>
 
-          {/* Body */}
-          <p className="text-[17px] text-[#5a626d] font-normal leading-[1.5] mb-8 max-w-2xl [text-wrap:pretty]">
-            آموزش نظام‌مند انواع سازهای ایرانی و جهانی برای کودکان تا بزرگسالان؛ همراه با اساتید کنسرواتواری، مبانی سلفژ و سالن اختصاصی کنسرت‌های هنرجویی سالانه.
+          {/* Body Paragraph: Relaxed leading and neutral tracking for optimal Persian readability */}
+          <p className="text-[16px] sm:text-[17px] text-[#515964] font-normal leading-[1.78] tracking-normal mb-8 max-w-2xl [text-wrap:pretty]">
+            آموزش نظام‌مند انواع <strong className="font-semibold text-[#202328]">سازهای اصیل ایرانی و کلاسیک جهانی</strong> از سطوح پایه تا پیشرفته؛ همراه با اساتید کنسرواتواری، مبانی علمی سلفژ و امکان اجرای زنده در سالن اختصاصی کنسرت‌های هنرجویی.
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4">
+          {/* Action Buttons with Descriptive ARIA Labels and Accessible Focus States */}
+          <div className="flex flex-wrap items-center gap-4" role="group" aria-label="اقدامات شروع و مشاوره">
             
             {/* Primary Lacquer Red Button */}
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-[24px] py-[12px] rounded-full text-[17px] font-semibold bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
+              aria-label="درخواست مشاوره رایگان و تعیین سطح حضوری در آموزشگاه موسیقی چنگ"
+              className="inline-flex items-center justify-center px-[28px] py-[13px] rounded-full text-[16px] sm:text-[17px] font-bold tracking-[-0.01em] bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#B92B3A]"
             >
               مشاوره و تعیین سطح حضوری
             </a>
@@ -45,12 +77,37 @@ export const Hero: React.FC = () => {
             {/* Secondary Ghost Button */}
             <a
               href="#courses"
-              className="inline-flex items-center justify-center gap-2 px-[24px] py-[12px] rounded-full text-[17px] font-semibold text-[#202124] hover:text-[#B92B3A] border-2 border-[#202124] hover:border-[#B92B3A] hover:bg-[#F3C7CA]/20 active:scale-95 transition-all duration-150"
+              aria-label="مشاهده کاتالوگ دوره‌های آموزشی و سازهای موسیقی آموزشگاه چنگ"
+              className="inline-flex items-center justify-center gap-2 px-[26px] py-[13px] rounded-full text-[16px] sm:text-[17px] font-semibold tracking-[-0.005em] text-[#202124] hover:text-[#B92B3A] border-2 border-[#202124] hover:border-[#B92B3A] hover:bg-[#F3C7CA]/20 active:scale-95 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#202124]"
             >
               <span>مشاهده کاتالوگ سازها</span>
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
+
+          {/* Semantic Trust Indicators with Accessible List Markup */}
+          <ul
+            aria-label="افتخارات و شاخص‌های کلیدی آموزشگاه"
+            className="mt-10 pt-6 border-t border-[#E8DFE0] flex flex-wrap items-center gap-y-3 gap-x-6 text-[13px] list-none p-0"
+          >
+            <li className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#B92B3A]" aria-hidden="true" />
+              <span className="font-extrabold text-[#1a1b1e] tracking-tight">۵۰+ سال</span>
+              <span className="font-normal text-[#5a626d]">پیشینه آموزش آکادمیک</span>
+            </li>
+            <li aria-hidden="true" className="hidden sm:inline text-[#d1d5db] select-none">•</li>
+            <li className="flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5 text-[#B92B3A]" aria-hidden="true" />
+              <span className="font-bold text-[#B92B3A] tracking-tight">مدرک رسمی</span>
+              <span className="font-normal text-[#5a626d]">مورد تأیید فرهنگ و ارشاد</span>
+            </li>
+            <li aria-hidden="true" className="hidden sm:inline text-[#d1d5db] select-none">•</li>
+            <li className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" aria-hidden="true" />
+              <span className="font-bold text-[#1a1b1e] tracking-tight">کنسرت‌های فصلی</span>
+              <span className="font-normal text-[#5a626d]">تجربه اجرای زنده صحنه‌ای</span>
+            </li>
+          </ul>
 
         </div>
 
@@ -58,4 +115,6 @@ export const Hero: React.FC = () => {
     </section>
   );
 };
+
+
 

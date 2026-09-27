@@ -3,6 +3,7 @@ import { Award, ArrowLeft, X, Trophy, BookOpen, Music, ZoomIn } from 'lucide-rea
 import { TEACHERS_DATA } from '../data';
 import { Teacher } from '../types';
 import { LightboxData } from './Lightbox';
+import { handleImageError } from '../utils/imageFallback';
 
 interface TeachersProps {
   onOpenLightbox?: (data: LightboxData) => void;
@@ -156,7 +157,9 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                     alt={`استاد ${teacher.name}`}
                     className="w-full h-full object-cover filter grayscale-[88%] contrast-115 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-103 transition-all duration-500 ease-out"
                     loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
+                    onError={handleImageError}
                   />
                   
                   {/* Badge in Light Pink #F3C7CA with Lacquer Red #B92B3A text */}
@@ -228,6 +231,8 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                   src={selectedTeacher.image}
                   alt={selectedTeacher.name}
                   className="w-14 h-14 rounded-full object-cover border-2 border-[#B92B3A]"
+                  decoding="async"
+                  onError={handleImageError}
                 />
                 <div className="text-right">
                   <h3 id="modal-teacher-title" className="text-[21px] font-bold text-[#202124]">

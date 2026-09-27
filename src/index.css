@@ -37,6 +37,164 @@
   }
 }
 
+/* =========================================================================
+   DARK MODE SPECIFIC SYSTEM: High-Contrast, Professional Obsidian Surfaces
+   ========================================================================= */
+html.dark {
+  color-scheme: dark;
+  background-color: #0E1013 !important;
+  color: #F3F4F6 !important;
+}
+
+html.dark body {
+  background-color: #0E1013 !important;
+  color: #F3F4F6 !important;
+}
+
+html.dark ::selection {
+  background-color: #D9384A;
+  color: #FFFFFF;
+}
+
+/* Base Canvas & Sub-Nav Surfaces */
+html.dark .bg-\[\#FCF8F8\] {
+  background-color: #0E1013 !important;
+}
+
+html.dark .bg-\[\#FCF8F8\]\/90,
+html.dark .bg-\[\#FCF8F8\]\/95 {
+  background-color: rgba(14, 16, 19, 0.94) !important;
+}
+
+/* Elevated Cards & Surfaces */
+html.dark .bg-white {
+  background-color: #171A21 !important;
+}
+
+html.dark .bg-\[\#3B1720\] {
+  background-color: #15080D !important;
+}
+
+html.dark .bg-\[\#290f16\] {
+  background-color: #110609 !important;
+}
+
+/* High Contrast Headings and Titles */
+html.dark .text-\[\#202124\],
+html.dark .text-\[\#1c1d20\],
+html.dark .text-\[\#1a1b1e\],
+html.dark .text-\[\#202328\],
+html.dark .text-\[\#2b2d31\],
+html.dark .text-\[\#2d3036\],
+html.dark .text-\[\#26282c\],
+html.dark .text-\[\#1f2937\],
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+  color: #F9FAFB !important;
+}
+
+/* Crisp Secondary Copy & Descriptions */
+html.dark .text-\[\#5a626d\],
+html.dark .text-\[\#555d68\],
+html.dark .text-\[\#515964\],
+html.dark .text-\[\#5F6368\],
+html.dark .text-\[\#6b7280\],
+html.dark .text-\[\#64748b\],
+html.dark .text-gray-600,
+html.dark .text-gray-500 {
+  color: #ABB3C0 !important;
+}
+
+/* Muted Meta & Accents */
+html.dark .text-\[\#8996A6\] {
+  color: #8E98A8 !important;
+}
+
+/* Crisp Structural Borders */
+html.dark .border-\[\#E8DFE0\],
+html.dark .border-\[\#E8DFE0\]\/80,
+html.dark .border-\[\#E8DFE0\]\/60,
+html.dark .border-gray-200,
+html.dark .border-gray-100 {
+  border-color: #272C37 !important;
+}
+
+html.dark .divide-\[\#E8DFE0\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #272C37 !important;
+}
+
+/* Soft Crimson/Pink Wash Overrides in Dark Mode */
+html.dark .bg-\[\#F3C7CA\]\/40,
+html.dark .bg-\[\#F3C7CA\]\/30,
+html.dark .bg-\[\#F3C7CA\]\/25,
+html.dark .bg-\[\#F3C7CA\]\/20,
+html.dark .bg-\[\#F3C7CA\]\/15 {
+  background-color: rgba(217, 56, 74, 0.14) !important;
+}
+
+html.dark .text-\[\#8E1C29\] {
+  color: #FF7080 !important;
+}
+
+html.dark .bg-\[\#F2ECEC\],
+html.dark .bg-gray-100,
+html.dark .bg-gray-50 {
+  background-color: #1E222C !important;
+}
+
+/* Secondary Button Contrast in Dark Mode */
+html.dark .border-\[\#202124\] {
+  border-color: #E2E8F0 !important;
+}
+
+/* Form Inputs, Selects, & Textareas */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #12141A !important;
+  color: #F9FAFB !important;
+  border-color: #2D3340 !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #B92B3A !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #656E7E !important;
+}
+
+/* SVG circular progress tracks in Courses */
+html.dark circle[stroke="#E8DFE0"] {
+  stroke: #2A303D !important;
+}
+
+/* Floating controls */
+html.dark .bg-\[\#FCF8F8\]\/95 {
+  background-color: #181B23 !important;
+  border-color: #2D3340 !important;
+  color: #F9FAFB !important;
+}
+
+/* Dark Mode Elevation Shadows */
+html.dark .apple-product-shadow {
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark .apple-soft-shadow {
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl {
+  box-shadow: 0 6px 20px -2px rgba(0, 0, 0, 0.55) !important;
+}
+
 /* Editorial & Cultural Poster Shadow */
 .apple-product-shadow {
   box-shadow: 0 16px 36px -10px rgba(32, 33, 36, 0.16);
@@ -86,4 +244,5 @@
     animation: none !important;
   }
 }
+
 

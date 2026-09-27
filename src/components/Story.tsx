@@ -1,5 +1,6 @@
 import React from 'react';
 import { History, HeartHandshake } from 'lucide-react';
+import { handleImageError } from '../utils/imageFallback';
 
 export const Story: React.FC = () => {
   return (
@@ -11,11 +12,13 @@ export const Story: React.FC = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-[18px] overflow-hidden apple-product-shadow aspect-[4/5] bg-[#290f16] border border-white/15 group">
               <img
-                src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1100&q=84"
+                src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=640&q=75&fm=webp"
                 alt="فضای سازها و آکوستیک آموزشگاه موسیقی چنگ خرمشهر"
                 className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-105 transition-all duration-700 ease-out"
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
+                onError={handleImageError}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#3B1720]/90 via-transparent to-transparent" />
             </div>
@@ -23,11 +26,13 @@ export const Story: React.FC = () => {
             {/* Overlapping Secondary Image */}
             <div className="hidden sm:block absolute -bottom-6 -left-6 w-1/2 aspect-[3/4] rounded-[14px] overflow-hidden border border-white/20 apple-product-shadow bg-[#290f16] group/sec">
               <img
-                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=84"
+                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=400&q=75&fm=webp"
                 alt="تمرین و اجرای موسیقی در چنگ"
                 className="w-full h-full object-cover filter grayscale contrast-120 group-hover/sec:grayscale-0 transition-all duration-700"
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
+                onError={handleImageError}
               />
             </div>
 

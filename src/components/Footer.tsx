@@ -32,7 +32,6 @@ export const Footer: React.FC = () => {
             <ul className="text-[15px] font-medium leading-[2.41] text-[#5a626d]">
               <li><a href="#teachers" className="hover:text-[#B92B3A] transition-colors">اساتید راهنما</a></li>
               <li><a href="#events" className="hover:text-[#B92B3A] transition-colors">کنسرت‌های هنرجویی</a></li>
-              <li><a href="#testimonials" className="hover:text-[#B92B3A] transition-colors">روایت و نظرات هنرجویان</a></li>
               <li><a href="#story" className="hover:text-[#B92B3A] transition-colors">کارگاه‌های همنوازی</a></li>
               <li><a href="#contact" className="hover:text-[#B92B3A] transition-colors">تعیین سطح حضوری</a></li>
             </ul>
