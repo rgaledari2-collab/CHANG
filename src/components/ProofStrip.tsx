@@ -16,7 +16,7 @@ export const ProofStrip: React.FC = () => {
           {PROOF_STATS.map((stat, idx) => (
             <div 
               key={stat.title}
-              className={`flex items-start gap-4 ${idx !== 0 ? 'pt-6 md:pt-0 md:pr-8' : ''} ${idx !== PROOF_STATS.length - 1 ? 'pb-6 md:pb-0 md:pl-8' : ''}`}
+              className="flex items-start gap-4 py-5 md:py-0 md:px-6 first:pt-0 last:pb-0 md:first:pr-0 md:last:pl-0"
             >
               <div className="w-11 h-11 rounded-[11px] bg-white border border-[#E8DFE0] flex items-center justify-center flex-shrink-0 shadow-sm">
                 {icons[idx]}

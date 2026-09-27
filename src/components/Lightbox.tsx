@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { X, ArrowLeft } from 'lucide-react';
+import { handleImageError } from '../utils/imageFallback';
 
 export interface LightboxData {
   src: string;
@@ -77,6 +78,7 @@ export const Lightbox: React.FC<LightboxProps> = ({ data, onClose }) => {
             className="w-auto h-auto max-w-[92vw] max-h-[76vh] sm:max-h-[80vh] object-contain select-none"
             loading="eager"
             referrerPolicy="no-referrer"
+            onError={handleImageError}
           />
         </div>
 

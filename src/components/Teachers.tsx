@@ -155,7 +155,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                   <img
                     src={teacher.image}
                     alt={`استاد ${teacher.name}`}
-                    className="w-full h-full object-cover filter grayscale-[88%] contrast-115 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-103 transition-all duration-500 ease-out"
+                    className="w-full h-full object-cover filter grayscale-[88%] contrast-115 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500 ease-out"
                     loading="lazy"
                     decoding="async"
                     referrerPolicy="no-referrer"

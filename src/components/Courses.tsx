@@ -110,7 +110,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
                       <span className="inline-block text-[11px] font-bold text-[#B92B3A] bg-[#F3C7CA]/30 px-2 py-0.5 rounded-md mb-1.5">
                         {c.category}
                       </span>
-                      <h3 className="text-[19px] sm:text-[20px] font-bold text-[#202124] leading-tight truncate">
+                      <h3 className="text-[18px] sm:text-[19px] font-bold text-[#202124] leading-tight">
                         {c.title}
                       </h3>
                       <div className="flex flex-wrap items-center gap-2 mt-1 text-[12px] text-[#8996A6]">
@@ -154,7 +154,7 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourseForConsultation 
                             className="p-2.5 rounded-[10px] bg-[#FCF8F8] border border-[#E8DFE0] flex items-start gap-2.5"
                           >
                             <CheckCircle2 className="w-4 h-4 text-[#B92B3A] shrink-0 mt-0.5" />
-                            <div className="text-[13px] text-[#333] leading-snug">
+                            <div className="text-[13px] text-[#5a626d] leading-snug">
                               <span className="font-bold text-[#202124] ml-1">
                                 گام ۰{idx + 1}:
                               </span>
