@@ -232,7 +232,7 @@ html.dark .shadow-xl {
 @keyframes sectionFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
@@ -243,30 +243,21 @@ html.dark .shadow-xl {
 .teacher-card,
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(20px);
   will-change: opacity, transform;
 }
 
 .teacher-card.is-visible,
 .reveal-on-scroll.is-visible {
-  animation: sectionFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: sectionFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Stagger delays for teacher cards & grid elements */
 .teacher-card:nth-child(1), .reveal-delay-1 { animation-delay: 0.06s; }
-.teacher-card:nth-child(2), .reveal-delay-2 { animation-delay: 0.16s; }
-.teacher-card:nth-child(3), .reveal-delay-3 { animation-delay: 0.26s; }
-.teacher-card:nth-child(4), .reveal-delay-4 { animation-delay: 0.36s; }
-.reveal-delay-5 { animation-delay: 0.46s; }
-
-@media (max-width: 768px) {
-  .teacher-card,
-  .reveal-on-scroll {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-  }
-}
+.teacher-card:nth-child(2), .reveal-delay-2 { animation-delay: 0.14s; }
+.teacher-card:nth-child(3), .reveal-delay-3 { animation-delay: 0.22s; }
+.teacher-card:nth-child(4), .reveal-delay-4 { animation-delay: 0.30s; }
+.reveal-delay-5 { animation-delay: 0.38s; }
 
 @media (prefers-reduced-motion: reduce) {
   .teacher-card,

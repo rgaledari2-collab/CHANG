@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { History, GraduationCap, Music, Sparkles, Award, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 
 interface StatItem {
   id: string;
@@ -252,47 +253,19 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
 };
 
 export const Stats: React.FC = () => {
-  const [headerVisible, setHeaderVisible] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-
-    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-      setHeaderVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setHeaderVisible(true);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.05, rootMargin: '50px 0px 50px 0px' }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const sectionRef = useRevealOnScroll<HTMLElement>();
 
   return (
     <section
       id="stats"
+      ref={sectionRef}
       className="py-16 sm:py-20 lg:py-24 bg-[#FCF8F8] dark:bg-[#0E1013] border-b border-[#E8DFE0] dark:border-white/10 relative transition-colors overflow-hidden"
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with Scroll Fade-In */}
+        {/* Section Header with Reveal-on-Scroll */}
         <div 
-          ref={headerRef}
-          className={`max-w-3xl mx-auto text-center mb-12 sm:mb-16 transition-all duration-700 ease-out ${
-            headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
-          }`}
+          className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 reveal-on-scroll"
         >
           <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] tracking-tight bg-[#F3C7CA]/30 dark:bg-[#B92B3A]/20 px-4 py-1.5 rounded-full border border-[#E8DFE0] dark:border-white/10 shadow-2xs mb-3">
             <Award className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
