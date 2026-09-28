@@ -22,6 +22,24 @@ import { ThemeToggle } from './ThemeToggle';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeMenu = (callback?: () => void) => {
+    if (isClosing) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      if (callback) callback();
+    }, 280);
+  };
+
+  const openMenu = () => {
+    setIsClosing(false);
+    setIsOpen(true);
+  };
 
   // Lock body scroll and prevent touch-through when mobile menu is open
   useEffect(() => {
@@ -33,7 +51,7 @@ export const Header: React.FC = () => {
 
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
-          setIsOpen(false);
+          closeMenu();
         }
       };
       window.addEventListener('keydown', handleKeyDown);
@@ -85,14 +103,12 @@ export const Header: React.FC = () => {
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    setIsOpen(false);
-    document.body.style.overflow = '';
-    setTimeout(() => {
+    closeMenu(() => {
       const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 150);
+    });
   };
 
   return (
@@ -104,7 +120,7 @@ export const Header: React.FC = () => {
           {/* Mobile Hamburger Button */}
           <button
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={openMenu}
             aria-expanded={isOpen}
             aria-controls="mobile-fullscreen-drawer"
             aria-label="باز کردن منوی تمام‌صفحه سایت"
@@ -124,7 +140,7 @@ export const Header: React.FC = () => {
               <ChangLogo className="w-full h-full" variant="white" />
             </div>
             <div className="text-right min-w-0 truncate">
-              <span className="block font-bold text-[14px] sm:text-[18px] text-white tracking-tight leading-none truncate">
+              <span className="block font-brand-title text-[15px] sm:text-[19px] text-white tracking-tight leading-none truncate">
                 آموزشگاه موسیقی چنگ
               </span>
               <span className="hidden sm:block text-[10px] sm:text-[11px] text-[#F3C7CA]/80 font-medium mt-1 truncate">
@@ -194,7 +210,9 @@ export const Header: React.FC = () => {
       {/* FULLSCREEN MOBILE DRAWER WITH SMOOTH ANIMATIONS & LARGE READABLE LIST */}
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 z-[100] lg:hidden flex flex-col bg-[#0F0508]/98 dark:bg-[#07090D]/98 backdrop-blur-2xl text-white transition-all animate-in fade-in duration-300 select-none overflow-hidden" 
+          className={`fixed inset-0 z-[100] lg:hidden flex flex-col bg-[#0F0508]/98 dark:bg-[#07090D]/98 backdrop-blur-2xl text-white select-none overflow-hidden will-change-transform ${
+            isClosing ? 'drawer-exit' : 'drawer-enter'
+          }`} 
           role="dialog" 
           aria-modal="true" 
           id="mobile-fullscreen-drawer"
@@ -211,7 +229,7 @@ export const Header: React.FC = () => {
                 <ChangLogo className="w-full h-full" variant="white" />
               </div>
               <div className="text-right">
-                <span className="block font-black text-[16px] sm:text-[18px] text-white leading-tight">
+                <span className="block font-brand-title text-[17px] sm:text-[20px] text-white leading-tight">
                   آموزشگاه موسیقی چنگ
                 </span>
                 <span className="block text-[11px] text-[#F3C7CA] font-medium mt-0.5">
@@ -223,7 +241,7 @@ export const Header: React.FC = () => {
             {/* Close Button */}
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => closeMenu()}
               aria-label="بستن منو"
               className="w-11 h-11 rounded-2xl bg-white/10 hover:bg-white/20 active:scale-90 border border-white/15 flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] cursor-pointer"
             >
@@ -397,7 +415,8 @@ export const Header: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   );

@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
           <h1
             id="hero-heading"
             aria-label="آموزشگاه موسیقی چنگ"
-            className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.2] mb-3 sm:mb-4 tracking-[-0.025em] text-[#1a1b1e] dark:text-white [text-wrap:balance]"
+            className="text-3xl sm:text-5xl lg:text-6xl font-brand-title leading-[1.2] mb-3 sm:mb-4 tracking-[-0.03em] text-[#1a1b1e] dark:text-white [text-wrap:balance]"
           >
             آموزشگاه موسیقی چنگ
           </h1>

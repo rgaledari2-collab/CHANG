@@ -1,8 +1,37 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   KALAMEH FONT FAMILY DEFINITION
+   Kalameh Black is renowned for modern geometric, bold, prestigious titles.
+   We define @font-face with web font sources and clean fallback stack.
+   ========================================================================= */
+@font-face {
+  font-family: 'Kalameh';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: local('Kalameh Black'),
+       local('Kalameh-Black'),
+       local('Kalameh'),
+       local('KalamehWeb-Black'),
+       url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Kalameh';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local('Kalameh Bold'),
+       local('Kalameh-Bold'),
+       local('KalamehWeb-Bold'),
+       url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+}
+
 @layer base {
   :root {
     --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
+    --font-brand-title: 'Kalameh', 'Kalameh Black', 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
     --color-bg-base: #FCF8F8;
     --color-card-surface: #FFFFFF;
     --color-text-main: #202124;
@@ -42,6 +71,12 @@
     background-color: #B92B3A;
     color: #FFFFFF;
   }
+}
+
+.font-brand-title {
+  font-family: var(--font-brand-title);
+  font-weight: 900;
+  letter-spacing: -0.035em;
 }
 
 /* =========================================================================
@@ -266,6 +301,39 @@ html.dark .shadow-xl {
     transform: none !important;
     animation: none !important;
   }
+}
+
+/* =========================================================================
+   MOBILE DRAWER SLIDE & FADE ANIMATIONS
+   ========================================================================= */
+@keyframes drawerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawerSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.drawer-enter {
+  animation: drawerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.drawer-exit {
+  animation: drawerSlideOut 0.28s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* =========================================================================
