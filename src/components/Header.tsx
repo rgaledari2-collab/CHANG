@@ -11,11 +11,11 @@ import {
   Sparkles,
   ArrowLeft,
   MapPin,
-  Clock
+  Clock,
+  Instagram
 } from 'lucide-react';
-import { CHANG_TRANSPARENT_LOGO_DATA_URI } from '../assets/logoData';
+import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
-import { ResponsiveImage } from './ResponsiveImage';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,21 +109,12 @@ export const Header: React.FC = () => {
           {/* Brand Logo & Title */}
           <a 
             href="#top" 
-            className="flex items-center gap-2 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1 min-w-0"
+            className="flex items-center gap-2.5 sm:gap-3.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1 min-w-0"
             aria-label="آموزشگاه موسیقی چنگ خرمشهر - صفحه نخست"
           >
-            <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center border border-white/20 shrink-0 transition-transform group-hover:scale-105 shadow-inner">
-              <ResponsiveImage 
-                src={CHANG_TRANSPARENT_LOGO_DATA_URI} 
-                alt="لوگوی آموزشگاه موسیقی چنگ" 
-                width={40}
-                height={40}
-                aspectRatio="1/1"
-                sizes="40px"
-                priority={true}
-                className="w-full h-full object-contain filter drop-shadow-sm" 
-              />
-            </span>
+            <div className="h-9 sm:h-11 w-auto flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
+              <ChangLogo className="h-8 sm:h-10 w-auto text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]" />
+            </div>
             <div className="text-right min-w-0 truncate">
               <span className="block font-bold text-[14px] sm:text-[18px] text-white tracking-tight leading-none truncate">
                 آموزشگاه موسیقی چنگ
@@ -177,13 +168,16 @@ export const Header: React.FC = () => {
           {/* Theme Switcher */}
           <ThemeToggle variant="compact" />
 
-          {/* Primary CTA (Desktop & Tablet) */}
+          {/* Primary CTA (Desktop full, Mobile compact icon) */}
           <a
             href="#contact"
-            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-[13px] font-semibold bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white transition-all duration-150 shadow-md ring-1 ring-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
+            aria-label="مشاوره و تعیین سطح حضوری"
+            title="مشاوره و تعیین سطح حضوری"
+            className="inline-flex items-center justify-center gap-1.5 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[12px] sm:text-[13px] font-semibold bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white transition-all duration-150 shadow-md ring-1 ring-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#F3C7CA]" />
-            <span>مشاوره و تعیین سطح</span>
+            <span className="hidden min-[480px]:inline">مشاوره و تعیین سطح</span>
+            <span className="min-[480px]:hidden">مشاوره</span>
           </a>
         </div>
 
@@ -207,17 +201,8 @@ export const Header: React.FC = () => {
             <div>
               <div className="p-5 border-b border-white/10 flex items-center justify-between bg-white/[0.03]">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center border border-white/20 shrink-0 shadow-xs">
-                    <ResponsiveImage 
-                      src={CHANG_TRANSPARENT_LOGO_DATA_URI} 
-                      alt="آموزشگاه چنگ" 
-                      width={40}
-                      height={40}
-                      aspectRatio="1/1"
-                      sizes="40px"
-                      priority={true}
-                      className="w-full h-full object-contain"
-                    />
+                  <div className="h-9 w-auto flex items-center justify-center shrink-0">
+                    <ChangLogo className="h-8 w-auto text-white drop-shadow-sm" />
                   </div>
                   <div className="text-right">
                     <span className="block font-bold text-[15px] text-white leading-tight">
@@ -298,7 +283,27 @@ export const Header: React.FC = () => {
                 <ArrowLeft className="w-4 h-4" />
               </a>
 
-              {/* Quick Academy Branches Info */}
+              {/* Instagram Pages */}
+              <div className="pt-2 flex items-center justify-between gap-2 border-t border-white/10">
+                <a
+                  href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-white text-[11px] font-bold"
+                >
+                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                  <span>اینستاگرام خرمشهر</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-gradient-to-r from-rose-500/20 to-orange-500/20 border border-rose-500/30 text-white text-[11px] font-bold"
+                >
+                  <Instagram className="w-3.5 h-3.5 text-rose-400" />
+                  <span>اینستاگرام آبادان</span>
+                </a>
+              </div>
               <div className="pt-2 flex flex-col gap-2 text-[11px] text-[#8E97A6]">
                 <div className="flex items-start gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#B92B3A] shrink-0 mt-0.5" />

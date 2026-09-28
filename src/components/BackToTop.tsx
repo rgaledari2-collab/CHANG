@@ -35,7 +35,7 @@ export const BackToTop: React.FC = () => {
 
   return (
     <div
-      className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 transition-all duration-300 pointer-events-none group ${
+      className={`fixed bottom-20 left-4 sm:bottom-6 sm:left-6 z-40 transition-all duration-300 pointer-events-none group ${
         isVisible
           ? 'opacity-100 translate-y-0 pointer-events-auto scale-100'
           : 'opacity-0 translate-y-4 scale-90'
@@ -47,7 +47,7 @@ export const BackToTop: React.FC = () => {
         onClick={scrollToTop}
         aria-label="بازگشت به بالای صفحه"
         title="بازگشت به ابتدای صفحه"
-        className="w-11 h-11 rounded-full bg-[#FCF8F8]/95 hover:bg-[#F3C7CA]/40 active:scale-95 text-[#202124] hover:text-[#B92B3A] hover:border-[#B92B3A] border border-[#E8DFE0] shadow-md flex items-center justify-center transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
+        className="w-11 h-11 rounded-full bg-[#FCF8F8]/95 dark:bg-[#1A1D24] hover:bg-[#F3C7CA]/40 dark:hover:bg-[#B92B3A]/30 active:scale-95 text-[#202124] dark:text-white hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] hover:border-[#B92B3A] dark:hover:border-[#B92B3A] border border-[#E8DFE0] dark:border-white/15 shadow-md flex items-center justify-center transition-all duration-150 backdrop-blur-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A]"
       >
         <ChevronUp className="w-5 h-5 transition-transform duration-150 group-hover:-translate-y-0.5" />
       </button>

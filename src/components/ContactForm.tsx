@@ -14,7 +14,9 @@ import {
   ShieldCheck,
   Building2,
   Headphones,
-  ArrowLeft
+  ArrowLeft,
+  Instagram,
+  ArrowUpRight
 } from 'lucide-react';
 import { COURSES_DATA } from '../data';
 
@@ -157,9 +159,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">دفتر مرکزی</span>
                   </div>
-                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed">
+                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
                     میدان فرمانداری - مجتمع فرهنگی هنری خلیج فارس
                   </dd>
+                  <a
+                    href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                  >
+                    <Instagram className="w-3.5 h-3.5" />
+                    <span>پیج اینستاگرام شعبه خرمشهر (chang_khorramshahr@)</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
 
@@ -175,9 +187,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">شعبه فعال</span>
                   </div>
-                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed">
+                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
                     سه‌راه شاملو، نبش زمین چمن
                   </dd>
+                  <a
+                    href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                  >
+                    <Instagram className="w-3.5 h-3.5" />
+                    <span>پیج اینستاگرام شعبه آبادان (chang_abadan@)</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
 

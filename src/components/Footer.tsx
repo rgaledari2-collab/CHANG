@@ -1,10 +1,10 @@
 import React from 'react';
-import { CHANG_TRANSPARENT_LOGO_DATA_URI } from '../assets/logoData';
-import { ResponsiveImage } from './ResponsiveImage';
+import { ChangLogo } from './ChangLogo';
+import { Instagram, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#FCF8F8] text-[#202124] py-16 border-t border-[#E8DFE0] select-none">
+    <footer className="bg-[#FCF8F8] text-[#202124] pt-16 pb-24 md:pb-16 border-t border-[#E8DFE0] select-none">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial 4-Column Directory Grid */}
@@ -77,6 +77,34 @@ export const Footer: React.FC = () => {
               <p className="text-[12px] text-[#8996A6] mt-2.5">
                 شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰
               </p>
+
+              {/* Instagram Official Links */}
+              <div className="mt-3.5 pt-3 border-t border-[#E8DFE0] space-y-1.5">
+                <a
+                  href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-[12px] text-[#B92B3A] hover:text-[#9C1C29] font-bold group"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Instagram className="w-3.5 h-3.5 text-[#B92B3A]" />
+                    <span>اینستاگرام خرمشهر</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-[12px] text-[#B92B3A] hover:text-[#9C1C29] font-bold group"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Instagram className="w-3.5 h-3.5 text-[#B92B3A]" />
+                    <span>اینستاگرام آبادان</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -85,16 +113,8 @@ export const Footer: React.FC = () => {
         {/* Legal Row */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8996A6]">
           <div className="flex items-center gap-2.5">
-            <span className="w-7 h-7 rounded-lg overflow-hidden bg-black/5 dark:bg-white/10 flex items-center justify-center p-0.5 border border-black/10 dark:border-white/10 shrink-0">
-              <ResponsiveImage
-                src={CHANG_TRANSPARENT_LOGO_DATA_URI}
-                alt="لوگوی چنگ"
-                width={28}
-                height={28}
-                aspectRatio="1/1"
-                sizes="28px"
-                className="w-full h-full object-contain"
-              />
+            <span className="h-6 w-auto flex items-center justify-center shrink-0">
+              <ChangLogo className="h-5 sm:h-6 w-auto text-[#B92B3A] dark:text-[#F3C7CA]" />
             </span>
             <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
           </div>

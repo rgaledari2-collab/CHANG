@@ -12,6 +12,7 @@ import { Events } from './components/Events';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
+import { QuickActionBar } from './components/QuickActionBar';
 import { Lightbox, LightboxData } from './components/Lightbox';
 
 function MainApp() {
@@ -60,6 +61,9 @@ function MainApp() {
 
       {/* Floating Back to Top Button */}
       <BackToTop />
+
+      {/* Quick Action Floating Bar (Call, Messengers WhatsApp/Eitaa, Level Assessment Booking) */}
+      <QuickActionBar />
 
       {/* High-Resolution Image Lightbox Modal */}
       <Lightbox data={lightboxData} onClose={() => setLightboxData(null)} />

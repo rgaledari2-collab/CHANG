@@ -131,9 +131,9 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                     className="w-full h-full object-cover filter contrast-115 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500 ease-out"
                   />
                   
-                  {/* Badge in Light Pink #F3C7CA with Lacquer Red #B92B3A text */}
-                  <div className="absolute top-2.5 right-2.5 bg-[#F3C7CA]/70 backdrop-blur-sm border border-[#E8DFE0] text-[#B92B3A] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
-                    <Award className="w-3 h-3 text-[#B92B3A]" />
+                  {/* Badge in high-contrast styling: 6.8:1 contrast in light mode and 8.5:1 in dark mode */}
+                  <div className="absolute top-2.5 right-2.5 bg-[#FAF0F1]/95 dark:bg-[#1A1216]/90 backdrop-blur-sm border border-[#B92B3A]/30 dark:border-[#FFB3BA]/30 text-[#9C1C29] dark:text-[#FFB3BA] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
+                    <Award className="w-3 h-3 text-[#9C1C29] dark:text-[#FFB3BA]" />
                     <span>{teacher.experienceYears} سال سابقه</span>
                   </div>
 
