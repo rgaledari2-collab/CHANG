@@ -126,7 +126,7 @@ export const Footer: React.FC = () => {
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8996A6]">
           <div className="flex items-center gap-2.5">
             <span className="h-6 w-auto flex items-center justify-center shrink-0">
-              <ChangLogo className="h-5 sm:h-6 w-auto text-[#B92B3A] dark:text-[#F3C7CA]" />
+              <ChangLogo className="h-6 w-auto" variant="currentColor" />
             </span>
             <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
           </div>

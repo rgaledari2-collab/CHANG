@@ -1,81 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%" fill="none">
-  <!-- Musical Staff Lines (خطوط حامل) -->
-  <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" opacity="0.95">
-    <!-- Left Stave Lines -->
-    <line x1="20" y1="270" x2="175" y2="270" />
-    <line x1="20" y1="300" x2="165" y2="300" />
-    <line x1="20" y1="330" x2="170" y2="330" />
-    <line x1="20" y1="360" x2="175" y2="360" />
-    <line x1="20" y1="390" x2="185" y2="390" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="100%" height="100%" fill="none">
+  {/* Musical Stave Lines (خطوط ۵ گانه حامل موسیقی) */}
+  <g stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity="0.95">
+    {/* Left Staves */}
+    <line x1="30" y1="305" x2="215" y2="305" />
+    <line x1="30" y1="335" x2="200" y2="335" />
+    <line x1="30" y1="365" x2="195" y2="365" />
+    <line x1="30" y1="395" x2="205" y2="395" />
+    <line x1="30" y1="425" x2="215" y2="425" />
 
-    <!-- Center-Under Stave Line Extensions -->
-    <line x1="170" y1="390" x2="980" y2="390" stroke-width="5" />
-    <line x1="280" y1="360" x2="380" y2="360" stroke-dasharray="14 10" opacity="0.6" />
-    <line x1="470" y1="360" x2="590" y2="360" stroke-dasharray="14 10" opacity="0.6" />
-    <line x1="710" y1="360" x2="800" y2="360" opacity="0.7" />
+    {/* Center Underlying Baseline Connection */}
+    <line x1="215" y1="425" x2="985" y2="425" stroke-width="5.5" />
 
-    <!-- Right Stave Lines -->
-    <line x1="690" y1="270" x2="980" y2="270" />
-    <line x1="700" y1="300" x2="980" y2="300" />
-    <line x1="710" y1="330" x2="980" y2="330" />
-    <line x1="740" y1="360" x2="980" y2="360" />
+    {/* Right Staves */}
+    <line x1="775" y1="305" x2="1170" y2="305" />
+    <line x1="790" y1="335" x2="1170" y2="335" />
+    <line x1="815" y1="365" x2="1170" y2="365" />
+    <line x1="840" y1="395" x2="1170" y2="395" />
+    <line x1="860" y1="425" x2="1170" y2="425" />
   </g>
 
-  <!-- Left Musical Eighth Note (نت چنگ چپ) -->
+  {/* Left Eighth Note (نت چنگ چپ) */}
   <g fill="currentColor">
-    <!-- Notehead -->
-    <ellipse cx="90" cy="335" rx="36" ry="24" transform="rotate(-26 90 335)" />
-    <!-- Stem -->
-    <rect x="110" y="160" width="8" height="175" rx="4" />
-    <!-- Flag / Hook -->
-    <path d="M118 160 C 135 190, 165 220, 162 260 C 158 275, 142 270, 138 250 C 138 220, 125 185, 118 175 Z" />
+    {/* Notehead with slanted musical angle */}
+    <ellipse cx="110" cy="385" rx="42" ry="27" transform="rotate(-28 110 385)" />
+    {/* Note Stem */}
+    <rect x="135" y="160" width="10.5" height="225" rx="5" />
+    {/* Note Flag / Hook */}
+    <path d="M145.5 160 C172 198, 208 238, 202 288 C197 308, 178 302, 172 278 C172 238, 155 195, 145.5 174 Z" />
   </g>
 
-  <!-- Right Musical Eighth Note (نت چنگ راست) -->
+  {/* Right Eighth Note (نت چنگ راست) */}
   <g fill="currentColor">
-    <!-- Notehead -->
-    <ellipse cx="780" cy="370" rx="32" ry="21" transform="rotate(-24 780 370)" />
-    <!-- Stem -->
-    <rect x="800" y="210" width="7.5" height="160" rx="3.5" />
-    <!-- Flag / Hook -->
-    <path d="M807 210 C 825 240, 850 265, 846 300 C 843 312, 830 308, 826 290 C 825 265, 814 235, 807 222 Z" />
+    {/* Notehead with slanted musical angle */}
+    <ellipse cx="895" cy="425" rx="39" ry="25" transform="rotate(-26 895 425)" />
+    {/* Note Stem */}
+    <rect x="918" y="220" width="9.5" height="205" rx="4.5" />
+    {/* Note Flag / Hook */}
+    <path d="M927.5 220 C950 255, 982 290, 976 338 C972 355, 955 350, 950 328 C949 292, 936 254, 927.5 236 Z" />
   </g>
 
-  <!-- Main Calligraphy: چنگ (Chang) with dynamic geometric curves -->
+  {/* Persian Calligraphy Logo: "چنگ" (Chang) */}
   <g fill="currentColor">
-    <!-- Upper Diagonal Strokes of "گ" (سرکش‌های گاف) -->
-    <!-- Top Sar-kash -->
-    <path d="M485 24 L295 145 C282 153 268 160 255 174 L275 198 C290 183 306 173 322 163 L505 46 Z" />
-    <!-- Second Sar-kash -->
-    <path d="M465 72 L310 172 C298 180 286 188 275 200 L295 224 C308 211 321 202 336 193 L485 96 Z" />
+    {/* 1. Top Diagonal Sarkash of "گ" (سرکش بالایی گاف) */}
+    <polygon points="562,38 385,150 355,150 532,38" />
 
-    <!-- Main Stem of "گ" and transition to "ن" and "چ" -->
-    <!-- Body of Gaaf (گ) -->
-    <path d="M435 125 L345 182 C325 195 308 212 295 235 L335 255 C345 238 358 225 375 214 L458 160 C468 153 475 140 472 128 C470 118 450 115 435 125 Z" />
+    {/* 2. Second Diagonal Sarkash of "گ" (سرکش پایینی گاف) */}
+    <polygon points="540,88 392,182 366,182 514,88" />
 
-    <!-- Letter "ن" (Noon) bowl and body -->
-    <path d="M510 240 C480 220 440 225 410 248 C375 275 350 305 320 315 L328 348 C368 335 400 300 435 275 C455 260 480 255 500 268 C525 285 550 285 575 268 C605 250 635 252 660 270 C680 285 695 275 698 258 C700 242 688 230 670 218 C635 195 595 198 565 222 C545 238 525 245 510 240 Z" />
+    {/* 3. Main Body & Diagonal Stem of "گ" */}
+    <path d="M504 132 L392 204 C366 220, 345 244, 335 274 L378 290 C388 270, 403 254, 420 242 L522 178 C536 169, 542 154, 536 141 C530 129, 516 125, 504 132 Z" />
 
-    <!-- Letter "چ" (Che) Head and Upper Arch -->
-    <path d="M580 185 C615 150 660 145 700 180 C705 185 700 215 675 225 C640 240 615 220 580 185 Z" />
-    <path d="M690 175 C705 190 705 230 655 270 C610 305 560 325 505 335 L510 368 C575 356 635 332 688 290 C735 252 745 205 715 160 Z" />
+    {/* 4. Upper Head & Arch of "چ" (سر چ) */}
+    <path d="M665 170 C724 116, 804 140, 809 210 C812 240, 789 270, 754 295 C704 330, 624 345, 544 345 L549 310 C614 310, 684 295, 724 265 C754 243, 764 223, 759 205 C754 165, 705 155, 670 190 Z" />
 
-    <!-- Middle Dot inside "ن" (Single Circle) -->
-    <circle cx="490" cy="180" r="28" />
+    {/* 5. Center Dip connecting "ن" to "چ" */}
+    <path d="M412 265 C442 245, 482 240, 522 255 C562 270, 602 270, 637 250 C662 235, 687 235, 707 250 L692 280 C677 267, 657 267, 637 280 C592 310, 542 305, 497 285 C467 273, 437 277, 412 293 Z" />
 
-    <!-- Three Dots under "چ" (سه نقطه چ) -->
-    <circle cx="615" cy="365" r="26" />
-    <circle cx="670" cy="335" r="26" />
-    <circle cx="700" cy="390" r="26" />
+    {/* Center Dot of "ن" (نقطه نون - دایره تک متقارن) */}
+    <circle cx="568" cy="202" r="31" />
 
-    <!-- Triple Harmonious Soundwave Contours at Base (امواج سه‌گانه زیرین) -->
-    <!-- Wave 1 (Upper contour) -->
-    <path d="M180 250 C185 295 225 350 305 355 C375 360 440 330 500 310 C560 290 620 295 670 330 L685 305 C625 265 555 260 490 280 C435 298 380 325 315 320 C250 315 215 275 210 245 Z" />
+    {/* Three Dots of "چ" (سه نقطه چنگ در پایین راست) */}
+    <circle cx="704" cy="378" r="27" />
+    <circle cx="768" cy="348" r="27" />
+    <circle cx="803" cy="408" r="27" />
 
-    <!-- Wave 2 (Middle contour) -->
-    <path d="M175 285 C180 330 220 380 300 385 C370 390 435 360 495 340 C550 322 605 328 650 360 L665 335 C610 298 545 292 485 312 C430 330 375 355 310 350 C245 345 210 305 205 280 Z" />
+    {/* Three Smooth Parallel Base Contour Ribbons (سه موج موازی زیر کلمه) */}
+    {/* Ribbon 1 (Top contour) */}
+    <path d="M224 275 C229 335, 279 395, 379 400 C469 405, 544 370, 619 345 C689 323, 759 330, 819 370 L834 343 C764 297, 679 290, 604 313 C534 335, 464 367, 384 363 C299 357, 259 310, 254 275 Z" />
 
-    <!-- Wave 3 (Bottom contour) -->
-    <path d="M170 320 C175 365 215 410 295 415 C365 420 430 390 490 370 C540 354 590 360 630 390 L645 365 C595 330 535 324 480 342 C425 360 370 385 305 380 C240 375 205 340 200 315 Z" />
+    {/* Ribbon 2 (Middle contour) */}
+    <path d="M219 315 C224 375, 274 430, 374 435 C459 439, 534 407, 609 383 C674 363, 739 370, 794 405 L809 378 C744 337, 664 330, 594 353 C524 375, 454 405, 379 400 C294 395, 254 350, 249 315 Z" />
+
+    {/* Ribbon 3 (Bottom contour) */}
+    <path d="M214 355 C219 413, 269 465, 369 470 C449 473, 524 443, 599 420 C659 403, 719 410, 769 443 L784 415 C724 377, 649 370, 584 393 C514 415, 444 443, 374 437 C289 431, 249 387, 244 355 Z" />
   </g>
 </svg>
