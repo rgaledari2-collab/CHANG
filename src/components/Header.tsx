@@ -20,10 +20,14 @@ import { ResponsiveImage } from './ResponsiveImage';
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll and prevent touch-through when mobile menu is open
   useEffect(() => {
     if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      const prevTouchAction = document.body.style.touchAction;
       document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
           setIsOpen(false);
@@ -31,11 +35,10 @@ export const Header: React.FC = () => {
       };
       window.addEventListener('keydown', handleKeyDown);
       return () => {
-        document.body.style.overflow = '';
+        document.body.style.overflow = prevOverflow;
+        document.body.style.touchAction = prevTouchAction;
         window.removeEventListener('keydown', handleKeyDown);
       };
-    } else {
-      document.body.style.overflow = '';
     }
   }, [isOpen]);
 

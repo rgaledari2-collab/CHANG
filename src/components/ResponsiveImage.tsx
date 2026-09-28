@@ -40,6 +40,16 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   style,
   ...props
 }) => {
+  // Generate responsive srcset if not explicitly provided
+  const computedSrcSet =
+    srcSet ||
+    (src && src.startsWith('https://images.unsplash.com/')
+      ? `${src.split('?')[0]}?auto=format&fit=crop&w=400&q=80 400w, ${src.split('?')[0]}?auto=format&fit=crop&w=800&q=80 800w, ${src.split('?')[0]}?auto=format&fit=crop&w=1200&q=80 1200w`
+      : undefined);
+
+  // Mobile-first default sizes matching common responsive breakpoints
+  const computedSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px';
+
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if (fallbackSrc) {
       e.currentTarget.onerror = null;
@@ -53,8 +63,8 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   const imageElement = (
     <img
       src={src}
-      srcSet={srcSet || undefined}
-      sizes={sizes || undefined}
+      srcSet={computedSrcSet}
+      sizes={computedSizes}
       alt={alt}
       width={width}
       height={height}

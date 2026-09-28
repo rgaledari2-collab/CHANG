@@ -47,25 +47,21 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Dynamic Headline - Short, Punchy, Musical & Attractive */}
+          {/* Dynamic Headline - Brand Name */}
           <h1
             id="hero-heading"
-            aria-label="آموزش اصیل موسیقی؛ از پایه تا شکوهِ صحنه."
-            className="text-[26px] sm:text-4xl lg:text-[56px] font-black leading-[1.2] mb-4 [text-wrap:balance]"
+            aria-label="آموزشگاه موسیقی چنگ"
+            className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.2] mb-3 sm:mb-4 tracking-[-0.025em] text-[#1a1b1e] dark:text-white [text-wrap:balance]"
           >
-            <span
-              aria-hidden="true"
-              className="block font-extrabold text-[#1a1b1e] dark:text-white tracking-[-0.025em]"
-            >
-              آموزش اصیل موسیقی؛
-            </span>
-            <span
-              aria-hidden="true"
-              className="block font-black text-[#B92B3A] dark:text-[#F3C7CA] tracking-[-0.03em] mt-1.5 drop-shadow-[0_1px_3px_rgba(185,43,58,0.15)]"
-            >
-              از پایه تا شکوهِ صحنه.
-            </span>
+            آموزشگاه موسیقی چنگ
           </h1>
+
+          {/* Featured Motto / Tagline Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-2 rounded-full bg-gradient-to-r from-[#B92B3A]/10 via-[#B92B3A]/15 to-[#B92B3A]/10 dark:from-[#B92B3A]/25 dark:via-[#B92B3A]/30 dark:to-[#B92B3A]/25 border border-[#B92B3A]/25 dark:border-[#B92B3A]/40 mb-4 shadow-2xs select-none">
+            <span className="text-[14px] sm:text-[18px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] tracking-tight">
+              آموزش اصیل موسیقی؛ از پایه تا شکوهِ صحنه
+            </span>
+          </div>
 
           {/* Subhead / Lead - Compact & Focused */}
           <p className="text-[15px] sm:text-[20px] font-medium text-[#2d3036] dark:text-[#E8DFE0] leading-[1.6] tracking-[-0.01em] mb-3 max-w-xl [text-wrap:balance]">
