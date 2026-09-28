@@ -10,7 +10,7 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
 
   const phoneNumber = '09359352738';
   const whatsappUrl = `https://wa.me/989359352738?text=${encodeURIComponent('درود، درخواست مشاوره، دریافت لوکیشن شعب و رزرو تعیین سطح در آموزشگاه موسیقی چنگ را دارم.')}`;
-  const eitaaUrl = 'https://eitaa.com/chang_music';
+  const eitaaUrl = 'https://eitaa.com/Changabadan';
   const igKhorramshahrUrl = 'https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw==';
   const igAbadanUrl = 'https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg==';
 
@@ -256,11 +256,16 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="block text-[13px] font-bold text-orange-950 dark:text-orange-200">
-                      پیام‌رسان ایتا (Eitaa)
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[13px] font-bold text-orange-950 dark:text-orange-200">
+                        پیام‌رسان ایتا (Eitaa)
+                      </span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-orange-200 dark:bg-orange-800 text-orange-900 dark:text-orange-100 font-mono dir-ltr">
+                        @Changabadan
+                      </span>
+                    </div>
                     <span className="block text-[11px] text-orange-800 dark:text-orange-300">
-                      کانال رسمی اطلاع‌رسانی کلاس‌ها
+                      کانال رسمی اطلاع‌رسانی کلاس‌ها و مشاوره
                     </span>
                   </div>
                 </div>

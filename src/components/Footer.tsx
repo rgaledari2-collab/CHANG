@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChangLogo } from './ChangLogo';
-import { Instagram, ArrowUpRight } from 'lucide-react';
+import { Instagram, MessageCircle, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -101,6 +101,18 @@ export const Footer: React.FC = () => {
                   <span className="flex items-center gap-1.5">
                     <Instagram className="w-3.5 h-3.5 text-[#B92B3A]" />
                     <span>اینستاگرام آبادان</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href="https://eitaa.com/Changabadan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between text-[12px] text-orange-600 hover:text-orange-700 font-bold group"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <MessageCircle className="w-3.5 h-3.5 text-orange-600" />
+                    <span>کانال ایتا (Changabadan@)</span>
                   </span>
                   <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>

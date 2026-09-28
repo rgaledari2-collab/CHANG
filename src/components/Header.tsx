@@ -12,7 +12,8 @@ import {
   ArrowLeft,
   MapPin,
   Clock,
-  Instagram
+  Instagram,
+  MessageCircle
 } from 'lucide-react';
 import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
@@ -283,25 +284,37 @@ export const Header: React.FC = () => {
                 <ArrowLeft className="w-4 h-4" />
               </a>
 
-              {/* Instagram Pages */}
-              <div className="pt-2 flex items-center justify-between gap-2 border-t border-white/10">
+              {/* Social & Messenger Links */}
+              <div className="pt-2 flex flex-col gap-2 border-t border-white/10">
+                <div className="flex items-center justify-between gap-2">
+                  <a
+                    href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-white text-[11px] font-bold"
+                  >
+                    <Instagram className="w-3.5 h-3.5 text-pink-400" />
+                    <span>اینستاگرام خرمشهر</span>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl bg-gradient-to-r from-rose-500/20 to-orange-500/20 border border-rose-500/30 text-white text-[11px] font-bold"
+                  >
+                    <Instagram className="w-3.5 h-3.5 text-rose-400" />
+                    <span>اینستاگرام آبادان</span>
+                  </a>
+                </div>
+
                 <a
-                  href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
+                  href="https://eitaa.com/Changabadan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-white text-[11px] font-bold"
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-orange-500/20 border border-orange-500/30 text-white text-[11px] font-bold"
                 >
-                  <Instagram className="w-3.5 h-3.5 text-pink-400" />
-                  <span>اینستاگرام خرمشهر</span>
-                </a>
-                <a
-                  href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-gradient-to-r from-rose-500/20 to-orange-500/20 border border-rose-500/30 text-white text-[11px] font-bold"
-                >
-                  <Instagram className="w-3.5 h-3.5 text-rose-400" />
-                  <span>اینستاگرام آبادان</span>
+                  <MessageCircle className="w-3.5 h-3.5 text-orange-400" />
+                  <span>کانال رسمی ایتا: Changabadan@</span>
                 </a>
               </div>
               <div className="pt-2 flex flex-col gap-2 text-[11px] text-[#8E97A6]">
