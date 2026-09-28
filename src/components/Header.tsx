@@ -117,11 +117,11 @@ export const Header: React.FC = () => {
           {/* Brand Logo & Title */}
           <a 
             href="#top" 
-            className="flex items-center gap-2.5 sm:gap-3.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1 min-w-0"
+            className="flex items-center gap-2 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] rounded-xl p-1 -m-1 min-w-0"
             aria-label="آموزشگاه موسیقی چنگ خرمشهر - صفحه نخست"
           >
-            <div className="h-9 sm:h-11 w-auto flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
-              <ChangLogo className="h-8 sm:h-10 w-auto" variant="white" />
+            <div className="h-10 sm:h-12 w-16 sm:w-20 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
+              <ChangLogo className="w-full h-full" variant="white" />
             </div>
             <div className="text-right min-w-0 truncate">
               <span className="block font-bold text-[14px] sm:text-[18px] text-white tracking-tight leading-none truncate">
@@ -207,8 +207,8 @@ export const Header: React.FC = () => {
           <div className="h-16 sm:h-20 px-4 sm:px-6 flex items-center justify-between border-b border-white/10 shrink-0 bg-white/[0.02]">
             {/* Logo and Brand Title */}
             <div className="flex items-center gap-3">
-              <div className="h-10 sm:h-12 w-auto flex items-center justify-center shrink-0">
-                <ChangLogo className="h-9 sm:h-11 w-auto" variant="white" />
+              <div className="h-11 sm:h-12 w-20 flex items-center justify-center shrink-0">
+                <ChangLogo className="w-full h-full" variant="white" />
               </div>
               <div className="text-right">
                 <span className="block font-black text-[16px] sm:text-[18px] text-white leading-tight">

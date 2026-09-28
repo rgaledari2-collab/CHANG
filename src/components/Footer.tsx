@@ -125,8 +125,8 @@ export const Footer: React.FC = () => {
         {/* Legal Row */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-[#8996A6]">
           <div className="flex items-center gap-2.5">
-            <span className="h-6 w-auto flex items-center justify-center shrink-0">
-              <ChangLogo className="h-6 w-auto" variant="currentColor" />
+            <span className="h-7 w-14 flex items-center justify-center shrink-0">
+              <ChangLogo className="w-full h-full" variant="currentColor" />
             </span>
             <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
           </div>
