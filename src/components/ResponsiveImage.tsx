@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { handleImageError } from '../utils/imageFallback';
 
 export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -13,16 +13,16 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
   className?: string;
   containerClassName?: string;
   fallbackSrc?: string;
+  rootMargin?: string;
 }
 
 /**
- * ResponsiveImage Component
+ * ResponsiveImage Component with Strict Viewport Lazy Loading (IntersectionObserver)
  * 
- * Implements clean, reliable responsive image loading:
- * - Direct real image loading with high-availability fallbacks
- * - Zero Cumulative Layout Shift (CLS) via explicit width, height & aspect-ratio
- * - Native lazy loading with asynchronous decoding
- * - Tolerant to network / ISP restrictions
+ * - Images are ONLY loaded when they enter the viewport window (threshold + rootMargin)
+ * - Zero Layout Shift (CLS) via explicit aspect-ratio
+ * - Smooth transition upon load with low perceived latency
+ * - Asynchronous decoding for non-blocking UI
  */
 export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
@@ -35,11 +35,52 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   priority = false,
   className = '',
   containerClassName = '',
-  onError,
   fallbackSrc,
+  rootMargin = '150px 0px',
+  onError,
+  onLoad,
   style,
   ...props
 }) => {
+  const [isVisible, setIsVisible] = useState(priority);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  // IntersectionObserver to strictly defer loading until scrolled into view
+  useEffect(() => {
+    if (priority || isVisible) return;
+
+    const target = containerRef.current || imgRef.current;
+    if (!target) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin,
+        threshold: 0.01,
+      }
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [priority, isVisible, rootMargin]);
+
   // Generate responsive srcset if not explicitly provided
   const computedSrcSet =
     srcSet ||
@@ -47,7 +88,6 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
       ? `${src.split('?')[0]}?auto=format&fit=crop&w=400&q=80 400w, ${src.split('?')[0]}?auto=format&fit=crop&w=800&q=80 800w, ${src.split('?')[0]}?auto=format&fit=crop&w=1200&q=80 1200w`
       : undefined);
 
-  // Mobile-first default sizes matching common responsive breakpoints
   const computedSizes = sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px';
 
   const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -60,37 +100,48 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
     onError?.(e);
   };
 
-  const imageElement = (
-    <img
-      src={src}
-      srcSet={computedSrcSet}
-      sizes={computedSizes}
-      alt={alt}
-      width={width}
-      height={height}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      fetchPriority={priority ? 'high' : 'auto'}
-      onError={handleError}
-      className={`w-full h-full object-cover transition-opacity duration-300 ${className}`}
-      style={{
-        aspectRatio: aspectRatio || undefined,
-        ...style,
-      }}
-      {...props}
-    />
+  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    setIsLoaded(true);
+    onLoad?.(e);
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={`relative overflow-hidden bg-black/5 dark:bg-white/5 ${containerClassName}`}
+      style={aspectRatio ? { aspectRatio } : undefined}
+    >
+      {isVisible ? (
+        <img
+          ref={imgRef}
+          src={src}
+          srcSet={computedSrcSet}
+          sizes={computedSizes}
+          alt={alt}
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
+          fetchPriority={priority ? 'high' : 'low'}
+          onError={handleError}
+          onLoad={handleImageLoad}
+          className={`w-full h-full object-cover transition-opacity duration-500 ease-out ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          } ${className}`}
+          style={{
+            aspectRatio: aspectRatio || undefined,
+            ...style,
+          }}
+          {...props}
+        />
+      ) : (
+        /* Placeholder skeleton before entering viewport */
+        <div
+          className="w-full h-full bg-[#18050B]/10 dark:bg-white/5 animate-pulse"
+          style={aspectRatio ? { aspectRatio } : undefined}
+          aria-hidden="true"
+        />
+      )}
+    </div>
   );
-
-  if (containerClassName) {
-    return (
-      <div 
-        className={`relative overflow-hidden ${containerClassName}`}
-        style={aspectRatio ? { aspectRatio } : undefined}
-      >
-        {imageElement}
-      </div>
-    );
-  }
-
-  return imageElement;
 };
