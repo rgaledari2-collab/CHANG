@@ -55,7 +55,7 @@ export const Events: React.FC<EventsProps> = ({ onOpenLightbox }) => {
   const handleOpenEventLightbox = () => {
     if (onOpenLightbox) {
       onOpenLightbox({
-        src: '/IMG_0549_optimized.webp',
+        src: 'IMG_0549_optimized.webp',
         title: event.title,
         subtitle: `${event.daySolar} ${event.dateSolar} • ${event.location} • آموزشگاه موسیقی چنگ`,
         badge: event.type,
@@ -122,23 +122,23 @@ export const Events: React.FC<EventsProps> = ({ onOpenLightbox }) => {
                 {/* Mobile (< 640px) receives 35KB WebP */}
                 <source
                   media="(max-width: 640px)"
-                  srcSet="/IMG_0549_640.webp"
+                  srcSet="IMG_0549_640.webp"
                   type="image/webp"
                 />
                 {/* Tablet & Small Desktop (< 1100px) receives 87KB WebP */}
                 <source
                   media="(max-width: 1100px)"
-                  srcSet="/IMG_0549_1100.webp"
+                  srcSet="IMG_0549_1100.webp"
                   type="image/webp"
                 />
                 {/* Desktop & Retina receives 175KB WebP */}
                 <source
-                  srcSet="/IMG_0549_1600.webp"
+                  srcSet="IMG_0549_1600.webp"
                   type="image/webp"
                 />
                 {/* Fallback img with lazy loading */}
                 <img
-                  src="/IMG_0549_1600.webp"
+                  src="IMG_0549_1600.webp"
                   alt={event.title}
                   loading="lazy"
                   decoding="async"

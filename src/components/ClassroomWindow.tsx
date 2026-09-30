@@ -249,8 +249,10 @@ export const ClassroomWindow: React.FC<ClassroomWindowProps> = ({
             {/* Teacher Video Feed */}
             <div className="relative rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex flex-col justify-between p-3 group aspect-video sm:aspect-auto">
               <img 
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=700&q=80" 
+                src="teacher_negar.webp" 
                 alt="استاد نگار احمدی"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover filter contrast-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />

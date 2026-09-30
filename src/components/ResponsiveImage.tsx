@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { handleImageError } from '../utils/imageFallback';
+import placeholders from '../assets/placeholders.json';
 
 export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -14,15 +15,16 @@ export interface ResponsiveImageProps extends React.ImgHTMLAttributes<HTMLImageE
   containerClassName?: string;
   fallbackSrc?: string;
   rootMargin?: string;
+  placeholder?: string;
 }
 
 /**
- * ResponsiveImage Component with Strict Viewport Lazy Loading (IntersectionObserver)
+ * ResponsiveImage Component with Strict Viewport Lazy Loading & Low-Resolution Blur-up Placeholders
  * 
- * - Images are ONLY loaded when they enter the viewport window (threshold + rootMargin)
- * - Zero Layout Shift (CLS) via explicit aspect-ratio
- * - Smooth transition upon load with low perceived latency
- * - Asynchronous decoding for non-blocking UI
+ * - Pairs solid color warm skeleton with micro-base64 data-URI placeholders
+ * - Eliminates layout shift (CLS: 0) with explicit aspect-ratio
+ * - Smooth fade-in transition once the WebP image finishes loading
+ * - Native decoding="async" and loading="lazy"
  */
 export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   src,
@@ -37,6 +39,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   containerClassName = '',
   fallbackSrc,
   rootMargin = '150px 0px',
+  placeholder,
   onError,
   onLoad,
   style,
@@ -47,7 +50,10 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  // IntersectionObserver to strictly defer loading until scrolled into view
+  // Retrieve base64 low-resolution placeholder if available
+  const lqip = placeholder || (placeholders as Record<string, string>)[src] || undefined;
+
+  // IntersectionObserver to strictly defer loading until scrolled near viewport
   useEffect(() => {
     if (priority || isVisible) return;
 
@@ -108,10 +114,30 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden bg-black/5 dark:bg-white/5 ${containerClassName}`}
+      className={`relative overflow-hidden bg-[#2A1016]/10 dark:bg-white/5 ${containerClassName}`}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
-      {isVisible ? (
+      {/* 1. Low-Resolution base64 data-URI placeholder with soft gaussian blur */}
+      {lqip && (
+        <div
+          className={`absolute inset-0 bg-cover bg-center filter blur-md transition-opacity duration-700 scale-105 pointer-events-none ${
+            isLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{ backgroundImage: `url("${lqip}")` }}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* 2. Solid color skeleton pulse background if no lqip or before load */}
+      <div
+        className={`absolute inset-0 bg-gradient-to-tr from-[#3B1720]/15 to-[#B92B3A]/5 dark:from-white/5 dark:to-white/10 animate-pulse transition-opacity duration-500 pointer-events-none ${
+          isLoaded ? 'opacity-0' : 'opacity-100'
+        }`}
+        aria-hidden="true"
+      />
+
+      {/* 3. Actual high-definition WebP image */}
+      {isVisible && (
         <img
           ref={imgRef}
           src={src}
@@ -125,7 +151,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
           fetchPriority={priority ? 'high' : 'low'}
           onError={handleError}
           onLoad={handleImageLoad}
-          className={`w-full h-full object-cover transition-opacity duration-500 ease-out ${
+          className={`relative z-10 w-full h-full object-cover transition-opacity duration-500 ease-out ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           } ${className}`}
           style={{
@@ -133,13 +159,6 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
             ...style,
           }}
           {...props}
-        />
-      ) : (
-        /* Placeholder skeleton before entering viewport */
-        <div
-          className="w-full h-full bg-[#18050B]/10 dark:bg-white/5 animate-pulse"
-          style={aspectRatio ? { aspectRatio } : undefined}
-          aria-hidden="true"
         />
       )}
     </div>

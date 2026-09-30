@@ -1,6 +1,5 @@
 import React from 'react';
 import { History, HeartHandshake } from 'lucide-react';
-import { handleImageError } from '../utils/imageFallback';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { ResponsiveImage } from './ResponsiveImage';
 
@@ -20,7 +19,7 @@ export const Story: React.FC = () => {
           <div className="lg:col-span-5 relative reveal-on-scroll">
             <div className="relative rounded-[18px] overflow-hidden apple-product-shadow aspect-[4/5] bg-[#290f16] border border-white/15 group">
               <ResponsiveImage
-                src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=80"
+                src="story_instruments.webp"
                 alt="فضای سازها و آکوستیک آموزشگاه موسیقی چنگ خرمشهر"
                 width={600}
                 height={750}
@@ -34,7 +33,7 @@ export const Story: React.FC = () => {
             {/* Overlapping Secondary Image */}
             <div className="hidden sm:block absolute -bottom-6 -left-6 w-1/2 aspect-[3/4] rounded-[14px] overflow-hidden border border-white/20 apple-product-shadow bg-[#290f16] group/sec">
               <ResponsiveImage
-                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80"
+                src="story_practice.webp"
                 alt="تمرین و اجرای موسیقی در چنگ"
                 width={400}
                 height={533}
@@ -100,28 +99,29 @@ export const Story: React.FC = () => {
               <div className="relative">
                 <span className="absolute -right-[31px] top-1.5 w-3 h-3 rounded-full bg-[#B92B3A] ring-4 ring-[#3B1720]" />
                 <h3 className="text-[17px] font-bold text-white mb-1">
-                  امروز؛ کانون همنوازی و اجرای زنده هنرجویان
+                  پایداری، اجراهای صحنه‌ای و گسترش به نسل جدید
                 </h3>
                 <p className="text-[14px] text-[#E8DFE0]/80 leading-relaxed">
-                  برگزاری کنسرت‌های سالانه، ضبط استودیویی قطعات و ورود هنرجویان به صحنه‌های ملی
+                  برگزاری سالانه بیش از ۱۰ کنسرت هنرجویی، مسترکلاس و همایش‌های فرهنگی
                 </p>
               </div>
             </div>
 
-            {/* CTA Button in Lacquer Red #B92B3A */}
-            <div className="flex flex-wrap items-center gap-4 reveal-on-scroll reveal-delay-3">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center px-[24px] py-[12px] rounded-full text-[17px] font-semibold bg-[#B92B3A] hover:bg-[#A52432] active:scale-95 text-white transition-all duration-150 shadow-md"
-              >
-                مشاوره و تعیین سطح حضوری
-              </a>
-
-              <span className="text-[#E8DFE0] text-[14px] flex items-center gap-1.5">
-                <HeartHandshake className="w-4 h-4 text-[#F3C7CA]" />
-                <span>همراهی با صبر و شیوه‌های نوین تدریس</span>
-              </span>
+            {/* Educational Commitment Callout */}
+            <div className="p-5 sm:p-6 rounded-[14px] bg-[#290f16]/90 border border-white/15 flex items-start gap-4 reveal-on-scroll reveal-delay-3 text-right">
+              <div className="w-10 h-10 rounded-full bg-[#B92B3A]/20 flex items-center justify-center shrink-0 border border-[#B92B3A]/40 text-[#F3C7CA]">
+                <HeartHandshake className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-[16px] font-bold text-white mb-1">
+                  تعهد به استاندارد و اخلاق آموزش
+                </h4>
+                <p className="text-[13.5px] text-[#E8DFE0] leading-relaxed">
+                  در چنگ، هر هنرجو فارغ از سن و پیش‌زمینه، یک برنامه اختصاصی گام‌به‌گام دریافت می‌کند. ما هیچ هنرجویی را با انتظارات غیرواقعی یا روش‌های تجاری مواجه نمی‌کنیم.
+                </p>
+              </div>
             </div>
+
           </div>
 
         </div>
