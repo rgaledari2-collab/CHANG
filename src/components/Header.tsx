@@ -15,7 +15,8 @@ import {
   Instagram,
   MessageCircle,
   ExternalLink,
-  ChevronLeft
+  ChevronLeft,
+  Music
 } from 'lucide-react';
 import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
@@ -64,6 +65,13 @@ export const Header: React.FC = () => {
   }, [isOpen]);
 
   const navLinks = [
+    { 
+      name: 'سازها و دوره‌ها', 
+      href: '#courses', 
+      icon: Music,
+      description: 'پیانو، تار، گیتار، ویولن، ارف و آواز در دو شعبه',
+      tag: 'دپارتمان‌ها'
+    },
     { 
       name: 'اساتید و کادر آموزشی', 
       href: '#teachers', 

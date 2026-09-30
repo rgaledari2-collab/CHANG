@@ -52,6 +52,7 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
 
   const handleConsultation = (teacher: Teacher) => {
     setSelectedTeacher(null);
+    document.body.style.overflow = '';
     const select = document.getElementById('course-select') as HTMLSelectElement | null;
     if (select && teacher.courseName) {
       select.value = teacher.courseName;
@@ -71,31 +72,31 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
   };
 
   return (
-    <section ref={sectionRef} id="teachers" className="py-20 lg:py-24 bg-[#FCF8F8] border-b border-[#E8DFE0]">
+    <section ref={sectionRef} id="teachers" className="py-20 lg:py-24 bg-[#FCF8F8] dark:bg-[#0E1013] border-b border-[#E8DFE0] dark:border-white/10 transition-colors">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Section Header with Numbering */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal-on-scroll">
           <div className="max-w-xl text-right">
-            <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] mb-2 tracking-tight">
+            <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] mb-2 tracking-tight">
               <span className="font-mono text-[14px]">۰۳</span>
               <span>/</span>
               <span>اساتید راهنما و نوازندگان صحنه</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#202124] leading-[1.10] tracking-[-0.025em] mb-3 [text-wrap:balance]">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#202124] dark:text-white leading-[1.10] tracking-[-0.025em] mb-3 [text-wrap:balance]">
               آدم‌هایی که در مسیرت همراهت می‌مانند.
             </h2>
-            <p className="text-[17px] text-[#5a626d] font-normal leading-[1.5] [text-wrap:pretty]">
+            <p className="text-[17px] text-[#5a626d] dark:text-[#9ca3af] font-normal leading-[1.5] [text-wrap:pretty]">
               اساتید چنگ از میان فارغ‌التحصیلان برجسته موسیقی و نوازندگان فعال صحنه، با شیوه تدریس صبورانه و متدهای نوین آکادمیک برگزیده شده‌اند.
             </p>
           </div>
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-[#E8DFE0] hover:border-[#B92B3A] text-[14px] font-semibold text-[#202124] hover:text-[#B92B3A] transition-all active:scale-95 shadow-sm self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 hover:border-[#B92B3A] text-[14px] font-semibold text-[#202124] dark:text-white hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-all active:scale-95 shadow-sm self-start md:self-auto"
           >
             <span>مشاوره و تعیین استاد راهنما</span>
-            <ArrowLeft className="w-3.5 h-3.5 text-[#B92B3A]" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#F3C7CA]" />
           </a>
         </div>
 
@@ -104,12 +105,12 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
           {TEACHERS_DATA.map((teacher) => (
             <div
               key={teacher.id}
-              className="teacher-card bg-white border border-[#E8DFE0] hover:border-[#B92B3A] rounded-[18px] p-5 flex flex-col justify-between transition-all duration-200 group apple-soft-shadow"
+              className="teacher-card bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 hover:border-[#B92B3A] dark:hover:border-[#B92B3A]/60 rounded-[18px] p-5 flex flex-col justify-between transition-all duration-200 group apple-soft-shadow"
             >
               <div>
                 {/* Selective Portrait Frame with Responsive Image */}
                 <div
-                  className="aspect-[4/5] relative rounded-[11px] overflow-hidden bg-[#FCF8F8] border border-[#E8DFE0] cursor-zoom-in mb-4"
+                  className="aspect-[4/5] relative rounded-[11px] overflow-hidden bg-[#FCF8F8] dark:bg-[#0E1013] border border-[#E8DFE0] dark:border-white/10 cursor-zoom-in mb-4"
                   onClick={() => openTeacherLightbox(teacher)}
                   role="button"
                   tabIndex={0}
@@ -132,15 +133,15 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                   />
                   
                   {/* Badge in high-contrast styling: 6.8:1 contrast in light mode and 8.5:1 in dark mode */}
-                  <div className="absolute top-2.5 right-2.5 bg-[#FAF0F1]/95 dark:bg-[#1A1216]/90 backdrop-blur-sm border border-[#B92B3A]/30 dark:border-[#FFB3BA]/30 text-[#9C1C29] dark:text-[#FFB3BA] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
+                  <div className="absolute top-2.5 right-2.5 bg-[#FAF0F1]/95 dark:bg-[#1A1216]/95 backdrop-blur-sm border border-[#B92B3A]/30 dark:border-[#FFB3BA]/30 text-[#9C1C29] dark:text-[#FFB3BA] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
                     <Award className="w-3 h-3 text-[#9C1C29] dark:text-[#FFB3BA]" />
                     <span>{teacher.experienceYears} سال سابقه</span>
                   </div>
 
                   {/* Hover Cue */}
                   <div className="absolute inset-0 bg-[#3B1720]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                    <span className="bg-[#FCF8F8]/95 backdrop-blur-md text-[#202124] text-[12px] font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#E8DFE0]">
-                      <ZoomIn className="w-3.5 h-3.5 text-[#B92B3A]" />
+                    <span className="bg-[#FCF8F8]/95 dark:bg-[#171A21]/95 backdrop-blur-md text-[#202124] dark:text-white text-[12px] font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#E8DFE0] dark:border-white/10">
+                      <ZoomIn className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#F3C7CA]" />
                       <span>مشاهده پرتره کامل</span>
                     </span>
                   </div>
@@ -150,25 +151,25 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                 <div className="text-right">
                   <h3
                     onClick={() => setSelectedTeacher(teacher)}
-                    className="text-[19px] font-bold text-[#202124] hover:text-[#B92B3A] cursor-pointer transition-colors mb-1"
+                    className="text-[19px] font-bold text-[#202124] dark:text-white hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] cursor-pointer transition-colors mb-1"
                   >
                     {teacher.name}
                   </h3>
-                  <p className="text-[13px] text-[#B92B3A] font-semibold mb-2">
+                  <p className="text-[13px] text-[#B92B3A] dark:text-[#F3C7CA] font-semibold mb-2">
                     {teacher.role}
                   </p>
-                  <p className="text-[14px] text-[#5a626d] leading-relaxed line-clamp-2">
+                  <p className="text-[14px] text-[#5a626d] dark:text-[#9ca3af] leading-relaxed line-clamp-2">
                     {teacher.specialty}
                   </p>
                 </div>
               </div>
 
               {/* Action Link in Lacquer Red */}
-              <div className="pt-4 border-t border-[#E8DFE0]/60 mt-4 flex items-center justify-between">
+              <div className="pt-4 border-t border-[#E8DFE0]/60 dark:border-white/10 mt-4 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={() => setSelectedTeacher(teacher)}
-                  className="text-[14px] font-semibold text-[#B92B3A] hover:text-[#A52432] transition-colors flex items-center gap-1"
+                  className="text-[14px] font-semibold text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#A52432] dark:hover:text-white transition-colors flex items-center gap-1"
                 >
                   <span>رزومه و سوابق هنری</span>
                   <ArrowLeft className="w-3.5 h-3.5" />
@@ -183,18 +184,21 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
       {/* Profile Modal with Dark Crimson Backdrop */}
       {selectedTeacher && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4 bg-[#3B1720]/80 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-md animate-fade-in"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-teacher-title"
           onClick={(e) => {
-            if (e.target === e.currentTarget) setSelectedTeacher(null);
+            if (e.target === e.currentTarget) {
+              setSelectedTeacher(null);
+              document.body.style.overflow = '';
+            }
           }}
         >
-          <div className="bg-[#FCF8F8] dark:bg-[#150a0f] text-[#202124] dark:text-white rounded-[18px] border border-[#E8DFE0] dark:border-white/10 shadow-2xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col">
+          <div className="bg-[#FCF8F8] dark:bg-[#150D11] text-[#202124] dark:text-white rounded-[18px] border border-[#E8DFE0] dark:border-white/10 shadow-2xl max-w-xl w-full max-h-[92vh] overflow-hidden flex flex-col">
             
             {/* Modal Header */}
-            <div className="p-5 sm:p-6 bg-[#F3C7CA]/30 border-b border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
+            <div className="p-5 sm:p-6 bg-[#F3C7CA]/30 dark:bg-[#200A13] border-b border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3.5 sm:gap-4">
                 <ResponsiveImage
                   src={selectedTeacher.image}
@@ -217,23 +221,26 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
 
               <button
                 type="button"
-                onClick={() => setSelectedTeacher(null)}
-                className="w-8 h-8 rounded-full bg-white hover:bg-[#FCF8F8] border border-[#E8DFE0] flex items-center justify-center text-[#202124] transition-colors"
+                onClick={() => {
+                  setSelectedTeacher(null);
+                  document.body.style.overflow = '';
+                }}
+                className="w-8 h-8 rounded-full bg-white dark:bg-white/10 hover:bg-[#FCF8F8] border border-[#E8DFE0] dark:border-white/10 flex items-center justify-center text-[#202124] dark:text-white transition-colors"
                 aria-label="بستن"
               >
-                <X className="w-4 h-4 text-[#B92B3A]" />
+                <X className="w-4 h-4 text-[#B92B3A] dark:text-[#FFB3BA]" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-5 text-right bg-[#FCF8F8]">
+            <div className="p-6 overflow-y-auto space-y-5 text-right bg-[#FCF8F8] dark:bg-[#150D11]">
               {selectedTeacher.education && (
                 <div>
-                  <h4 className="text-[14px] font-bold text-[#202124] mb-1.5 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-[#B92B3A]" />
+                  <h4 className="text-[14px] font-bold text-[#202124] dark:text-white mb-1.5 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
                     <span>تحصیلات و مدارک تخصصی</span>
                   </h4>
-                  <p className="text-[15px] text-[#5a626d] leading-relaxed">
+                  <p className="text-[15px] text-[#5a626d] dark:text-[#CBD5E1] leading-relaxed">
                     {selectedTeacher.education}
                   </p>
                 </div>
@@ -241,14 +248,14 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
 
               {selectedTeacher.stageRecords && selectedTeacher.stageRecords.length > 0 && (
                 <div>
-                  <h4 className="text-[14px] font-bold text-[#202124] mb-2 flex items-center gap-2">
-                    <Trophy className="w-4 h-4 text-[#B92B3A]" />
+                  <h4 className="text-[14px] font-bold text-[#202124] dark:text-white mb-2 flex items-center gap-2">
+                    <Trophy className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
                     <span>سوابق صحنه‌ای و فعالیت‌های اجرایی</span>
                   </h4>
-                  <ul className="space-y-1.5 text-[14px] text-[#5a626d]">
+                  <ul className="space-y-1.5 text-[14px] text-[#5a626d] dark:text-[#CBD5E1]">
                     {selectedTeacher.stageRecords.map((rec, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-[#B92B3A] font-bold">•</span>
+                        <span className="text-[#B92B3A] dark:text-[#F3C7CA] font-bold">•</span>
                         <span>{rec}</span>
                       </li>
                     ))}
@@ -258,11 +265,11 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
 
               {selectedTeacher.pedagogy && (
                 <div>
-                  <h4 className="text-[14px] font-bold text-[#202124] mb-1.5 flex items-center gap-2">
-                    <Music className="w-4 h-4 text-[#B92B3A]" />
+                  <h4 className="text-[14px] font-bold text-[#202124] dark:text-white mb-1.5 flex items-center gap-2">
+                    <Music className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
                     <span>متد و رویکرد آموزشی</span>
                   </h4>
-                  <p className="text-[15px] text-[#5a626d] leading-relaxed">
+                  <p className="text-[15px] text-[#5a626d] dark:text-[#CBD5E1] leading-relaxed">
                     {selectedTeacher.pedagogy}
                   </p>
                 </div>
@@ -270,11 +277,14 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 sm:p-5 bg-[#F3C7CA]/20 border-t border-[#E8DFE0] flex items-center justify-end gap-3">
+            <div className="p-4 sm:p-5 bg-[#F3C7CA]/20 dark:bg-[#1E0E14] border-t border-[#E8DFE0] dark:border-white/10 flex items-center justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setSelectedTeacher(null)}
-                className="px-4 py-2 rounded-full text-[14px] font-medium text-[#202124] hover:bg-white transition-colors"
+                onClick={() => {
+                  setSelectedTeacher(null);
+                  document.body.style.overflow = '';
+                }}
+                className="px-4 py-2 rounded-full text-[14px] font-medium text-[#202124] dark:text-[#CBD5E1] hover:bg-white dark:hover:bg-white/10 transition-colors"
               >
                 بستن
               </button>

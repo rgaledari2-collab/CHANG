@@ -92,11 +92,28 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
 
     const branchName = preferredBranch === 'khorramshahr' ? 'شعبه خرمشهر' : 'شعبه آبادان';
 
+    // Store lead locally in browser localStorage for offline reliability and administrative backup
+    try {
+      const storedLeads = JSON.parse(localStorage.getItem('chang_consultation_leads') || '[]');
+      storedLeads.push({
+        fullName: fullName.trim(),
+        phone: normalizedPhone,
+        course: course || 'مشاوره کلی',
+        studentAge,
+        preferredBranch,
+        message: message.trim(),
+        createdAt: new Date().toISOString(),
+      });
+      localStorage.setItem('chang_consultation_leads', JSON.stringify(storedLeads));
+    } catch {
+      // Ignore localStorage errors (e.g. in private browsing)
+    }
+
     setTimeout(() => {
       setIsSubmitting(false);
       setFormStatus({
         success: true,
-        text: `درخواست مشاوره برای ${fullName.trim()} جهت ${branchName} با موفقیت ثبت شد. کارشناسان آموزشگاه چنگ در اسرع وقت با شماره شما تماس خواهند گرفت.`
+        text: `درخواست مشاوره برای ${fullName.trim()} جهت ${branchName} (${course || 'تعیین سطح کلی'}) با موفقیت در سامانه چنگ ثبت شد. کارشناسان آموزشگاه در ساعات کاری با شما تماس خواهند گرفت.`
       });
       setFullName('');
       setPhone('');

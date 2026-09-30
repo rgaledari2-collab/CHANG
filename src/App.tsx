@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
+import { Courses } from './components/Courses';
 import { Story } from './components/Story';
 import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
@@ -36,6 +37,9 @@ function MainApp() {
       <main id="main-content" className="flex-1 overflow-x-hidden w-full max-w-full">
         <Hero />
         <ProofStrip />
+
+        {/* Dedicated Courses & Instruments Department */}
+        <Courses onSelectCourse={setSelectedCourseForConsultation} />
 
         {/* Decorative Wave Divider into Story Section */}
         <SectionDivider preset="courses-to-story" />
