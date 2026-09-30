@@ -4,21 +4,35 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
 import { Courses } from './components/Courses';
+import { OnlineClassroom } from './components/OnlineClassroom';
 import { Story } from './components/Story';
 import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
-import { SectionDivider } from './components/SectionDivider';
 import { Manifesto } from './components/Manifesto';
 import { Events } from './components/Events';
 import { ContactForm } from './components/ContactForm';
+import { SectionDivider } from './components/SectionDivider';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
 import { QuickActionBar } from './components/QuickActionBar';
 import { Lightbox, LightboxData } from './components/Lightbox';
+import { PaymentModal, PaymentReceipt, PaymentFlowMode } from './components/PaymentModal';
+import { Course } from './types';
 
 function MainApp() {
   const [selectedCourseForConsultation, setSelectedCourseForConsultation] = useState<string>('');
+  const [payingCourse, setPayingCourse] = useState<Course | null>(null);
+  const [paymentFlowMode, setPaymentFlowMode] = useState<PaymentFlowMode>('tuition');
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
+
+  const handlePaymentSuccess = (receipt: PaymentReceipt) => {
+    // Payment record is persisted in localStorage
+  };
+
+  const handleOpenPayment = (course: Course, mode: PaymentFlowMode = 'tuition') => {
+    setPayingCourse(course);
+    setPaymentFlowMode(mode);
+  };
 
   return (
     <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200 overflow-x-hidden w-full max-w-full">
@@ -39,7 +53,13 @@ function MainApp() {
         <ProofStrip />
 
         {/* Dedicated Courses & Instruments Department */}
-        <Courses onSelectCourse={setSelectedCourseForConsultation} />
+        <Courses 
+          onSelectCourse={setSelectedCourseForConsultation} 
+          onPayTuition={(course) => handleOpenPayment(course, 'tuition')}
+        />
+
+        {/* Online Live Classroom & Practice Studio */}
+        <OnlineClassroom />
 
         {/* Decorative Wave Divider into Story Section */}
         <SectionDivider preset="courses-to-story" />
@@ -57,7 +77,12 @@ function MainApp() {
         <Teachers onOpenLightbox={setLightboxData} />
         <Manifesto />
         <Events onOpenLightbox={setLightboxData} />
-        <ContactForm selectedCourse={selectedCourseForConsultation} />
+        
+        {/* Contact, Level Assessment Booking, and Direct Tuition Payment Form */}
+        <ContactForm 
+          selectedCourse={selectedCourseForConsultation} 
+          onOpenPayment={(course, mode) => handleOpenPayment(course, mode)}
+        />
       </main>
 
       {/* Footer */}
@@ -68,6 +93,15 @@ function MainApp() {
 
       {/* Quick Action Floating Bar (Call, Messengers WhatsApp/Eitaa, Level Assessment Booking) */}
       <QuickActionBar />
+
+      {/* Online Payment Modal with Shaparak / ZarinPal Simulator & Confetti */}
+      <PaymentModal 
+        isOpen={Boolean(payingCourse)} 
+        course={payingCourse} 
+        mode={paymentFlowMode}
+        onClose={() => setPayingCourse(null)}
+        onSuccess={handlePaymentSuccess}
+      />
 
       {/* High-Resolution Image Lightbox Modal */}
       <Lightbox data={lightboxData} onClose={() => setLightboxData(null)} />

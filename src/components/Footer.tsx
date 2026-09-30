@@ -18,6 +18,7 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="text-[15px] font-medium leading-[2.41] text-[#5a626d] dark:text-[#9ca3af]">
               <li><a href="#courses" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">سازها و دوره‌های آموزشی</a></li>
+              <li><a href="#online-class" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">کلاس آنلاین و استودیو زنده</a></li>
               <li><a href="#teachers" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">اساتید و کادر آموزشی</a></li>
               <li><a href="#story" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">پیشینه و رسالت آموزشگاه</a></li>
               <li><a href="#stats" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">شاخص‌ها و آمار رسمی</a></li>

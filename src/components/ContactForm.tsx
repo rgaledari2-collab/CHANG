@@ -16,25 +16,36 @@ import {
   Headphones,
   ArrowLeft,
   Instagram,
-  ArrowUpRight
+  ArrowUpRight,
+  CreditCard,
+  Sparkles,
+  CheckCircle,
+  FileCheck,
+  CalendarCheck,
+  Coins
 } from 'lucide-react';
 import { COURSES_DATA } from '../data';
+import { Course } from '../types';
+import { PaymentFlowMode } from './PaymentModal';
 
 interface ContactFormProps {
   selectedCourse?: string;
+  onOpenPayment?: (course: Course, mode: PaymentFlowMode) => void;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
+export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpenPayment }) => {
+  const [activeTab, setActiveTab] = useState<'consultation' | 'registration'>('registration');
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [course, setCourse] = useState(selectedCourse || '');
   const [studentAge, setStudentAge] = useState('');
   const [preferredBranch, setPreferredBranch] = useState<'khorramshahr' | 'abadan'>('khorramshahr');
   const [message, setMessage] = useState('');
+  const [paymentChoice, setPaymentChoice] = useState<'tuition' | 'placement_deposit' | 'none'>('tuition');
 
   const [nameError, setNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
-  const [formStatus, setFormStatus] = useState<{ success?: boolean; text: string } | null>(null);
+  const [formStatus, setFormStatus] = useState<{ success?: boolean; text: string; isPaymentTriggered?: boolean } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +63,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
       .replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString())
       .replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
   };
+
+  const selectedCourseObj = COURSES_DATA.find(c => c.title === course) || COURSES_DATA[0];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,29 +105,48 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
 
     const branchName = preferredBranch === 'khorramshahr' ? 'شعبه خرمشهر' : 'شعبه آبادان';
 
-    // Store lead locally in browser localStorage for offline reliability and administrative backup
+    // Store lead locally in browser localStorage
     try {
       const storedLeads = JSON.parse(localStorage.getItem('chang_consultation_leads') || '[]');
       storedLeads.push({
         fullName: fullName.trim(),
         phone: normalizedPhone,
-        course: course || 'مشاوره کلی',
+        course: course || 'مشاوره و تعیین سطح کلی',
         studentAge,
         preferredBranch,
+        type: activeTab,
+        paymentChoice,
         message: message.trim(),
         createdAt: new Date().toISOString(),
       });
       localStorage.setItem('chang_consultation_leads', JSON.stringify(storedLeads));
     } catch {
-      // Ignore localStorage errors (e.g. in private browsing)
+      // Ignore localStorage errors
     }
 
     setTimeout(() => {
       setIsSubmitting(false);
-      setFormStatus({
-        success: true,
-        text: `درخواست مشاوره برای ${fullName.trim()} جهت ${branchName} (${course || 'تعیین سطح کلی'}) با موفقیت در سامانه چنگ ثبت شد. کارشناسان آموزشگاه در ساعات کاری با شما تماس خواهند گرفت.`
-      });
+
+      if (paymentChoice !== 'none' && onOpenPayment) {
+        // Direct transition into the ZarinPal Payment Gateway Modal
+        setFormStatus({
+          success: true,
+          text: `اطلاعات هنرجو ${fullName.trim()} با موفقیت ثبت شد. در حال هدایت به درگاه شاپرک جهت ${
+            paymentChoice === 'tuition' ? 'پرداخت شهریه دوره' : 'واریز بیعانه رزرو نوبت تعیین سطح'
+          }...`,
+          isPaymentTriggered: true
+        });
+        
+        setTimeout(() => {
+          onOpenPayment(selectedCourseObj, paymentChoice);
+        }, 600);
+      } else {
+        setFormStatus({
+          success: true,
+          text: `درخواست ${activeTab === 'registration' ? 'رزرو کلاس و پیش‌ثبت‌نام' : 'مشاوره و تعیین سطح'} برای ${fullName.trim()} جهت ${branchName} (${course || 'تعیین سطح کلی'}) با موفقیت ثبت گردید. کارشناسان آموزشگاه به زودی با شما تماس خواهند گرفت.`
+        });
+      }
+
       setFullName('');
       setPhone('');
       setStudentAge('');
@@ -131,14 +163,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
           <div className="lg:col-span-5 text-right">
             <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] mb-2 tracking-tight">
               <Headphones className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
-              <span>مشاوره تخصصی و تعیین سطح هنرجو</span>
+              <span>پذیرش، رزرو و پرداخت آنلاین شهریه</span>
             </div>
             
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#202124] dark:text-white leading-[1.10] tracking-[-0.025em] mb-4 [text-wrap:balance]">
-              یک گفت‌وگوی کوتاه، <br />یک شروع درست.
+              یک گفت‌وگوی کوتاه، <br />یک شروع درست و مستقیم.
             </h2>
             <p className="text-[16px] text-[#5a626d] dark:text-[#9ca3af] font-normal leading-[1.6] mb-8 [text-wrap:pretty]">
-              آموزشگاه موسیقی چنگ با دو شعبه فعال در خرمشهر و آبادان، آماده پاسخگویی و ارائه مشاوره حضوری و تلفنی جهت انتخاب ساز مناسب و تعیین سطح است.
+              شما می‌توانید بسته به نیازتان یکی از گزینه‌ها را انتخاب کنید: رزرو نوبت تعیین سطح تخصصی (با بیعانه کسر شونده از شهریه) یا پرداخت مستقیم و قطعی شهریه دوره با درگاه زرین‌پال.
             </p>
 
             <dl className="space-y-4">
@@ -221,18 +253,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
               </div>
 
               {/* Working Hours */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 shadow-xs flex items-start gap-4 group hover:border-[#B92B3A]/40 transition-colors">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 shadow-xs flex items-center gap-4">
                 <div className="w-11 h-11 rounded-xl bg-[#F3C7CA]/40 dark:bg-[#B92B3A]/20 border border-[#E8DFE0] dark:border-white/10 text-[#B92B3A] dark:text-[#F3C7CA] flex items-center justify-center shrink-0 shadow-xs">
                   <Clock className="w-5 h-5" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-0.5">
-                    <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium">ساعات پذیرش و پاسخگویی</dt>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>پاسخگویی هر دو شعبه</span>
-                    </span>
-                  </div>
+                <div>
+                  <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium mb-0.5">ساعات فعالیت و پذیرش</dt>
                   <dd className="text-[14px] font-bold text-[#202124] dark:text-white">
                     شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰
                   </dd>
@@ -242,7 +268,43 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
           </div>
 
           {/* Form Card */}
-          <div className="lg:col-span-7 bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-[18px] p-4 sm:p-8 lg:p-10 shadow-sm transition-colors">
+          <div className="lg:col-span-7 bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-[24px] p-5 sm:p-8 lg:p-10 shadow-sm transition-colors">
+            
+            {/* Header Mode Switcher (Level Assessment vs Direct Class Registration) */}
+            <div className="mb-6 p-1.5 bg-[#FAF0F1] dark:bg-white/5 rounded-2xl flex items-center gap-1 border border-[#E8DFE0] dark:border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('registration');
+                  setPaymentChoice('tuition');
+                }}
+                className={`flex-1 py-3 px-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all flex items-center justify-center gap-2 ${
+                  activeTab === 'registration'
+                    ? 'bg-[#B92B3A] text-white shadow-sm'
+                    : 'text-[#5a626d] dark:text-[#9ca3af] hover:text-[#202124]'
+                }`}
+              >
+                <CreditCard className="w-4 h-4" />
+                <span>ثبت‌نام دوره و شهریه</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('consultation');
+                  setPaymentChoice('placement_deposit');
+                }}
+                className={`flex-1 py-3 px-3 rounded-xl text-[13px] sm:text-[14px] font-bold transition-all flex items-center justify-center gap-2 ${
+                  activeTab === 'consultation'
+                    ? 'bg-[#19407e] text-white shadow-sm'
+                    : 'text-[#5a626d] dark:text-[#9ca3af] hover:text-[#202124]'
+                }`}
+              >
+                <CalendarCheck className="w-4 h-4" />
+                <span>رزرو تعیین سطح و بیعانه</span>
+              </button>
+            </div>
+
             <form onSubmit={handleSubmit} noValidate className="space-y-4 sm:space-y-5 text-right">
               
               {/* Branch Selection Tabs */}
@@ -296,7 +358,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
               {/* Full Name */}
               <div>
                 <label htmlFor="full-name" className="block text-[14px] font-bold text-[#202124] dark:text-white mb-1.5">
-                  نام و نام‌خانوادگی <span className="text-[#B92B3A]">*</span>
+                  نام و نام‌خانوادگی هنرجو <span className="text-[#B92B3A]">*</span>
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8996A6] dark:text-[#6b7280]">
@@ -362,7 +424,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="course-select" className="block text-[14px] font-bold text-[#202124] dark:text-white mb-1.5">
-                    ساز یا دوره مورد علاقه
+                    ساز یا دوره مورد نظر
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-[#8996A6] dark:text-[#6b7280]">
@@ -377,7 +439,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
                       <option value="">هنوز تصمیم نگرفته‌ام (مشاوره کلی)</option>
                       {COURSES_DATA.map((c) => (
                         <option key={c.id} value={c.title}>
-                          {c.title}
+                          {c.title} (شهریه: {(c.tuitionFee || 1650000).toLocaleString('fa-IR')} تومان)
                         </option>
                       ))}
                     </select>
@@ -406,6 +468,87 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
                 </div>
               </div>
 
+              {/* Dynamic Payment Option Box */}
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#1A1D24] border border-[#E8DFE0] dark:border-white/10 space-y-2.5">
+                <label className="block text-[13px] font-bold text-[#202124] dark:text-white">
+                  شیوه ثبت درخواست و پرداخت در شاپرک:
+                </label>
+                
+                <div className="space-y-2">
+                  <label 
+                    onClick={() => setPaymentChoice('tuition')}
+                    className={`cursor-pointer p-3 rounded-xl border flex items-center justify-between transition-all ${
+                      paymentChoice === 'tuition'
+                        ? 'border-[#B92B3A] bg-[#FAF0F1] dark:bg-[#200A13] ring-1 ring-[#B92B3A]'
+                        : 'border-[#E8DFE0] dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        paymentChoice === 'tuition' ? 'border-[#B92B3A]' : 'border-gray-400'
+                      }`}>
+                        {paymentChoice === 'tuition' && <div className="w-2 h-2 rounded-full bg-[#B92B3A]" />}
+                      </div>
+                      <div>
+                        <span className="text-[13px] font-bold text-[#202124] dark:text-white block">
+                          پرداخت مستقیم شهریه دوره (ثبت‌نام قطعی)
+                        </span>
+                        <span className="text-[11px] text-[#8996A6]">شهریه مصوب ترم ۸ جلسه‌ای</span>
+                      </div>
+                    </div>
+                    <span className="font-bold text-[14px] text-[#B92B3A] dark:text-[#FFB3BA]">
+                      {(selectedCourseObj.tuitionFee || 1650000).toLocaleString('fa-IR')} تومان
+                    </span>
+                  </label>
+
+                  <label 
+                    onClick={() => setPaymentChoice('placement_deposit')}
+                    className={`cursor-pointer p-3 rounded-xl border flex items-center justify-between transition-all ${
+                      paymentChoice === 'placement_deposit'
+                        ? 'border-[#19407e] bg-blue-50/50 dark:bg-blue-950/20 ring-1 ring-[#19407e]'
+                        : 'border-[#E8DFE0] dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        paymentChoice === 'placement_deposit' ? 'border-[#19407e]' : 'border-gray-400'
+                      }`}>
+                        {paymentChoice === 'placement_deposit' && <div className="w-2 h-2 rounded-full bg-[#19407e]" />}
+                      </div>
+                      <div>
+                        <span className="text-[13px] font-bold text-[#202124] dark:text-white block">
+                          بیعانه رزرو نوبت تعیین سطح تخصصی
+                        </span>
+                        <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
+                          کسر کامل از شهریه پس از ثبت‌نام
+                        </span>
+                      </div>
+                    </div>
+                    <span className="font-bold text-[14px] text-[#19407e] dark:text-sky-300">
+                      ۱۵۰,۰۰۰ تومان
+                    </span>
+                  </label>
+
+                  <label 
+                    onClick={() => setPaymentChoice('none')}
+                    className={`cursor-pointer p-2.5 rounded-xl border flex items-center gap-2.5 transition-all ${
+                      paymentChoice === 'none'
+                        ? 'border-gray-500 bg-gray-100 dark:bg-white/10'
+                        : 'border-[#E8DFE0] dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                      paymentChoice === 'none' ? 'border-gray-700' : 'border-gray-400'
+                    }`}>
+                      {paymentChoice === 'none' && <div className="w-2 h-2 rounded-full bg-gray-700 dark:bg-white" />}
+                    </div>
+                    <span className="text-[12px] text-[#5a626d] dark:text-[#9ca3af]">
+                      فقط تماس تلفنی و هماهنگی حضوری (بدون پرداخت آنلاین در این مرحله)
+                    </span>
+                  </label>
+                </div>
+              </div>
+
               {/* Message */}
               <div>
                 <label htmlFor="user-message" className="block text-[14px] font-bold text-[#202124] dark:text-white mb-1.5 flex items-center gap-1.5">
@@ -414,10 +557,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
                 </label>
                 <textarea
                   id="user-message"
-                  rows={3}
+                  rows={2}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="تجربه قبلی موسیقی، زمان ترجیحی تماس و..."
+                  placeholder="تجربه قبلی موسیقی، زمان ترجیحی تماس یا کلاس و..."
                   className="w-full px-4 py-3 rounded-xl bg-[#FCF8F8] dark:bg-[#0E1013] border border-[#E8DFE0] dark:border-white/10 text-[14px] text-[#202124] dark:text-white focus:outline-none focus:border-[#B92B3A] focus:ring-2 focus:ring-[#B92B3A]/20 resize-y"
                 />
               </div>
@@ -442,10 +585,23 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-full text-[16px] font-bold tracking-[-0.01em] bg-[#B92B3A] hover:bg-[#A52432] active:scale-[0.98] text-white transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#B92B3A] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                className={`w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-full text-[16px] font-bold tracking-[-0.01em] text-white transition-all shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer ${
+                  paymentChoice === 'placement_deposit'
+                    ? 'bg-[#19407e] hover:bg-[#12284c]'
+                    : 'bg-[#B92B3A] hover:bg-[#A52432]'
+                }`}
               >
                 {isSubmitting ? (
-                  <span>در حال ثبت اطلاعات...</span>
+                  <span>در حال پردازش و ثبت...</span>
+                ) : paymentChoice !== 'none' ? (
+                  <>
+                    <span>
+                      {paymentChoice === 'tuition' 
+                        ? 'انتقال به درگاه زرین‌پال و پرداخت شهریه' 
+                        : 'واریز بیعانه ۱۵۰,۰۰۰ تومانی تعیین سطح در شاپرک'}
+                    </span>
+                    <ArrowLeft className="w-4 h-4" />
+                  </>
                 ) : (
                   <>
                     <span>ثبت درخواست مشاوره و تعیین سطح</span>

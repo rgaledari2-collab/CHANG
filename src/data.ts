@@ -10,6 +10,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'از ۶ سال به بالا',
     level: 'مقدماتی تا کنسرواتوار',
     instrumentType: 'keyboard',
+    tuitionFee: 1850000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'آشنایی با کلاویه‌ها، پوزیسیون دست و نت‌خوانی کلید سل' },
       { id: 'm2', title: 'تمرینات اتود بایر و ارتقای استقلال دو دست' },
@@ -26,6 +28,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'نوجوانان و بزرگسالان',
     level: 'پایه‌ای تا عالی ردیف',
     instrumentType: 'string',
+    tuitionFee: 1650000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'شناخت پرده‌ها، استقرار ساز و مضراب‌نوازی راست و چپ' },
       { id: 'm2', title: 'مبانی دستگاه ماهور و شور و هماهنگی پنجه' },
@@ -42,6 +46,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: '۳ تا ۸ سال',
     level: 'دوره جامع پایه‌ای کودک',
     instrumentType: 'child',
+    tuitionFee: 1450000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'پرورش درک ریتم و ضرب‌آهنگ با بازی‌های حرکتی و دست‌زدن' },
       { id: 'm2', title: 'نت‌خوانی تصویری و تسلط بر سازهای تیغه‌ای بلز' },
@@ -58,6 +64,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'از ۸ سال به بالا',
     level: 'آغازین تا همنوازی حرفه‌ای',
     instrumentType: 'guitar',
+    tuitionFee: 1550000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'پوزیشن صحیح دست، آکوردهای سردسته و آرپژهای اولیه' },
       { id: 'm2', title: 'تسلط بر ریتم‌های پاپ ۴/۴ و ۶/۸ و آکوردهای باره‌دار' },
@@ -74,6 +82,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'نوجوانان و بزرگسالان',
     level: 'تنفس صحیح تا خوانندگی صحنه',
     instrumentType: 'vocal',
+    tuitionFee: 1950000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'تنفس عمیق شکمی دیافراگمی و رهایی حنجره' },
       { id: 'm2', title: 'سلفژ دیداری، درک فواصل صوتی و کوک دقیق صدا' },
@@ -90,6 +100,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'از ۷ سال به بالا',
     level: 'آغازین تا آنسامبل زهی',
     instrumentType: 'violin',
+    tuitionFee: 1750000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'استقرار بالشتک و آرشه‌کشی موازی با خرک' },
       { id: 'm2', title: 'انگشت‌گذاری دقیق پوزیسیون اول و سلفژ پرده‌ها' },
@@ -106,6 +118,8 @@ export const COURSES_DATA: Course[] = [
     ageGroup: 'تمامی گروه‌های سنی',
     level: 'پایه‌ای تا همنوازی سنتی',
     instrumentType: 'percussion',
+    tuitionFee: 1350000,
+    sessionCount: 8,
     milestones: [
       { id: 'm1', title: 'حرکات دست روی ساز، ضربات تم، بک و پلنگ' },
       { id: 'm2', title: 'ریتم‌های ۲/۴، ۶/۸ و وزن‌خوانی میزان‌ها' },

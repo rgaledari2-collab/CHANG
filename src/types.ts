@@ -14,6 +14,8 @@ export interface Course {
   instrumentType: 'keyboard' | 'string' | 'child' | 'vocal' | 'wind' | 'percussion' | 'guitar' | 'violin';
   level?: string;
   milestones?: CourseMilestone[];
+  tuitionFee?: number; // Tuition in Tomans per term
+  sessionCount?: number; // Number of sessions per term
 }
 
 export interface Teacher {

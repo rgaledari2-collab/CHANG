@@ -17,9 +17,10 @@ import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 
 interface CoursesProps {
   onSelectCourse: (courseTitle: string) => void;
+  onPayTuition: (course: Course) => void;
 }
 
-export const Courses: React.FC<CoursesProps> = ({ onSelectCourse }) => {
+export const Courses: React.FC<CoursesProps> = ({ onSelectCourse, onPayTuition }) => {
   const sectionRef = useRevealOnScroll<HTMLElement>();
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
@@ -188,19 +189,32 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourse }) => {
                 </div>
 
                 {/* Card Footer CTA */}
-                <div className="p-4 sm:p-5 bg-[#FAF0F1]/60 dark:bg-white/[0.02] border-t border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
-                  <span className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium">
-                    شعبه خرمشهر و آبادان
-                  </span>
+                <div className="p-4 sm:p-5 bg-[#FAF0F1]/60 dark:bg-white/[0.02] border-t border-[#E8DFE0] dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="text-right w-full sm:w-auto">
+                    <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af] block">شهریه هر ترم ({course.sessionCount || 8} جلسه):</span>
+                    <span className="text-[15px] font-extrabold text-[#B92B3A] dark:text-[#FFB3BA]">
+                      {(course.tuitionFee || 1650000).toLocaleString('fa-IR')} <span className="text-[11px] font-normal text-[#5a626d] dark:text-[#9ca3af]">تومان</span>
+                    </span>
+                  </div>
                   
-                  <button
-                    type="button"
-                    onClick={() => handleConsultationClick(course.title)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white text-[13px] font-bold transition-all shadow-xs"
-                  >
-                    <span>رزرو و مشاوره این دوره</span>
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                    <button
+                      type="button"
+                      onClick={() => handleConsultationClick(course.title)}
+                      className="px-3 py-2 rounded-full border border-[#E8DFE0] dark:border-white/10 hover:border-[#B92B3A] text-[12px] font-semibold text-[#202124] dark:text-white transition-all"
+                    >
+                      مشاوره حضوری
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => onPayTuition(course)}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#B92B3A] hover:bg-[#D9384A] active:scale-95 text-white text-[12px] font-bold transition-all shadow-xs"
+                    >
+                      <span>ثبت‌نام و پرداخت آنلاین</span>
+                      <ArrowLeft className="w-3 h-3" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );
