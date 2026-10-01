@@ -27,6 +27,7 @@ import {
 import { COURSES_DATA } from '../data';
 import { Course } from '../types';
 import { PaymentFlowMode } from './PaymentModal';
+import { useSiteConfig } from '../config/SiteConfigContext';
 
 interface ContactFormProps {
   selectedCourse?: string;
@@ -34,6 +35,9 @@ interface ContactFormProps {
 }
 
 export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpenPayment }) => {
+  const config = useSiteConfig();
+  const { phone: configPhone, phoneDisplay, workingHours, branches } = config;
+
   const [activeTab, setActiveTab] = useState<'consultation' | 'registration'>('registration');
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -182,11 +186,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 <div className="flex-1">
                   <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium mb-0.5">شماره تماس و مشاوره</dt>
                   <dd className="text-[18px] font-extrabold text-[#202124] dark:text-white flex items-center justify-between">
-                    <a href="tel:09359352738" className="hover:text-[#B92B3A] dark:hover:text-[#F3C7CA] transition-colors dir-ltr font-mono">
-                      ۰۹۳۵-۹۳۵-۲۷۳۸
+                    <a href={`tel:${configPhone}`} className="hover:text-[#B92B3A] dark:hover:text-[#F3C7CA] transition-colors dir-ltr font-mono">
+                      {phoneDisplay}
                     </a>
                     <a 
-                      href="tel:09359352738" 
+                      href={`tel:${configPhone}`} 
                       className="inline-flex items-center gap-1 text-[12px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] hover:underline"
                     >
                       <span>تماس مستقیم</span>
@@ -204,23 +208,25 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <dt className="text-[12px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] bg-[#FAF0F1] dark:bg-[#B92B3A]/15 px-2.5 py-0.5 rounded-md inline-block">
-                      شعبه خرمشهر
+                      {branches.khorramshahr.name}
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">دفتر مرکزی</span>
                   </div>
                   <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
-                    میدان فرمانداری - مجتمع فرهنگی هنری خلیج فارس
+                    {branches.khorramshahr.address}
                   </dd>
-                  <a
-                    href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
-                  >
-                    <Instagram className="w-3.5 h-3.5" />
-                    <span>پیج اینستاگرام شعبه خرمشهر (chang_khorramshahr@)</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
+                  {branches.khorramshahr.instagram && (
+                    <a
+                      href={branches.khorramshahr.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                      <span>پیج اینستاگرام شعبه خرمشهر ({branches.khorramshahr.instagramId}@)</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                 </div>
               </div>
 
@@ -232,23 +238,25 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
                     <dt className="text-[12px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] bg-[#FAF0F1] dark:bg-[#B92B3A]/15 px-2.5 py-0.5 rounded-md inline-block">
-                      شعبه آبادان
+                      {branches.abadan.name}
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">شعبه فعال</span>
                   </div>
                   <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
-                    سه‌راه شاملو، نبش زمین چمن
+                    {branches.abadan.address}
                   </dd>
-                  <a
-                    href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
-                  >
-                    <Instagram className="w-3.5 h-3.5" />
-                    <span>پیج اینستاگرام شعبه آبادان (chang_abadan@)</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
+                  {branches.abadan.instagram && (
+                    <a
+                      href={branches.abadan.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                      <span>پیج اینستاگرام شعبه آبادان ({branches.abadan.instagramId}@)</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                 </div>
               </div>
 
@@ -260,7 +268,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 <div>
                   <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium mb-0.5">ساعات فعالیت و پذیرش</dt>
                   <dd className="text-[14px] font-bold text-[#202124] dark:text-white">
-                    شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰
+                    {workingHours}
                   </dd>
                 </div>
               </div>

@@ -1,8 +1,12 @@
 import React from 'react';
 import { ChangLogo } from './ChangLogo';
 import { Instagram, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { useSiteConfig } from '../config/SiteConfigContext';
 
 export const Footer: React.FC = () => {
+  const config = useSiteConfig();
+  const { phone, phoneDisplay, workingHours, branches, socialLinks } = config;
+
   return (
     <footer className="bg-[#FCF8F8] dark:bg-[#0B0D11] text-[#202124] dark:text-white pt-16 pb-24 md:pb-16 border-t border-[#E8DFE0] dark:border-white/10 transition-colors select-none">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,60 +68,68 @@ export const Footer: React.FC = () => {
             </h4>
             <div className="text-[14px] font-medium leading-[2.1] text-[#5a626d] dark:text-[#9ca3af]">
               <p className="mb-2">
-                <a href="tel:09359352738" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] font-extrabold text-[16px] text-[#202124] dark:text-white transition-colors dir-ltr inline-block font-mono">
-                  ۰۹۳۵-۹۳۵-۲۷۳۸
+                <a href={`tel:${phone}`} className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] font-extrabold text-[16px] text-[#202124] dark:text-white transition-colors dir-ltr inline-block font-mono">
+                  {phoneDisplay}
                 </a>
               </p>
               <div className="space-y-1.5 text-[13px] text-[#515964] dark:text-[#CBD5E1]">
                 <p>
-                  <strong className="text-[#202124] dark:text-white">شعبه خرمشهر:</strong> میدان فرمانداری - مجتمع فرهنگی هنری خلیج فارس
+                  <strong className="text-[#202124] dark:text-white">{branches.khorramshahr.name}:</strong> {branches.khorramshahr.address}
                 </p>
                 <p>
-                  <strong className="text-[#202124] dark:text-white">شعبه آبادان:</strong> سه‌راه شاملو، نبش زمین چمن
+                  <strong className="text-[#202124] dark:text-white">{branches.abadan.name}:</strong> {branches.abadan.address}
                 </p>
               </div>
               <p className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] mt-2.5">
-                شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰
+                {workingHours}
               </p>
 
-              {/* Instagram Official Links */}
+              {/* Official Social Links from config.json */}
               <div className="mt-3.5 pt-3 border-t border-[#E8DFE0] dark:border-white/10 space-y-1.5">
-                <a
-                  href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between text-[12px] text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#9C1C29] font-bold group"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Instagram className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#FFB3BA]" />
-                    <span>اینستاگرام خرمشهر</span>
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-                <a
-                  href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between text-[12px] text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#9C1C29] font-bold group"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Instagram className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#FFB3BA]" />
-                    <span>اینستاگرام آبادان</span>
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-                <a
-                  href="https://eitaa.com/Changabadan"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between text-[12px] text-orange-600 dark:text-orange-400 hover:text-orange-700 font-bold group"
-                >
-                  <span className="flex items-center gap-1.5">
-                    <MessageCircle className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
-                    <span>کانال ایتا (Changabadan@)</span>
-                  </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
+                {socialLinks.instagramKhorramshahr && (
+                  <a
+                    href={socialLinks.instagramKhorramshahr}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between text-[12px] text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#9C1C29] font-bold group"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <Instagram className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#FFB3BA]" />
+                      <span>اینستاگرام خرمشهر</span>
+                    </span>
+                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                )}
+
+                {socialLinks.instagramAbadan && (
+                  <a
+                    href={socialLinks.instagramAbadan}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between text-[12px] text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#9C1C29] font-bold group"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <Instagram className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#FFB3BA]" />
+                      <span>اینستاگرام آبادان</span>
+                    </span>
+                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                )}
+
+                {socialLinks.eitaa && (
+                  <a
+                    href={socialLinks.eitaa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between text-[12px] text-orange-600 dark:text-orange-400 hover:text-orange-700 font-bold group"
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <MessageCircle className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
+                      <span>کانال ایتا ({socialLinks.eitaaId || 'ایتا'})</span>
+                    </span>
+                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -130,10 +142,10 @@ export const Footer: React.FC = () => {
             <span className="h-7 w-14 flex items-center justify-center shrink-0">
               <ChangLogo className="w-full h-full" variant="currentColor" />
             </span>
-            <p>© {new Date().getFullYear()} کلیه حقوق برای آموزشگاه موسیقی چنگ (شعب خرمشهر و آبادان) محفوظ است.</p>
+            <p>© {new Date().getFullYear()} کلیه حقوق برای {config.siteName} (شعب خرمشهر و آبادان) محفوظ است.</p>
           </div>
           <div className="flex items-center gap-3">
-            <span>آموزشگاه تخصصی موسیقی چنگ</span>
+            <span>{config.siteName}</span>
             <span>·</span>
             <span>خرمشهر و آبادان، خوزستان</span>
           </div>

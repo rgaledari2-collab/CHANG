@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSiteConfig } from '../config/SiteConfigContext';
 import { 
   Link2, 
   Video, 
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 
 export const OnlineClassGuide: React.FC = () => {
+  const config = useSiteConfig();
   const [activeTab, setActiveTab] = useState<'steps' | 'tips' | 'faq'>('steps');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -257,10 +259,10 @@ export const OnlineClassGuide: React.FC = () => {
         </div>
 
         <a 
-          href="tel:09359352738" 
+          href={`tel:${config.phone}`} 
           className="text-[#B92B3A] dark:text-[#FFB3BA] hover:underline font-bold flex items-center gap-1 font-mono"
         >
-          <span>شماره پشتیبانی کلاس‌ها: ۰۹۳۵۹۳۵۲۷۳۸</span>
+          <span>شماره پشتیبانی کلاس‌ها: {config.phoneDisplay}</span>
           <ArrowLeft className="w-3.5 h-3.5" />
         </a>
       </div>

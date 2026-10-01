@@ -21,8 +21,12 @@ import {
 } from 'lucide-react';
 import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
+import { useSiteConfig } from '../config/SiteConfigContext';
 
 export const Header: React.FC = () => {
+  const config = useSiteConfig();
+  const { phone, phoneDisplay, workingHours, branches, socialLinks } = config;
+
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -187,19 +191,19 @@ export const Header: React.FC = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Direct Phone Link in Dark Pill */}
           <a
-            href="tel:09359352738"
+            href={`tel:${phone}`}
             className="hidden xl:inline-flex items-center gap-2 text-[12px] text-[#E8DFE0] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-full transition-all duration-150 shadow-2xs"
             title="تماس مستقیم با آموزشگاه"
           >
             <Phone className="w-3.5 h-3.5 text-[#F3C7CA]" />
-            <span className="dir-ltr font-mono font-semibold text-white">۰۹۳۵-۹۳۵-۲۷۳۸</span>
+            <span className="dir-ltr font-mono font-semibold text-white">{phoneDisplay}</span>
           </a>
 
           {/* Quick Call Icon on Mobile */}
           <a
-            href="tel:09359352738"
+            href={`tel:${phone}`}
             className="lg:hidden p-2 rounded-xl text-[#F3C7CA] hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 transition-colors"
-            title="تماس مستقیم با آموزشگاه: ۰۹۳۵۹۳۵۲۷۳۸"
+            title={`تماس مستقیم با آموزشگاه: ${phoneDisplay}`}
             aria-label="تماس تلفنی با آموزشگاه"
           >
             <Phone className="w-4 h-4" />
@@ -321,7 +325,7 @@ export const Header: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               {/* Direct Call */}
               <a
-                href="tel:09359352738"
+                href={`tel:${phone}`}
                 className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 hover:bg-emerald-500/25 transition-colors group"
               >
                 <div className="flex items-center gap-3">
@@ -330,7 +334,7 @@ export const Header: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <span className="block text-[13px] font-bold text-emerald-200">تماس تلفنی سریع</span>
-                    <span className="block text-[14px] font-mono font-extrabold text-white dir-ltr">۰۹۳۵-۹۳۵-۲۷۳۸</span>
+                    <span className="block text-[14px] font-mono font-extrabold text-white dir-ltr">{phoneDisplay}</span>
                   </div>
                 </div>
                 <ArrowLeft className="w-4 h-4 text-emerald-400 group-hover:-translate-x-1 transition-transform" />
@@ -362,45 +366,51 @@ export const Header: React.FC = () => {
               </span>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <a
-                  href="https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-white text-[12px] font-bold hover:brightness-110 transition-all group"
-                >
-                  <div className="flex items-center gap-2">
-                    <Instagram className="w-4 h-4 text-pink-400" />
-                    <span>اینستاگرام خرمشهر</span>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-pink-400 group-hover:translate-x-0.5" />
-                </a>
+                {socialLinks.instagramKhorramshahr && (
+                  <a
+                    href={socialLinks.instagramKhorramshahr}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 border border-pink-500/30 text-white text-[12px] font-bold hover:brightness-110 transition-all group"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Instagram className="w-4 h-4 text-pink-400" />
+                      <span>اینستاگرام خرمشهر</span>
+                    </div>
+                    <ExternalLink className="w-3.5 h-3.5 text-pink-400 group-hover:translate-x-0.5" />
+                  </a>
+                )}
 
-                <a
-                  href="https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-rose-500/20 to-orange-500/20 border border-rose-500/30 text-white text-[12px] font-bold hover:brightness-110 transition-all group"
-                >
-                  <div className="flex items-center gap-2">
-                    <Instagram className="w-4 h-4 text-rose-400" />
-                    <span>اینستاگرام آبادان</span>
-                  </div>
-                  <ExternalLink className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5" />
-                </a>
+                {socialLinks.instagramAbadan && (
+                  <a
+                    href={socialLinks.instagramAbadan}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-rose-500/20 to-orange-500/20 border border-rose-500/30 text-white text-[12px] font-bold hover:brightness-110 transition-all group"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Instagram className="w-4 h-4 text-rose-400" />
+                      <span>اینستاگرام آبادان</span>
+                    </div>
+                    <ExternalLink className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5" />
+                  </a>
+                )}
               </div>
 
-              <a
-                href="https://eitaa.com/Changabadan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-orange-500/20 border border-orange-500/30 text-white text-[12px] font-bold hover:bg-orange-500/30 transition-all group"
-              >
-                <div className="flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-orange-400" />
-                  <span>کانال رسمی ایتا (Changabadan@)</span>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-orange-400" />
-              </a>
+              {socialLinks.eitaa && (
+                <a
+                  href={socialLinks.eitaa}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-between p-2.5 rounded-xl bg-orange-500/20 border border-orange-500/30 text-white text-[12px] font-bold hover:bg-orange-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4 text-orange-400" />
+                    <span>کانال رسمی ایتا ({socialLinks.eitaaId || 'ایتا'})</span>
+                  </div>
+                  <ExternalLink className="w-3.5 h-3.5 text-orange-400" />
+                </a>
+              )}
             </div>
 
             {/* Branch Addresses */}
@@ -408,20 +418,20 @@ export const Header: React.FC = () => {
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#B92B3A] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white">شعبه خرمشهر: </strong>
-                  <span>میدان فرمانداری، مجتمع فرهنگی هنری خلیج فارس</span>
+                  <strong className="text-white">{branches.khorramshahr.name}: </strong>
+                  <span>{branches.khorramshahr.address}</span>
                 </div>
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-[#B92B3A] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white">شعبه آبادان: </strong>
-                  <span>سه‌راه شاملو، نبش زمین چمن</span>
+                  <strong className="text-white">{branches.abadan.name}: </strong>
+                  <span>{branches.abadan.address}</span>
                 </div>
               </div>
               <div className="flex items-center gap-2 pt-1.5 border-t border-white/10 text-[11px] text-[#CBD5E1]">
                 <Clock className="w-3.5 h-3.5 text-[#B92B3A] shrink-0" />
-                <span>ساعات کاری: شنبه تا پنج‌شنبه ۹ الی ۱۳ و ۱۶ الی ۲۱</span>
+                <span>ساعات کاری: {workingHours}</span>
               </div>
             </div>
 

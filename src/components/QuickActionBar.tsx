@@ -3,27 +3,29 @@ import {
   Phone, 
   Sparkles, 
   X, 
-  ArrowLeft, 
   ExternalLink, 
   Instagram, 
-  MessageCircle,
-  Clock,
-  MapPin
+  MessageCircle, 
+  MapPin 
 } from 'lucide-react';
+import { useSiteConfig } from '../config/SiteConfigContext';
 
 interface QuickActionBarProps {
   onOpenConsultation?: () => void;
 }
 
 export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultation }) => {
+  const config = useSiteConfig();
   const [showMessengerModal, setShowMessengerModal] = useState(false);
   const [isFabMenuOpen, setIsFabMenuOpen] = useState(false);
 
-  const phoneNumber = '09359352738';
-  const whatsappUrl = `https://wa.me/989359352738?text=${encodeURIComponent('درود، درخواست مشاوره، دریافت لوکیشن شعب و رزرو تعیین سطح در آموزشگاه موسیقی چنگ را دارم.')}`;
-  const eitaaUrl = 'https://eitaa.com/Changabadan';
-  const igKhorramshahrUrl = 'https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw==';
-  const igAbadanUrl = 'https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg==';
+  const phoneNumber = config.phone;
+  const whatsappUrl = config.socialLinks.whatsapp 
+    ? `${config.socialLinks.whatsapp}?text=${encodeURIComponent('درود، درخواست مشاوره، دریافت لوکیشن شعب و رزرو تعیین سطح در آموزشگاه موسیقی چنگ را دارم.')}`
+    : `https://wa.me/98${config.phone.replace(/^0/, '')}`;
+  const eitaaUrl = config.socialLinks.eitaa;
+  const igKhorramshahrUrl = config.socialLinks.instagramKhorramshahr;
+  const igAbadanUrl = config.socialLinks.instagramAbadan;
 
   const handleBookingClick = () => {
     setIsFabMenuOpen(false);
@@ -137,7 +139,7 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
         <div className="bg-[#1A1B1E]/95 dark:bg-[#121316]/95 backdrop-blur-xl border border-white/15 rounded-full p-1.5 shadow-xl flex items-center gap-2 ring-1 ring-black/20">
           <a
             href={`tel:${phoneNumber}`}
-            aria-label="تماس با دفتر آموزشگاه: ۰۹۳۵۹۳۵۲۷۳۸"
+            aria-label={`تماس با دفتر آموزشگاه: ${config.phoneDisplay}`}
             title="تماس مستقیم با دفتر آموزشگاه"
             className="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30 flex items-center justify-center transition-all active:scale-95"
           >
@@ -208,91 +210,99 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
             {/* Channels List */}
             <div className="space-y-2.5">
               {/* 1. Instagram Khorramshahr */}
-              <a
-                href={igKhorramshahrUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 hover:border-pink-500/40 text-[#202124] dark:text-white transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                    <Instagram className="w-5 h-5" />
+              {igKhorramshahrUrl && (
+                <a
+                  href={igKhorramshahrUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 hover:border-pink-500/40 text-[#202124] dark:text-white transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <Instagram className="w-5 h-5" />
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[13px] font-bold">اینستاگرام {config.branches.khorramshahr.name}</span>
+                      <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">@{config.branches.khorramshahr.instagramId}</span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-[13px] font-bold">اینستاگرام شعبه خرمشهر</span>
-                    <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">@chang_khorramshahr</span>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-pink-500 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-pink-500 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              )}
 
               {/* 2. Instagram Abadan */}
-              <a
-                href={igAbadanUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 hover:border-rose-500/40 text-[#202124] dark:text-white transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 to-orange-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                    <Instagram className="w-5 h-5" />
+              {igAbadanUrl && (
+                <a
+                  href={igAbadanUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-gradient-to-r from-rose-500/10 to-amber-500/10 border border-rose-500/20 hover:border-rose-500/40 text-[#202124] dark:text-white transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-500 to-orange-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <Instagram className="w-5 h-5" />
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[13px] font-bold">اینستاگرام {config.branches.abadan.name}</span>
+                      <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">@{config.branches.abadan.instagramId}</span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-[13px] font-bold">اینستاگرام شعبه آبادان</span>
-                    <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">@chang_abadan</span>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-rose-500 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-rose-500 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              )}
 
               {/* 3. WhatsApp Direct */}
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 text-[#202124] dark:text-white transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                    <MessageCircle className="w-5 h-5" />
+              {whatsappUrl && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 text-[#202124] dark:text-white transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <MessageCircle className="w-5 h-5" />
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[13px] font-bold">ارتباط مستقیم در واتساپ</span>
+                      <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1] dir-ltr">{config.phoneDisplay}</span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-[13px] font-bold">ارتباط مستقیم در واتساپ</span>
-                    <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1] dir-ltr">۰۹۳۵-۹۳۵-۲۷۳۸</span>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-emerald-500 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-emerald-500 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              )}
 
               {/* 4. Eitaa Channel */}
-              <a
-                href={eitaaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-orange-500/10 border border-orange-500/20 hover:border-orange-500/40 text-[#202124] dark:text-white transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                    <MessageCircle className="w-5 h-5" />
+              {eitaaUrl && (
+                <a
+                  href={eitaaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-orange-500/10 border border-orange-500/20 hover:border-orange-500/40 text-[#202124] dark:text-white transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <MessageCircle className="w-5 h-5" />
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[13px] font-bold">کانال رسمی در پیام‌رسان ایتا</span>
+                      <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">{config.socialLinks.eitaaId || '@Changabadan'}</span>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-[13px] font-bold">کانال رسمی در پیام‌رسان ایتا</span>
-                    <span className="block text-[11px] font-mono text-[#4A5568] dark:text-[#CBD5E1]">@Changabadan</span>
-                  </div>
-                </div>
-                <ExternalLink className="w-4 h-4 text-orange-500 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                  <ExternalLink className="w-4 h-4 text-orange-500 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              )}
             </div>
 
             {/* Branch Locations note */}
             <div className="mt-4 pt-3 border-t border-[#E8DFE0] dark:border-white/10 text-[11px] text-[#4A5568] dark:text-[#CBD5E1] space-y-1.5">
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-[#B92B3A] shrink-0" />
-                <span>شعبه خرمشهر: میدان فرمانداری، مجتمع فرهنگی خلیج فارس</span>
+                <span>{config.branches.khorramshahr.name}: {config.branches.khorramshahr.address}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-[#B92B3A] shrink-0" />
-                <span>شعبه آبادان: سه‌راه شاملو، نبش زمین چمن</span>
+                <span>{config.branches.abadan.name}: {config.branches.abadan.address}</span>
               </div>
             </div>
 

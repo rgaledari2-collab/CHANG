@@ -1,0 +1,35 @@
+{
+  "siteName": "آموزشگاه موسیقی چنگ",
+  "slogan": "اصالت، آموزش آکادمیک و صحنه اجرا در خرمشهر و آبادان",
+  "phone": "09359352738",
+  "phoneDisplay": "۰۹۳۵-۹۳۵-۲۷۳۸",
+  "workingHours": "شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰",
+  "branches": {
+    "khorramshahr": {
+      "name": "شعبه خرمشهر",
+      "isMain": true,
+      "address": "میدان فرمانداری - مجتمع فرهنگی هنری خلیج فارس",
+      "city": "خرمشهر",
+      "province": "خوزستان",
+      "instagram": "https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw==",
+      "instagramId": "chang_khorramshahr"
+    },
+    "abadan": {
+      "name": "شعبه آبادان",
+      "isMain": false,
+      "address": "سه‌راه شاملو، نبش زمین چمن",
+      "city": "آبادان",
+      "province": "خوزستان",
+      "instagram": "https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg==",
+      "instagramId": "chang_abadan"
+    }
+  },
+  "socialLinks": {
+    "instagramKhorramshahr": "https://www.instagram.com/chang_khorramshahr?stkn=MWpvZTljd2Rya3U1cw==",
+    "instagramAbadan": "https://www.instagram.com/chang_abadan?stkn=MTY1ZnhtdDVkcWZrbg==",
+    "eitaa": "https://eitaa.com/Changabadan",
+    "eitaaId": "@Changabadan",
+    "whatsapp": "https://wa.me/989359352738"
+  },
+  "adminNotice": "برای تغییر تلفن، آدرس یا شبکه‌های اجتماعی این فایل (config.json) را در ریشه هاست ویرایش کنید."
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { SiteConfigProvider } from './config/SiteConfigContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
@@ -112,7 +113,9 @@ function MainApp() {
 export default function App() {
   return (
     <ThemeProvider>
-      <MainApp />
+      <SiteConfigProvider>
+        <MainApp />
+      </SiteConfigProvider>
     </ThemeProvider>
   );
 }
