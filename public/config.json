@@ -4,6 +4,11 @@
   "phone": "09359352738",
   "phoneDisplay": "۰۹۳۵-۹۳۵-۲۷۳۸",
   "workingHours": "شنبه تا پنج‌شنبه: ۹:۰۰ تا ۱۳:۰۰ و ۱۶:۰۰ تا ۲۱:۰۰",
+  "adminPassword": "chang",
+  "pricing": {
+    "placementDeposit": 150000,
+    "regularTuition": 1650000
+  },
   "branches": {
     "khorramshahr": {
       "name": "شعبه خرمشهر",
@@ -31,5 +36,5 @@
     "eitaaId": "@Changabadan",
     "whatsapp": "https://wa.me/989359352738"
   },
-  "adminNotice": "برای تغییر تلفن، آدرس یا شبکه‌های اجتماعی این فایل (config.json) را در ریشه هاست ویرایش کنید."
+  "adminNotice": "برای تغییر تلفن، آدرس یا شبکه‌های اجتماعی این فایل (config.json) را در ریشه هاست ویرایش کنید یا از پنل مدیریت داخل سایت استفاده نمایید."
 }

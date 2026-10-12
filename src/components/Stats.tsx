@@ -20,7 +20,7 @@ const STATS_ITEMS: StatItem[] = [
     suffix: '+ سال',
     title: 'سابقه آموزش و اصالت',
     description: 'از دهه ۱۳۵۰ خرمشهر؛ پنج دهه پداگوژی استاندارد، تداوم فرهنگی و آموزش نسل‌ها',
-    icon: <History className="w-6 h-6 text-[#B92B3A] dark:text-[#F3C7CA]" />,
+    icon: <History className="w-6 h-6 text-[#B92B3A] dark:text-[#FFB3BA]" />,
     stepNumber: '۰۱',
     detail: 'بیش از نیم قرن تداوم فرهنگی'
   },
@@ -30,7 +30,7 @@ const STATS_ITEMS: StatItem[] = [
     suffix: '+ نفر',
     title: 'هنرجوی فارغ‌التحصیل و موفق',
     description: 'هنرجویانی که دوره‌های آکادمیک را به پایان رسانده و وارد کنسرواتوارها و ارکسترها شده‌اند',
-    icon: <GraduationCap className="w-6 h-6 text-[#B92B3A] dark:text-[#F3C7CA]" />,
+    icon: <GraduationCap className="w-6 h-6 text-[#B92B3A] dark:text-[#FFB3BA]" />,
     stepNumber: '۰۲',
     detail: 'دارای پرونده فارغ‌التحصیلی معتبر'
   },
@@ -40,7 +40,7 @@ const STATS_ITEMS: StatItem[] = [
     suffix: '+ ساز',
     title: 'ساز تخصصی و دوره آموزشی',
     description: 'شامل پیانو، تار، سه‌تار، سنتور، ویولن، گیتار، دف، تنبک، آواز کلاسیک و متد ارف',
-    icon: <Music className="w-6 h-6 text-[#B92B3A] dark:text-[#F3C7CA]" />,
+    icon: <Music className="w-6 h-6 text-[#B92B3A] dark:text-[#FFB3BA]" />,
     stepNumber: '۰۳',
     detail: 'آموزش سازهای ایرانی و جهانی'
   },
@@ -50,7 +50,7 @@ const STATS_ITEMS: StatItem[] = [
     suffix: '+ کنسرت',
     title: 'کنسرت و رسیتال صحنه‌ای',
     description: 'اجراهای زنده رسمی با حضور خانواده‌ها جهت غلبه بر اضطراب صحنه و تجربه حرفه‌ای استیج',
-    icon: <Sparkles className="w-6 h-6 text-[#B92B3A] dark:text-[#F3C7CA]" />,
+    icon: <Sparkles className="w-6 h-6 text-[#B92B3A] dark:text-[#FFB3BA]" />,
     stepNumber: '۰۴',
     detail: 'سالن اختصاصی اجراهای هنرجویی'
   },
@@ -82,7 +82,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
     const cardEl = cardRef.current;
     if (!cardEl) return;
 
-    // Check prefers-reduced-motion
+    // Respect user's motion preferences
     const prefersReducedMotion =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -94,59 +94,47 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
       return;
     }
 
-    // On mobile screens, immediately reveal to prevent any loading delays
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    if (isMobile) {
-      setIsVisible(true);
-      setCurrentValue(item.targetValue);
-      setIsCompleted(true);
-      return;
-    }
-
-    // Animation runner using RequestAnimationFrame with smooth Quintic Ease-Out
+    // High-performance scroll-triggered counter animation via requestAnimationFrame
     const startCounterAnimation = () => {
       if (hasAnimatedRef.current) return;
       hasAnimatedRef.current = true;
       setIsVisible(true);
 
-      const duration = 2000; // 2 seconds animation
-      let startTime: number | null = null;
+      const duration = 2200; // 2.2 seconds silky-smooth count up
+      let startTimestamp: number | null = null;
       const startValue = 0;
       const endValue = item.targetValue;
+      const startDelay = index * 120; // Staggered cascade per card
 
-      // Small initial delay based on card index for a natural cascading wave effect
-      const startDelay = index * 140;
+      const step = (timestamp: number) => {
+        if (!startTimestamp) startTimestamp = timestamp + startDelay;
 
-      const animate = (timestamp: number) => {
-        if (!startTime) startTime = timestamp + startDelay;
-
-        // Waiting for cascade delay
-        if (timestamp < startTime) {
-          requestAnimationFrame(animate);
+        if (timestamp < startTimestamp) {
+          requestAnimationFrame(step);
           return;
         }
 
-        const elapsed = timestamp - startTime;
+        const elapsed = timestamp - startTimestamp;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Quintic Ease-Out: 1 - (1 - t)^5 (super smooth deceleration)
+        // Quintic Ease-Out curve for dramatic initial acceleration and smooth organic deceleration
         const easeOut = 1 - Math.pow(1 - progress, 5);
         const next = Math.floor(startValue + (endValue - startValue) * easeOut);
 
         setCurrentValue(next);
 
         if (progress < 1) {
-          requestAnimationFrame(animate);
+          requestAnimationFrame(step);
         } else {
           setCurrentValue(endValue);
           setIsCompleted(true);
         }
       };
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(step);
     };
 
-    // IntersectionObserver to trigger fade-in & counting animation on scroll into view
+    // IntersectionObserver triggers when the stats card scrolls into view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -157,7 +145,7 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
         });
       },
       {
-        threshold: 0.15, // Triggers when 15% of the card is visible in the viewport
+        threshold: 0.15,
         rootMargin: '0px 0px -40px 0px',
       }
     );
@@ -175,17 +163,17 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
     <div
       ref={cardRef}
       style={{
-        transitionDelay: `${index * 130}ms`,
+        transitionDelay: `${index * 110}ms`,
       }}
-      className={`bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#B92B3A]/40 dark:hover:border-[#B92B3A]/60 hover:shadow-lg transition-all duration-700 ease-out group relative overflow-hidden will-change-transform ${
+      className={`bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 rounded-2xl p-6 sm:p-7 flex flex-col justify-between hover:border-[#B92B3A]/40 dark:hover:border-[#B92B3A]/60 hover:shadow-xl transition-all duration-700 ease-out group relative overflow-hidden will-change-transform select-none ${
         isVisible
           ? 'opacity-100 translate-y-0 scale-100'
-          : 'opacity-0 translate-y-8 scale-[0.98] pointer-events-none'
+          : 'opacity-0 translate-y-8 scale-[0.98]'
       }`}
     >
-      {/* Top ambient highlight on hover */}
+      {/* Top ambient highlight line on hover */}
       <div 
-        className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-transparent via-[#B92B3A]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+        className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-transparent via-[#B92B3A]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
         aria-hidden="true" 
       />
 
@@ -195,32 +183,32 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
           <div className="w-12 h-12 rounded-xl bg-[#FAF0F1] dark:bg-[#B92B3A]/15 border border-[#E8DFE0] dark:border-white/10 flex items-center justify-center group-hover:scale-105 group-hover:bg-[#F3C7CA]/30 transition-all duration-200 shadow-2xs">
             {item.icon}
           </div>
-          <span className="font-mono text-[12px] font-bold text-[#8996A6] dark:text-[#9ca3af] tracking-wider">
+          <span className="font-mono text-[13px] font-bold text-[#8996A6] dark:text-[#9ca3af] tracking-wider">
             {item.stepNumber}
           </span>
         </div>
 
-        {/* Counter Display with Real-Time Number Ticker */}
+        {/* Counter Display with Real-Time Number Ticker & Glow Accent */}
         <div className="mb-3 flex items-baseline gap-2 flex-wrap">
           <span
-            className="text-3xl sm:text-4xl lg:text-[44px] font-black text-[#1a1b1e] dark:text-white tracking-tight tabular-nums"
+            className="text-4xl sm:text-5xl lg:text-[48px] font-black font-brand-title text-[#141518] dark:text-white tracking-tight tabular-nums transition-transform duration-75"
             aria-live="polite"
             aria-label={`${item.targetValue} ${item.suffix}`}
           >
             {formatPersianNumber(currentValue)}
           </span>
-          <span className="text-lg sm:text-xl font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] tracking-tight">
+          <span className="text-xl sm:text-2xl font-black text-[#B92B3A] dark:text-[#FFB3BA] tracking-tight">
             {item.suffix}
           </span>
         </div>
 
-        {/* Dynamic Animated Progress Bar */}
+        {/* Dynamic Animated Progress Bar Synchronized with the Count */}
         <div 
           className="w-full h-1.5 bg-[#FAF0F1] dark:bg-white/10 rounded-full overflow-hidden mb-4" 
           aria-hidden="true"
         >
           <div
-            className="h-full bg-gradient-to-r from-[#B92B3A] to-[#D9384A] rounded-full transition-all duration-75"
+            className="h-full bg-gradient-to-r from-[#B92B3A] via-[#D9384A] to-amber-500 rounded-full transition-all duration-75"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -236,17 +224,17 @@ const CounterCard: React.FC<CounterCardProps> = ({ item, index }) => {
         </p>
       </div>
 
-      {/* Bottom status line */}
+      {/* Bottom verified accreditation status */}
       <div className="mt-6 pt-4 border-t border-[#F2ECEC] dark:border-white/10 flex items-center justify-between text-xs text-[#8996A6] dark:text-[#9ca3af]">
         <span className="inline-flex items-center gap-1.5">
           {isCompleted ? (
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           ) : (
-            <TrendingUp className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#F3C7CA] shrink-0" />
+            <TrendingUp className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#FFB3BA] shrink-0 animate-pulse" />
           )}
-          <span className="font-medium text-[#202124] dark:text-white">{item.detail}</span>
+          <span className="font-semibold text-[#202124] dark:text-white">{item.detail}</span>
         </span>
-        <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">تأییدشده</span>
+        <span className="text-[11px] font-mono text-[#8996A6] dark:text-[#9ca3af]">تأییدشده رسمی</span>
       </div>
     </div>
   );
@@ -267,12 +255,12 @@ export const Stats: React.FC = () => {
         <div 
           className="max-w-3xl mx-auto text-center mb-12 sm:mb-16 reveal-on-scroll"
         >
-          <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] tracking-tight bg-[#F3C7CA]/30 dark:bg-[#B92B3A]/20 px-4 py-1.5 rounded-full border border-[#E8DFE0] dark:border-white/10 shadow-2xs mb-3">
-            <Award className="w-4 h-4 text-[#B92B3A] dark:text-[#F3C7CA]" />
+          <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] tracking-tight bg-[#F3C7CA]/30 dark:bg-[#B92B3A]/20 px-4 py-1.5 rounded-full border border-[#E8DFE0] dark:border-white/10 shadow-2xs mb-3">
+            <Award className="w-4 h-4 text-[#B92B3A] dark:text-[#FFB3BA]" />
             <span>شاخص‌های عملکردی و اعتبار آکادمیک</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-black text-[#1a1b1e] dark:text-white tracking-tight leading-[1.2] mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-black font-brand-title text-[#1a1b1e] dark:text-white tracking-tight leading-[1.2] mb-4">
             اعدادی که گواه پنج دهه تعهد به هنر موسیقی هستند
           </h2>
 
@@ -281,18 +269,11 @@ export const Stats: React.FC = () => {
           </p>
         </div>
 
-        {/* Clean Responsive Grid with Animated Counters and Staggered Fade-in */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
+        {/* 4-Column Live Scroll-Triggered Counter Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
           {STATS_ITEMS.map((item, index) => (
             <CounterCard key={item.id} item={item} index={index} />
           ))}
-        </div>
-
-        {/* Quiet footnote note */}
-        <div className="mt-10 text-center text-xs text-[#8996A6] dark:text-[#9ca3af]">
-          <span>
-            * اطلاعات و آمار بر اساس سوابق و پرونده‌های فارغ‌التحصیلی هنرجویان آموزشگاه موسیقی چنگ خرمشهر از سال ۱۳۵۰ تا کنون استخراج شده است.
-          </span>
         </div>
 
       </div>

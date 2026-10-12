@@ -16,8 +16,7 @@ import {
   MessageCircle,
   ExternalLink,
   ChevronLeft,
-  Music,
-  Video
+  Music
 } from 'lucide-react';
 import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
@@ -76,13 +75,6 @@ export const Header: React.FC = () => {
       icon: Music,
       description: 'پیانو، تار، گیتار، ویولن، ارف و آواز در دو شعبه',
       tag: 'دپارتمان‌ها'
-    },
-    { 
-      name: 'کلاس آنلاین و استودیو', 
-      href: '#online-class', 
-      icon: Video,
-      description: 'اتاق آموزش مجازی با کیفیت صدای استودیویی ساز',
-      tag: 'استودیو زنده'
     },
     { 
       name: 'اساتید و کادر آموزشی', 

@@ -25,6 +25,7 @@ import {
 import { Course } from '../types';
 import { ZarinPalGatewaySimulator } from './ZarinPalGatewaySimulator';
 import { ConfettiCelebration } from './ConfettiCelebration';
+import { useSiteConfig } from '../config/SiteConfigContext';
 
 export type PaymentFlowMode = 'tuition' | 'placement_deposit';
 
@@ -58,6 +59,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   mode = 'tuition',
   onSuccess
 }) => {
+  const config = useSiteConfig();
   const [currentMode, setCurrentMode] = useState<PaymentFlowMode>(mode);
   const [step, setStep] = useState<'info' | 'gateway' | 'result'>('info');
   const [studentName, setStudentName] = useState('');
@@ -77,11 +79,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Calculation of amount:
-  // 1. Tuition: Full term fee (e.g., 1,650,000 to 1,850,000 Tomans for 8 sessions)
-  // 2. Placement Deposit (بیعانه رزرو نوبت تعیین سطح تخصصی): 150,000 Tomans (کسر از شهریه پس از ثبت‌نام قطعی)
-  const fullTuition = course?.tuitionFee || 1650000;
-  const placementDepositFee = 150000;
+  // Calculation of amount (dynamically configurable from admin panel):
+  const fullTuition = config.pricing?.regularTuition || course?.tuitionFee || 1650000;
+  const placementDepositFee = config.pricing?.placementDeposit || 150000;
   const payableAmount = currentMode === 'tuition' ? fullTuition : placementDepositFee;
   const sessions = course?.sessionCount || 8;
   const targetTitle = course?.title || 'مشاوره و تعیین سطح تخصصی موسیقی';

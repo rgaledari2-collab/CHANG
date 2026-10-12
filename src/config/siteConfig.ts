@@ -18,12 +18,19 @@ export interface SiteSocialLinks {
   whatsapp: string;
 }
 
+export interface SitePricing {
+  placementDeposit: number;
+  regularTuition: number;
+}
+
 export interface SiteConfig {
   siteName: string;
   slogan: string;
   phone: string;
   phoneDisplay: string;
   workingHours: string;
+  adminPassword?: string;
+  pricing?: SitePricing;
   branches: {
     khorramshahr: SiteBranch;
     abadan: SiteBranch;
@@ -32,4 +39,11 @@ export interface SiteConfig {
   adminNotice?: string;
 }
 
-export const SITE_CONFIG: SiteConfig = defaultConfig as SiteConfig;
+export const SITE_CONFIG: SiteConfig = {
+  ...defaultConfig,
+  adminPassword: (defaultConfig as any).adminPassword || 'chang1403',
+  pricing: (defaultConfig as any).pricing || {
+    placementDeposit: 150000,
+    regularTuition: 1650000
+  }
+} as SiteConfig;

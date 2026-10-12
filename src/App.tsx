@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { SiteConfigProvider } from './config/SiteConfigContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
 import { Courses } from './components/Courses';
-import { OnlineClassroom } from './components/OnlineClassroom';
 import { Story } from './components/Story';
 import { Stats } from './components/Stats';
 import { Teachers } from './components/Teachers';
@@ -18,6 +17,7 @@ import { BackToTop } from './components/BackToTop';
 import { QuickActionBar } from './components/QuickActionBar';
 import { Lightbox, LightboxData } from './components/Lightbox';
 import { PaymentModal, PaymentReceipt, PaymentFlowMode } from './components/PaymentModal';
+import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { Course } from './types';
 
 function MainApp() {
@@ -25,9 +25,30 @@ function MainApp() {
   const [payingCourse, setPayingCourse] = useState<Course | null>(null);
   const [paymentFlowMode, setPaymentFlowMode] = useState<PaymentFlowMode>('tuition');
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // Allow opening admin dashboard directly via #admin hash in URL
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#admin') {
+        setIsAdminOpen(true);
+      }
+    };
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handlePaymentSuccess = (receipt: PaymentReceipt) => {
-    // Payment record is persisted in localStorage
+    // Persist to localStorage payment records
+    try {
+      const stored = localStorage.getItem('chang_payment_records');
+      const records = stored ? JSON.parse(stored) : [];
+      records.unshift(receipt);
+      localStorage.setItem('chang_payment_records', JSON.stringify(records));
+    } catch {
+      // ignore
+    }
   };
 
   const handleOpenPayment = (course: Course, mode: PaymentFlowMode = 'tuition') => {
@@ -59,9 +80,6 @@ function MainApp() {
           onPayTuition={(course) => handleOpenPayment(course, 'tuition')}
         />
 
-        {/* Online Live Classroom & Practice Studio */}
-        <OnlineClassroom />
-
         {/* Decorative Wave Divider into Story Section */}
         <SectionDivider preset="courses-to-story" />
 
@@ -86,8 +104,8 @@ function MainApp() {
         />
       </main>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer with Discreet Admin Panel Button */}
+      <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
 
       {/* Floating Back to Top Button */}
       <BackToTop />
@@ -106,6 +124,17 @@ function MainApp() {
 
       {/* High-Resolution Image Lightbox Modal */}
       <Lightbox data={lightboxData} onClose={() => setLightboxData(null)} />
+
+      {/* Protected Admin Dashboard Modal */}
+      <AdminDashboardModal 
+        isOpen={isAdminOpen} 
+        onClose={() => {
+          setIsAdminOpen(false);
+          if (window.location.hash === '#admin') {
+            history.pushState(null, '', ' ');
+          }
+        }} 
+      />
     </div>
   );
 }

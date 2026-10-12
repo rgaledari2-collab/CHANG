@@ -505,7 +505,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                       </div>
                     </div>
                     <span className="font-bold text-[14px] text-[#B92B3A] dark:text-[#FFB3BA]">
-                      {(selectedCourseObj.tuitionFee || 1650000).toLocaleString('fa-IR')} تومان
+                      {(config.pricing?.regularTuition || selectedCourseObj.tuitionFee || 1650000).toLocaleString('fa-IR')} تومان
                     </span>
                   </label>
 
@@ -533,7 +533,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                       </div>
                     </div>
                     <span className="font-bold text-[14px] text-[#19407e] dark:text-sky-300">
-                      ۱۵۰,۰۰۰ تومان
+                      {(config.pricing?.placementDeposit || 150000).toLocaleString('fa-IR')} تومان
                     </span>
                   </label>
 

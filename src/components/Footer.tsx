@@ -1,9 +1,13 @@
 import React from 'react';
 import { ChangLogo } from './ChangLogo';
-import { Instagram, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { Instagram, MessageCircle, ArrowUpRight, Lock } from 'lucide-react';
 import { useSiteConfig } from '../config/SiteConfigContext';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   const config = useSiteConfig();
   const { phone, phoneDisplay, workingHours, branches, socialLinks } = config;
 
@@ -22,7 +26,6 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="text-[15px] font-medium leading-[2.41] text-[#5a626d] dark:text-[#9ca3af]">
               <li><a href="#courses" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">سازها و دوره‌های آموزشی</a></li>
-              <li><a href="#online-class" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">کلاس آنلاین و استودیو زنده</a></li>
               <li><a href="#teachers" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">اساتید و کادر آموزشی</a></li>
               <li><a href="#story" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">پیشینه و رسالت آموزشگاه</a></li>
               <li><a href="#stats" className="hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-colors">شاخص‌ها و آمار رسمی</a></li>
@@ -144,10 +147,23 @@ export const Footer: React.FC = () => {
             </span>
             <p>© {new Date().getFullYear()} کلیه حقوق برای {config.siteName} (شعب خرمشهر و آبادان) محفوظ است.</p>
           </div>
+          
           <div className="flex items-center gap-3">
             <span>{config.siteName}</span>
             <span>·</span>
             <span>خرمشهر و آبادان، خوزستان</span>
+            <span>·</span>
+            
+            {/* Discreet Admin Login Trigger for the Business Owner */}
+            <button
+              type="button"
+              onClick={onOpenAdmin}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold text-gray-400 hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              title="ورود به پنل مدیریت آموزشگاه (مخصوص مدیریت)"
+            >
+              <Lock className="w-3 h-3" />
+              <span>پنل مدیریت</span>
+            </button>
           </div>
         </div>
 

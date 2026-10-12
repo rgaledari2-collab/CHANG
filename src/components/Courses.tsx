@@ -14,6 +14,7 @@ import { COURSES_DATA } from '../data';
 import { Course } from '../types';
 import { ResponsiveImage } from './ResponsiveImage';
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
+import { InstrumentMatcher } from './InstrumentMatcher';
 
 interface CoursesProps {
   onSelectCourse: (courseTitle: string) => void;
@@ -220,6 +221,9 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourse, onPayTuition }
             );
           })}
         </div>
+
+        {/* Interactive Instrument Matcher & Talent Discovery Tool */}
+        <InstrumentMatcher onSelectCourse={onSelectCourse} />
 
       </div>
     </section>
