@@ -1,24 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { SiteConfigProvider } from './config/SiteConfigContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProofStrip } from './components/ProofStrip';
 import { Courses } from './components/Courses';
-import { Story } from './components/Story';
-import { Stats } from './components/Stats';
-import { Teachers } from './components/Teachers';
-import { Manifesto } from './components/Manifesto';
-import { Events } from './components/Events';
-import { ContactForm } from './components/ContactForm';
 import { SectionDivider } from './components/SectionDivider';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
 import { QuickActionBar } from './components/QuickActionBar';
-import { Lightbox, LightboxData } from './components/Lightbox';
-import { PaymentModal, PaymentReceipt, PaymentFlowMode } from './components/PaymentModal';
-import { AdminDashboardModal } from './components/AdminDashboardModal';
+import type { LightboxData } from './components/Lightbox';
+import type { PaymentReceipt, PaymentFlowMode } from './components/PaymentModal';
 import { Course } from './types';
+
+// Lazy-loaded below-the-fold sections & interactive modals for sub-second initial paint
+const BranchesStudioTour = lazy(() =>
+  import('./components/BranchesStudioTour').then((m) => ({ default: m.BranchesStudioTour }))
+);
+const HeritageTimeline = lazy(() =>
+  import('./components/HeritageTimeline').then((m) => ({ default: m.HeritageTimeline }))
+);
+const Stats = lazy(() =>
+  import('./components/Stats').then((m) => ({ default: m.Stats }))
+);
+const Teachers = lazy(() =>
+  import('./components/Teachers').then((m) => ({ default: m.Teachers }))
+);
+const Manifesto = lazy(() =>
+  import('./components/Manifesto').then((m) => ({ default: m.Manifesto }))
+);
+const Events = lazy(() =>
+  import('./components/Events').then((m) => ({ default: m.Events }))
+);
+const ConcertPassGenerator = lazy(() =>
+  import('./components/ConcertPassGenerator').then((m) => ({ default: m.ConcertPassGenerator }))
+);
+const ContactForm = lazy(() =>
+  import('./components/ContactForm').then((m) => ({ default: m.ContactForm }))
+);
+const Lightbox = lazy(() =>
+  import('./components/Lightbox').then((m) => ({ default: m.Lightbox }))
+);
+const PaymentModal = lazy(() =>
+  import('./components/PaymentModal').then((m) => ({ default: m.PaymentModal }))
+);
+const AdminDashboardModal = lazy(() =>
+  import('./components/AdminDashboardModal').then((m) => ({ default: m.AdminDashboardModal }))
+);
+
+function SectionFallback() {
+  return (
+    <div
+      className="w-full py-24 flex items-center justify-center bg-[#FBF9F6] dark:bg-[#0B0909]"
+      aria-hidden="true"
+    >
+      <div className="w-8 h-8 rounded-full border-2 border-[#C29B53]/30 border-t-[#8E1B26] animate-spin" />
+    </div>
+  );
+}
 
 function MainApp() {
   const [selectedCourseForConsultation, setSelectedCourseForConsultation] = useState<string>('');
@@ -29,44 +68,45 @@ function MainApp() {
 
   // Allow opening admin dashboard directly via #admin hash in URL
   useEffect(() => {
-    const handleHashChange = () => {
+    const checkHash = () => {
       if (window.location.hash === '#admin') {
         setIsAdminOpen(true);
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
       }
     };
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
   }, []);
 
+  const handleOpenPayment = (course: Course, mode: PaymentFlowMode = 'tuition') => {
+    setPaymentFlowMode(mode);
+    setPayingCourse(course);
+  };
+
   const handlePaymentSuccess = (receipt: PaymentReceipt) => {
-    // Persist to localStorage payment records
     try {
-      const stored = localStorage.getItem('chang_payment_records');
-      const records = stored ? JSON.parse(stored) : [];
-      records.unshift(receipt);
-      localStorage.setItem('chang_payment_records', JSON.stringify(records));
+      const existing = JSON.parse(localStorage.getItem('chang_payment_receipts') || '[]');
+      localStorage.setItem('chang_payment_receipts', JSON.stringify([receipt, ...existing]));
     } catch {
-      // ignore
+      // Ignore storage quota errors
     }
   };
 
-  const handleOpenPayment = (course: Course, mode: PaymentFlowMode = 'tuition') => {
-    setPayingCourse(course);
-    setPaymentFlowMode(mode);
-  };
-
   return (
-    <div className="min-h-screen bg-[#FCF8F8] text-[#202124] selection:bg-[#B92B3A] selection:text-white antialiased flex flex-col font-sans transition-colors duration-200 overflow-x-hidden w-full max-w-full">
-      {/* Skip Link for Keyboard Accessibility */}
+    <div
+      dir="rtl"
+      className="min-h-screen w-full max-w-[100vw] overflow-x-hidden flex flex-col bg-[#FBF9F6] dark:bg-[#0B0909] text-[#0B0909] dark:text-[#F4EFEA] selection:bg-[#8E1B26] selection:text-white transition-colors"
+    >
+      {/* Accessibility Skip to Main Content Link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:right-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#B92B3A] focus:text-white focus:rounded-full focus:shadow-lg focus:text-sm font-semibold"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[100] focus:px-5 focus:py-3 focus:rounded-xl focus:bg-[#8E1B26] focus:text-white focus:font-bold focus:shadow-lg"
       >
-        رفتن به محتوای اصلی
+        پرش به محتوای اصلی
       </a>
 
-      {/* Header with Mobile Drawer Menu */}
+      {/* Top Navigation & Brand Identity */}
       <Header />
 
       {/* Main Content Sections */}
@@ -80,28 +120,38 @@ function MainApp() {
           onPayTuition={(course) => handleOpenPayment(course, 'tuition')}
         />
 
-        {/* Decorative Wave Divider into Story Section */}
-        <SectionDivider preset="courses-to-story" />
+        {/* Lazy-loaded Below-the-Fold Sections */}
+        <Suspense fallback={<SectionFallback />}>
+          {/* Dual Branch Architectural & Acoustic Studio Tour */}
+          <BranchesStudioTour />
 
-        <Story />
+          {/* Decorative Wave Divider into Heritage Timeline */}
+          <SectionDivider preset="courses-to-story" />
 
-        {/* Decorative Architectural Slant Divider from Story into Stats Section */}
-        <SectionDivider preset="story-to-stats" />
+          {/* Archival Museum Timeline (1350 to Present) */}
+          <HeritageTimeline />
 
-        <Stats />
+          {/* Decorative Architectural Slant Divider from Timeline into Stats Section */}
+          <SectionDivider preset="story-to-stats" />
 
-        {/* Decorative Layered Soundwave Divider between Stats and Teachers */}
-        <SectionDivider preset="stats-to-teachers" />
+          <Stats />
 
-        <Teachers onOpenLightbox={setLightboxData} />
-        <Manifesto />
-        <Events onOpenLightbox={setLightboxData} />
-        
-        {/* Contact, Level Assessment Booking, and Direct Tuition Payment Form */}
-        <ContactForm 
-          selectedCourse={selectedCourseForConsultation} 
-          onOpenPayment={(course, mode) => handleOpenPayment(course, mode)}
-        />
+          {/* Decorative Layered Soundwave Divider between Stats and Teachers */}
+          <SectionDivider preset="stats-to-teachers" />
+
+          <Teachers onOpenLightbox={setLightboxData} />
+          <Manifesto />
+          <Events onOpenLightbox={setLightboxData} />
+
+          {/* Luxury Concert Pass & Student Recital Ticket Generator */}
+          <ConcertPassGenerator />
+          
+          {/* Contact, Level Assessment Booking, and Direct Tuition Payment Form */}
+          <ContactForm 
+            selectedCourse={selectedCourseForConsultation} 
+            onOpenPayment={(course, mode) => handleOpenPayment(course, mode)}
+          />
+        </Suspense>
       </main>
 
       {/* Footer with Discreet Admin Panel Button */}
@@ -113,28 +163,32 @@ function MainApp() {
       {/* Quick Action Floating Bar (Call, Messengers WhatsApp/Eitaa, Level Assessment Booking) */}
       <QuickActionBar />
 
-      {/* Online Payment Modal with Shaparak / ZarinPal Simulator & Confetti */}
-      <PaymentModal 
-        isOpen={Boolean(payingCourse)} 
-        course={payingCourse} 
-        mode={paymentFlowMode}
-        onClose={() => setPayingCourse(null)}
-        onSuccess={handlePaymentSuccess}
-      />
+      {/* Lazy-Loaded Modals (Only downloaded when triggered by user) */}
+      <Suspense fallback={null}>
+        {Boolean(payingCourse) && (
+          <PaymentModal 
+            isOpen={Boolean(payingCourse)} 
+            course={payingCourse} 
+            mode={paymentFlowMode}
+            onClose={() => setPayingCourse(null)}
+            onPaymentSuccess={handlePaymentSuccess}
+          />
+        )}
 
-      {/* High-Resolution Image Lightbox Modal */}
-      <Lightbox data={lightboxData} onClose={() => setLightboxData(null)} />
+        {Boolean(lightboxData) && (
+          <Lightbox 
+            data={lightboxData} 
+            onClose={() => setLightboxData(null)} 
+          />
+        )}
 
-      {/* Protected Admin Dashboard Modal */}
-      <AdminDashboardModal 
-        isOpen={isAdminOpen} 
-        onClose={() => {
-          setIsAdminOpen(false);
-          if (window.location.hash === '#admin') {
-            history.pushState(null, '', ' ');
-          }
-        }} 
-      />
+        {isAdminOpen && (
+          <AdminDashboardModal 
+            isOpen={isAdminOpen} 
+            onClose={() => setIsAdminOpen(false)} 
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

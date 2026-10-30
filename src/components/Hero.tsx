@@ -250,12 +250,12 @@ export const Hero: React.FC = () => {
               }`}
               style={{ transitionDelay: '0.18s' }}
             >
-              <span className="block text-[#17181C] dark:text-white">
+              <span className="block text-[#181412] dark:text-[#F7F4F0]">
                 طنینِ اصالت، آموزش آکادمیک
               </span>
               
-              {/* Bold Gradient Text Effect (Dark Ruby Red -> Warm Persimmon -> Amber Gold) */}
-              <span className="block mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#9C1C29] via-[#C92A3A] to-[#E55B3C] dark:from-[#FF8F9B] dark:via-[#FFB3BA] dark:to-[#FBBF24] drop-shadow-xs">
+              {/* Mature Conservatory Gradient (Aged Burgundy -> Burnished Bronze -> Antique Brass Gold) */}
+              <span className="block mt-1 sm:mt-2 text-transparent bg-clip-text bg-gradient-to-l from-[#7E1620] via-[#9E2430] to-[#B8863B] dark:from-[#E5C17B] dark:via-[#D4AF37] dark:to-[#F3E5AB] drop-shadow-xs">
                 و شکوهِ اجرای زنده بر صحنه
               </span>
             </h1>
@@ -344,19 +344,19 @@ export const Hero: React.FC = () => {
             }`}
             style={{ transitionDelay: '0.28s' }}
           >
-            <div className="relative rounded-[28px] bg-gradient-to-br from-white via-[#FCF6F6] to-[#F5EBEB] dark:from-[#151821] dark:via-[#13151C] dark:to-[#0D0F14] border border-[#E8DFE0] dark:border-white/15 p-5 sm:p-6 shadow-xl overflow-hidden">
+            <div className="relative rounded-[28px] bg-gradient-to-br from-[#FFFFFF] via-[#FBF9F5] to-[#F3EDE2] dark:from-[#181412] dark:via-[#14100F] dark:to-[#0D0A09] border border-[#E5DDD2] dark:border-[#C29B53]/25 p-5 sm:p-6 shadow-xl overflow-hidden">
               
               {/* Header inside the interactive instrument card */}
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#E8DFE0] dark:border-white/10">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#E5DDD2] dark:border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#FAF0F1] dark:bg-[#B92B3A]/20 flex items-center justify-center text-[#B92B3A] dark:text-[#FFB3BA]">
+                  <div className="w-10 h-10 rounded-xl bg-[#F4EFE6] dark:bg-[#C29B53]/15 border border-[#E5DDD2] dark:border-[#C29B53]/30 flex items-center justify-center text-[#8E1B26] dark:text-[#E2BE7E]">
                     <Music className="w-5 h-5" />
                   </div>
                   <div className="text-right">
-                    <h2 className="text-[15px] font-extrabold text-[#202124] dark:text-white flex items-center gap-1.5">
+                    <h2 className="text-[15px] font-extrabold text-[#181412] dark:text-white flex items-center gap-1.5">
                       <span>کاسه طنین و پرده‌های سیمین چنگ</span>
                     </h2>
-                    <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">
+                    <span className="text-[11px] text-[#5C534B] dark:text-[#B8B0A6]">
                       سیم‌ها را لمس کنید تا طنین آکوستیک کوک ایرانی شنیده شود
                     </span>
                   </div>
@@ -365,16 +365,16 @@ export const Hero: React.FC = () => {
                 <button
                   type="button"
                   onClick={playChordCadence}
-                  className="px-2.5 py-1.5 rounded-lg bg-[#FAF0F1] dark:bg-white/10 text-[#B92B3A] dark:text-[#FFB3BA] text-[11px] font-bold hover:bg-[#B92B3A] hover:text-white transition-all flex items-center gap-1 shadow-2xs"
+                  className="px-2.5 py-1.5 rounded-lg bg-[#F4EFE6] dark:bg-[#C29B53]/15 text-[#8E1B26] dark:text-[#E2BE7E] border border-[#E5DDD2] dark:border-[#C29B53]/30 text-[11px] font-bold hover:bg-[#8E1B26] hover:text-white transition-all flex items-center gap-1 shadow-2xs"
                 >
                   <Sparkles className="w-3 h-3" />
                   <span>آرپژ</span>
                 </button>
               </div>
 
-              {/* The Physical Chang Instrument Simulation (Harp Strings) */}
+              {/* The Physical Chang Instrument Simulation (Walnut & Brass Harp Strings) */}
               <div 
-                className="relative h-[250px] sm:h-[280px] rounded-2xl bg-[#200A13] dark:bg-[#07090D] border border-amber-900/30 overflow-hidden flex items-center justify-around px-3 sm:px-6 shadow-inner group cursor-pointer"
+                className="relative h-[250px] sm:h-[280px] rounded-2xl bg-gradient-to-b from-[#1C110D] via-[#150C09] to-[#0E0706] border border-[#C29B53]/35 overflow-hidden flex items-center justify-around px-3 sm:px-6 shadow-inner group cursor-pointer"
                 title="کلیک روی هر سیم برای لمس صدای زنده ساز"
               >
                 {/* Wood Grain Texture Overlay */}

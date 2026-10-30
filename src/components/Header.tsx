@@ -16,7 +16,8 @@ import {
   MessageCircle,
   ExternalLink,
   ChevronLeft,
-  Music
+  Music,
+  Building2
 } from 'lucide-react';
 import { ChangLogo } from './ChangLogo';
 import { ThemeToggle } from './ThemeToggle';
@@ -75,6 +76,13 @@ export const Header: React.FC = () => {
       icon: Music,
       description: 'پیانو، تار، گیتار، ویولن، ارف و آواز در دو شعبه',
       tag: 'دپارتمان‌ها'
+    },
+    { 
+      name: 'استودیوها و شعب', 
+      href: '#studios', 
+      icon: Building2,
+      description: 'کلاس‌های آکوستیک چوب و گرند پیانو در خرمشهر و آبادان',
+      tag: 'دو شعبه'
     },
     { 
       name: 'اساتید و کادر آموزشی', 

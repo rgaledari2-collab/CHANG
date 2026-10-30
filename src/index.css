@@ -32,21 +32,29 @@
   :root {
     --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
     --font-brand-title: 'Kalameh', 'Kalameh Black', 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
-    --color-bg-base: #FCF8F8;
+    --color-antique-ebony: #0B0909;
+    --color-burnished-brass: #C29B53;
+    --color-brass-glow: rgba(194, 155, 83, 0.22);
+    --color-bg-base: #FBF9F6;
     --color-card-surface: #FFFFFF;
-    --color-text-main: #202124;
-    --color-accent-primary: #B92B3A;
-    --color-accent-complement: #F3C7CA;
-    --color-neutral-complement: #505C6B;
-    --color-dark-bg: #3B1720;
-    --color-border-subtle: #E8DFE0;
+    --color-text-main: #0B0909;
+    --color-accent-primary: #8E1B26;
+    --color-accent-brass: #C29B53;
+    --color-accent-complement: #EADCD3;
+    --color-neutral-complement: #544D49;
+    --color-dark-bg: #0B0909;
+    --color-border-subtle: #E6DFD6;
+    --gradient-card-bronze-light: linear-gradient(145deg, #FFFFFF 0%, #FBF8F3 52%, #F3EBDD 100%);
+    --gradient-card-bronze-dark: linear-gradient(145deg, #171311 0%, #120E0D 55%, #1E1612 100%);
+    --shadow-conservatory-rest: 0 10px 28px -10px rgba(11, 9, 9, 0.08), 0 2px 8px -2px rgba(194, 155, 83, 0.06);
+    --shadow-conservatory-hover: 0 24px 48px -12px rgba(11, 9, 9, 0.18), 0 0 25px -4px rgba(194, 155, 83, 0.24);
   }
   
   html {
     scroll-behavior: smooth;
     font-family: var(--font-sans);
-    background-color: #FCF8F8;
-    color: #202124;
+    background-color: #FBF9F6;
+    color: #181412;
     overflow-x: hidden;
     max-width: 100vw;
     scrollbar-gutter: stable;
@@ -57,8 +65,8 @@
     font-size: 17px;
     line-height: 1.47;
     letter-spacing: -0.015em;
-    background-color: #FCF8F8;
-    color: #202124;
+    background-color: #FBF9F6;
+    color: #181412;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -68,8 +76,8 @@
   }
 
   ::selection {
-    background-color: #B92B3A;
-    color: #FFFFFF;
+    background-color: #8E1B26;
+    color: #FBF9F6;
   }
 }
 
@@ -80,51 +88,96 @@
 }
 
 /* =========================================================================
-   DARK MODE SPECIFIC SYSTEM: High-Contrast, Professional Obsidian Surfaces
+   MATURE CONSERVATORY PALETTE MAPPING (LIGHT MODE: Warm Sheet-Music Parchment & Antique Brass)
+   Harmonizes legacy pink/red tokens into aged burgundy (#8E1B26), walnut, and warm ivory (#FBF9F6)
+   ========================================================================= */
+html:not(.dark) .bg-\[\#FCF8F8\],
+html:not(.dark) .bg-\[\#FAF5F5\],
+html:not(.dark) .bg-\[\#F9F5F5\] {
+  background-color: #FBF9F6 !important;
+}
+
+html:not(.dark) .bg-\[\#FAF0F1\],
+html:not(.dark) .bg-\[\#F3C7CA\]\/25,
+html:not(.dark) .bg-\[\#F3C7CA\]\/30 {
+  background-color: #F4EFE6 !important;
+}
+
+html:not(.dark) .border-\[\#E8DFE0\],
+html:not(.dark) .border-\[\#D5C6C8\] {
+  border-color: #E5DDD2 !important;
+}
+
+html:not(.dark) .divide-\[\#E8DFE0\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #E5DDD2 !important;
+}
+
+html:not(.dark) .bg-\[\#B92B3A\] {
+  background-color: #8E1B26 !important;
+}
+
+html:not(.dark) .hover\:bg-\[\#A32230\]:hover,
+html:not(.dark) .hover\:bg-\[\#A52432\]:hover,
+html:not(.dark) .hover\:bg-\[\#D9384A\]:hover {
+  background-color: #74141E !important;
+}
+
+html:not(.dark) .text-\[\#B92B3A\] {
+  color: #8E1B26 !important;
+}
+
+/* =========================================================================
+   DARK MODE SPECIFIC SYSTEM: Deep Ebony Rosewood, Walnut & Antique Gold
    ========================================================================= */
 html.dark {
   color-scheme: dark;
-  background-color: #0E1013 !important;
-  color: #F3F4F6 !important;
+  background-color: #0B0909 !important;
+  color: #F4EFEA !important;
 }
 
 html.dark body {
-  background-color: #0E1013 !important;
-  color: #F3F4F6 !important;
+  background-color: #0B0909 !important;
+  color: #F4EFEA !important;
 }
 
 html.dark ::selection {
-  background-color: #D9384A;
-  color: #FFFFFF;
+  background-color: #C29B53;
+  color: #0B0909;
 }
 
 /* Base Canvas & Sub-Nav Surfaces */
-html.dark .bg-\[\#FCF8F8\] {
-  background-color: #0E1013 !important;
+html.dark .bg-\[\#FCF8F8\],
+html.dark .bg-\[\#FAF5F5\],
+html.dark .bg-\[\#F9F5F5\] {
+  background-color: #0B0909 !important;
 }
 
 html.dark .bg-\[\#FCF8F8\]\/90,
 html.dark .bg-\[\#FCF8F8\]\/95 {
-  background-color: rgba(14, 16, 19, 0.94) !important;
+  background-color: rgba(11, 9, 9, 0.94) !important;
 }
 
-/* Elevated Cards & Surfaces */
-html.dark .bg-white {
-  background-color: #171A21 !important;
+/* Elevated Cards & Surfaces (Warm Dark Rosewood / Ebony) */
+html.dark .bg-white,
+html.dark .dark\:bg-\[\#141720\],
+html.dark .dark\:bg-\[\#151821\],
+html.dark .dark\:bg-\[\#171A21\] {
+  background-color: #151211 !important;
 }
 
 html.dark .bg-\[\#3B1720\] {
-  background-color: #15080D !important;
+  background-color: #160A0D !important;
 }
 
 html.dark .bg-\[\#290f16\] {
-  background-color: #110609 !important;
+  background-color: #100608 !important;
 }
 
 /* High Contrast Headings and Titles */
 html.dark .text-\[\#202124\],
 html.dark .text-\[\#1c1d20\],
 html.dark .text-\[\#1a1b1e\],
+html.dark .text-\[\#141518\],
 html.dark .text-\[\#202328\],
 html.dark .text-\[\#2b2d31\],
 html.dark .text-\[\#2d3036\],
@@ -132,73 +185,75 @@ html.dark .text-\[\#26282c\],
 html.dark .text-\[\#1f2937\],
 html.dark .text-gray-900,
 html.dark .text-gray-800 {
-  color: #F9FAFB !important;
+  color: #F7F4F0 !important;
 }
 
 /* Crisp Secondary Copy & Descriptions */
 html.dark .text-\[\#5a626d\],
 html.dark .text-\[\#555d68\],
+html.dark .text-\[\#555E6B\],
 html.dark .text-\[\#515964\],
 html.dark .text-\[\#5F6368\],
 html.dark .text-\[\#6b7280\],
 html.dark .text-\[\#64748b\],
 html.dark .text-gray-600,
 html.dark .text-gray-500 {
-  color: #ABB3C0 !important;
+  color: #B8B0A6 !important;
 }
 
 /* High Contrast Muted Meta & Secondary Labels (WCAG AA Compliant: 7.2:1) */
 html.dark .text-\[\#8996A6\],
 html.dark .text-\[\#8E97A6\] {
-  color: #CBD5E1 !important;
+  color: #D2C9BE !important;
 }
 
-/* Light mode override to ensure #8996A6 passes WCAG AA (>= 4.5:1 against #FCF8F8 / #FFFFFF) */
+/* Light mode override to ensure #8996A6 passes WCAG AA (>= 4.5:1 against #FBF9F6 / #FFFFFF) */
 html:not(.dark) .text-\[\#8996A6\] {
-  color: #4A5568 !important;
+  color: #5C534B !important;
 }
 
-/* Crisp Structural Borders */
+/* Crisp Structural Borders (Subtle Warm Bronze/Walnut Hairline) */
 html.dark .border-\[\#E8DFE0\],
 html.dark .border-\[\#E8DFE0\]\/80,
 html.dark .border-\[\#E8DFE0\]\/60,
 html.dark .border-gray-200,
 html.dark .border-gray-100 {
-  border-color: #272C37 !important;
+  border-color: #292220 !important;
 }
 
 html.dark .divide-\[\#E8DFE0\] > :not([hidden]) ~ :not([hidden]) {
-  border-color: #272C37 !important;
+  border-color: #292220 !important;
 }
 
-/* Soft Crimson/Pink Wash Overrides in Dark Mode */
+/* Soft Crimson/Brass Wash Overrides in Dark Mode */
 html.dark .bg-\[\#F3C7CA\]\/40,
 html.dark .bg-\[\#F3C7CA\]\/30,
 html.dark .bg-\[\#F3C7CA\]\/25,
 html.dark .bg-\[\#F3C7CA\]\/20,
 html.dark .bg-\[\#F3C7CA\]\/15 {
-  background-color: rgba(217, 56, 74, 0.14) !important;
+  background-color: rgba(194, 155, 83, 0.12) !important;
 }
 
 /* Accessible accent colors for text against light and dark backgrounds */
-html.dark .text-\[\#F3C7CA\] {
-  color: #FFB3BA !important;
+html.dark .text-\[\#F3C7CA\],
+html.dark .dark\:text-\[\#FFB3BA\] {
+  color: #E2BE7E !important;
 }
 
-/* If #F3C7CA is ever used as text in light mode, darken it to accessible deep lacquer red */
+/* If #F3C7CA is ever used as text in light mode, darken it to accessible deep lacquer burgundy */
 html:not(.dark) .text-\[\#F3C7CA\] {
-  color: #9C1C29 !important;
+  color: #8E1B26 !important;
 }
 
 html.dark .bg-\[\#F2ECEC\],
 html.dark .bg-gray-100,
 html.dark .bg-gray-50 {
-  background-color: #1E222C !important;
+  background-color: #1D1816 !important;
 }
 
 /* Secondary Button Contrast in Dark Mode */
 html.dark .border-\[\#202124\] {
-  border-color: #E2E8F0 !important;
+  border-color: #D2C9BE !important;
 }
 
 /* Form Inputs, Selects, & Textareas */
@@ -499,6 +554,59 @@ html.dark .shadow-xl {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-12px) rotate(1.5deg); }
 }
+
+/* =========================================================================
+   CONSERVATORY BRONZE CARD SURFACES & INTERACTIVE MICRO-ANIMATIONS
+   Subtle 3D Parallax Tilt, Soft Brass Shadow Bloom & Specular Sheen
+   ========================================================================= */
+.conservatory-card {
+  background-image: var(--gradient-card-bronze-light);
+  box-shadow: var(--shadow-conservatory-rest);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+  will-change: transform, box-shadow;
+}
+
+html.dark .conservatory-card {
+  background-image: var(--gradient-card-bronze-dark) !important;
+  box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(194, 155, 83, 0.12) !important;
+}
+
+.conservatory-card:hover {
+  box-shadow: var(--shadow-conservatory-hover);
+  border-color: var(--color-burnished-brass) !important;
+}
+
+html.dark .conservatory-card:hover {
+  box-shadow: 0 26px 54px -12px rgba(0, 0, 0, 0.85), 0 0 28px -4px rgba(194, 155, 83, 0.28) !important;
+  border-color: rgba(194, 155, 83, 0.65) !important;
+}
+
+.conservatory-card-sheen {
+  background: radial-gradient(
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(194, 155, 83, 0.16),
+    transparent 65%
+  );
+}
+
+/* =========================================================================
+   CORE WEB VITALS: OFF-SCREEN RENDERING OPTIMIZATION
+   Skips layout/paint work for off-screen sections until scrolled near
+   ========================================================================= */
+#studios,
+#story,
+#stats,
+#teachers,
+#events,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
+}
+
+
 
 
 
