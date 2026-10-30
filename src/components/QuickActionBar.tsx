@@ -47,17 +47,16 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
     <>
       {/* 
         ========================================================================
-        MOBILE & TABLET: Ultra-Compact Circular Floating Action Button (FAB)
-        Only 48x48px circular button placed cleanly at bottom-left corner.
-        Frees up 100% of the mobile screen while providing instant, elegant access.
+        MOBILE & TABLET: Conservatory Ebony & Burnished Brass Floating Action Button (FAB)
+        Respects iOS/Android safe-area inset at bottom-left corner.
         ========================================================================
       */}
-      <div className="md:hidden fixed bottom-5 left-4 z-40 flex flex-col items-start select-none">
+      <div className="md:hidden fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-4 z-40 flex flex-col items-start select-none">
         
         {/* Backdrop overlay when speed dial popup is active */}
         {isFabMenuOpen && (
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs z-30 transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-[#0B0909]/60 backdrop-blur-xs z-30 transition-opacity animate-in fade-in duration-200"
             onClick={() => setIsFabMenuOpen(false)}
           />
         )}
@@ -69,12 +68,12 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
             <a
               href={`tel:${phoneNumber}`}
               onClick={() => setIsFabMenuOpen(false)}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-full bg-[#1A1B1E] text-white text-[12px] font-bold border border-white/20 shadow-xl active:scale-95 transition-all"
+              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0B0909]/95 text-[#F7F4F0] text-[12px] font-bold border border-[#C29B53]/35 shadow-xl active:scale-95 transition-all"
             >
-              <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/35 flex items-center justify-center">
                 <Phone className="w-3.5 h-3.5" />
               </div>
-              <span className="whitespace-nowrap">تماس تلفنی</span>
+              <span className="whitespace-nowrap">تماس تلفنی با آموزشگاه</span>
             </a>
 
             {/* 2. Instagram & Messengers */}
@@ -84,24 +83,24 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
                 setIsFabMenuOpen(false);
                 setShowMessengerModal(true);
               }}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-full bg-[#1A1B1E] text-white text-[12px] font-bold border border-white/20 shadow-xl active:scale-95 transition-all"
+              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0B0909]/95 text-[#F7F4F0] text-[12px] font-bold border border-[#C29B53]/35 shadow-xl active:scale-95 transition-all"
             >
-              <div className="w-7 h-7 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-[#C29B53]/20 text-[#E5C787] border border-[#C29B53]/40 flex items-center justify-center">
                 <Instagram className="w-3.5 h-3.5" />
               </div>
-              <span className="whitespace-nowrap">اینستاگرام و ایتا</span>
+              <span className="whitespace-nowrap">اینستاگرام، واتساپ و ایتا</span>
             </button>
 
             {/* 3. Level Assessment Reservation */}
             <button
               type="button"
               onClick={handleBookingClick}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-full bg-gradient-to-l from-[#B92B3A] to-[#D9384A] text-white text-[12px] font-extrabold border border-white/20 shadow-xl active:scale-95 transition-all"
+              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-gradient-to-l from-[#8E1B26] to-[#6E121B] text-white text-[12px] font-extrabold border border-[#C29B53]/50 shadow-xl active:scale-95 transition-all"
             >
-              <div className="w-7 h-7 rounded-full bg-white/20 text-white flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-[#C29B53]/25 text-[#E5C787] flex items-center justify-center">
                 <Sparkles className="w-3.5 h-3.5" />
               </div>
-              <span className="whitespace-nowrap">رزرو تعیین سطح</span>
+              <span className="whitespace-nowrap">رزرو نوبت تعیین سطح</span>
             </button>
           </div>
         )}
@@ -112,19 +111,19 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
           onClick={() => setIsFabMenuOpen(!isFabMenuOpen)}
           aria-expanded={isFabMenuOpen}
           aria-label="دکمه دسترسی سریع، تماس و رزرو تعیین سطح"
-          className={`relative z-40 w-12 h-12 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(185,43,58,0.4)] border border-white/25 active:scale-90 transition-all duration-200 ${
+          className={`relative z-40 w-13 h-13 rounded-full flex items-center justify-center shadow-[0_8px_28px_rgba(11,9,9,0.55)] border border-[#C29B53]/55 active:scale-90 transition-all duration-200 ${
             isFabMenuOpen 
-              ? 'bg-[#1A1B1E] text-white rotate-90' 
-              : 'bg-[#B92B3A] hover:bg-[#D9384A] text-white ring-4 ring-[#B92B3A]/20'
+              ? 'bg-[#0B0909] text-[#E5C787] rotate-90' 
+              : 'bg-gradient-to-br from-[#8E1B26] via-[#74141E] to-[#0B0909] text-[#F7F4F0] ring-4 ring-[#C29B53]/20'
           }`}
         >
           {isFabMenuOpen ? (
-            <X className="w-5 h-5 transition-transform" />
+            <X className="w-5 h-5 transition-transform text-[#E5C787]" />
           ) : (
             <>
-              <Phone className="w-5 h-5 text-white animate-pulse" />
+              <Phone className="w-5 h-5 text-[#E5C787] animate-pulse" />
               {/* Micro badge dot indicator */}
-              <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#B92B3A]" />
+              <span className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#0B0909]" />
             </>
           )}
         </button>
@@ -132,11 +131,11 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
 
       {/* 
         ========================================================================
-        DESKTOP / TABLET: Refined Floating Pill (Bottom-Right)
+        DESKTOP / TABLET: Refined Conservatory Floating Pill (Bottom-Right)
         ========================================================================
       */}
       <div className="hidden md:flex fixed bottom-6 right-6 z-40 flex-col items-end gap-3 pointer-events-auto select-none">
-        <div className="bg-[#1A1B1E]/95 dark:bg-[#121316]/95 backdrop-blur-xl border border-white/15 rounded-full p-1.5 shadow-xl flex items-center gap-2 ring-1 ring-black/20">
+        <div className="bg-[#0B0909]/95 backdrop-blur-xl border border-[#C29B53]/30 rounded-full p-1.5 shadow-2xl flex items-center gap-2 ring-1 ring-black/40">
           <a
             href={`tel:${phoneNumber}`}
             aria-label={`تماس با دفتر آموزشگاه: ${config.phoneDisplay}`}
@@ -151,19 +150,19 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
             onClick={() => setShowMessengerModal(true)}
             aria-label="پیج‌های اینستاگرام شعب، واتساپ و ایتا"
             title="ارتباط در فضای مجازی و شبکه‌های اجتماعی"
-            className="w-9 h-9 rounded-full bg-pink-500/20 text-pink-300 hover:bg-pink-500/30 border border-pink-500/30 flex items-center justify-center transition-all active:scale-95 relative"
+            className="w-9 h-9 rounded-full bg-[#C29B53]/15 text-[#E5C787] hover:bg-[#C29B53]/25 border border-[#C29B53]/35 flex items-center justify-center transition-all active:scale-95 relative"
           >
             <Instagram className="w-4 h-4" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-[#1A1B1E]" />
+            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-[#0B0909]" />
           </button>
 
           <button
             type="button"
             onClick={handleBookingClick}
             aria-label="رزرو برای تعیین سطح حضوری"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#B92B3A] hover:bg-[#D9384A] text-white text-[12px] font-bold shadow-md transition-all active:scale-95"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#8E1B26] hover:bg-[#74141E] border border-[#C29B53]/40 text-white text-[12px] font-bold shadow-md transition-all active:scale-95"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E5C787]" />
             <span>تعیین سطح حضوری</span>
           </button>
         </div>
@@ -175,24 +174,24 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
           role="dialog"
           aria-modal="true"
           aria-labelledby="messenger-modal-title"
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200 select-none"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-[#0B0909]/70 backdrop-blur-sm transition-opacity animate-in fade-in duration-200 select-none"
           onClick={() => setShowMessengerModal(false)}
         >
           <div
-            className="w-full max-w-md bg-white dark:bg-[#1A1D24] rounded-3xl p-5 sm:p-6 shadow-2xl border border-[#E8DFE0] dark:border-white/10 text-right animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
+            className="w-full max-w-md bg-[#FBF9F6] dark:bg-[#141110] rounded-3xl p-5 sm:p-6 shadow-2xl border border-[#E5DDD2] dark:border-[#C29B53]/30 text-right animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFE0] dark:border-white/10 mb-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E5DDD2] dark:border-white/10 mb-4">
               <div className="flex items-center gap-2.5">
-                <span className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shadow-xs">
+                <span className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#8E1B26] to-[#C29B53] text-white flex items-center justify-center shadow-xs">
                   <Instagram className="w-5 h-5" />
                 </span>
                 <div>
-                  <h3 id="messenger-modal-title" className="text-[15px] font-extrabold text-[#202124] dark:text-white">
+                  <h3 id="messenger-modal-title" className="text-[15px] font-extrabold text-[#0B0909] dark:text-white">
                     پیج‌های رسمی و ارتباط مجازی
                   </h3>
-                  <p className="text-[11px] text-[#4A5568] dark:text-[#CBD5E1]">
+                  <p className="text-[11px] text-[#544D49] dark:text-[#B8B0A6]">
                     اینستاگرام شعب خرمشهر و آبادان، واتساپ و ایتا
                   </p>
                 </div>
@@ -201,7 +200,7 @@ export const QuickActionBar: React.FC<QuickActionBarProps> = ({ onOpenConsultati
                 type="button"
                 onClick={() => setShowMessengerModal(false)}
                 aria-label="بستن پنجره"
-                className="w-8 h-8 rounded-full bg-[#FAF0F1] dark:bg-white/10 text-[#4A5568] dark:text-white hover:bg-[#F3C7CA]/50 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-[#F4EFE6] dark:bg-white/10 text-[#0B0909] dark:text-white hover:border-[#C29B53] flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>

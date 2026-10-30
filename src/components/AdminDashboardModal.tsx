@@ -50,13 +50,17 @@ export interface ConsultationLead {
 export interface StoredReceipt {
   refId: string;
   trackingCode: string;
+  cardPan?: string;
   courseTitle: string;
   amount: number;
   date: string;
   studentName: string;
   phone: string;
+  gateway?: 'zarinpal' | 'zibal' | 'shaparak';
   flowType: 'tuition' | 'placement_deposit';
   branch?: string;
+  preferredTime?: string;
+  verified?: boolean;
 }
 
 export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen, onClose }) => {
@@ -80,6 +84,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   const [leads, setLeads] = useState<ConsultationLead[]>([]);
   const [payments, setPayments] = useState<StoredReceipt[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [paymentTypeFilter, setPaymentTypeFilter] = useState<'all' | 'tuition' | 'placement_deposit'>('all');
 
   // Sync form data whenever config changes or modal opens
   useEffect(() => {
@@ -100,13 +105,95 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
     }
 
     try {
-      const storedPayments = localStorage.getItem('chang_payment_records');
-      if (storedPayments) {
-        setPayments(JSON.parse(storedPayments));
-      }
+      const receiptsRaw = localStorage.getItem('chang_payment_receipts');
+      const recordsRaw = localStorage.getItem('chang_payment_records');
+      const parsedReceipts: StoredReceipt[] = receiptsRaw ? JSON.parse(receiptsRaw) : [];
+      const parsedRecords: StoredReceipt[] = recordsRaw ? JSON.parse(recordsRaw) : [];
+
+      // Merge and deduplicate by trackingCode or refId
+      const mergedMap = new Map<string, StoredReceipt>();
+      [...parsedReceipts, ...parsedRecords].forEach((item) => {
+        const key = item.trackingCode || item.refId || `${item.studentName}-${item.date}`;
+        if (!mergedMap.has(key)) {
+          mergedMap.set(key, item);
+        }
+      });
+
+      setPayments(Array.from(mergedMap.values()));
     } catch {
       setPayments([]);
     }
+  };
+
+  const persistPayments = (updated: StoredReceipt[]) => {
+    setPayments(updated);
+    try {
+      localStorage.setItem('chang_payment_receipts', JSON.stringify(updated));
+      localStorage.setItem('chang_payment_records', JSON.stringify(updated));
+    } catch {
+      // Ignore storage errors
+    }
+  };
+
+  const handleDeletePayment = (trackingOrRef: string) => {
+    const updated = payments.filter(
+      (p) => (p.trackingCode || p.refId) !== trackingOrRef
+    );
+    persistPayments(updated);
+  };
+
+  const handleToggleVerifyPayment = (trackingOrRef: string) => {
+    const updated = payments.map((p) =>
+      (p.trackingCode || p.refId) === trackingOrRef
+        ? { ...p, verified: !p.verified }
+        : p
+    );
+    persistPayments(updated);
+  };
+
+  const handleClearPayments = () => {
+    localStorage.removeItem('chang_payment_receipts');
+    localStorage.removeItem('chang_payment_records');
+    setPayments([]);
+  };
+
+  const handleExportPaymentsCSV = () => {
+    if (payments.length === 0) return;
+    const headers = [
+      'شماره پیگیری',
+      'کد مرجع',
+      'نام پرداخت‌کننده',
+      'شماره تماس',
+      'مبلغ (تومان)',
+      'بابت دوره',
+      'نوع پرداخت',
+      'شعبه',
+      'درگاه',
+      'وضعیت تایید',
+      'تاریخ و ساعت'
+    ];
+    const rows = payments.map((p) => [
+      `"${p.trackingCode || ''}"`,
+      `"${p.refId || ''}"`,
+      `"${p.studentName || ''}"`,
+      `"${p.phone || ''}"`,
+      `"${p.amount || 0}"`,
+      `"${p.courseTitle || ''}"`,
+      `"${p.flowType === 'tuition' ? 'شهریه کامل ترم' : 'بیعانه تعیین سطح'}"`,
+      `"${p.branch === 'abadan' ? 'آبادان' : 'خرمشهر'}"`,
+      `"${p.gateway || 'zarinpal'}"`,
+      `"${p.verified ? 'تایید نهایی' : 'ثبت سیستمی'}"`,
+      `"${p.date || ''}"`
+    ]);
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `chang_payments_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -138,10 +225,8 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
   };
 
   const handleClearLeads = () => {
-    if (window.confirm('آیا از حذف تاریخچه درخواست‌های ثبت‌نام و مشاوره مطمئن هستید؟')) {
-      localStorage.removeItem('chang_consultation_leads');
-      setLeads([]);
-    }
+    localStorage.removeItem('chang_consultation_leads');
+    setLeads([]);
   };
 
   const handleExportLeadsCSV = () => {
@@ -713,54 +798,244 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({ isOpen
                 </div>
               )}
 
-              {/* TAB 3: Payments */}
-              {activeTab === 'payments' && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#E8DFE0] dark:border-white/10">
-                    <h4 className="text-[15px] font-bold text-[#202124] dark:text-white flex items-center gap-2">
-                      <CreditCard className="w-5 h-5 text-[#B92B3A]" />
-                      <span>رسیدهای پرداخت آنلاین شبیه‌ساز شاپرک ({payments.length})</span>
-                    </h4>
-                  </div>
+              {/* TAB 3: Payments & Transactions Management */}
+              {activeTab === 'payments' && (() => {
+                const filteredPayments = payments.filter((p) => {
+                  const matchesType =
+                    paymentTypeFilter === 'all' || p.flowType === paymentTypeFilter;
+                  const q = searchQuery.trim().toLowerCase();
+                  if (!q) return matchesType;
+                  return (
+                    matchesType &&
+                    ((p.studentName || '').toLowerCase().includes(q) ||
+                      (p.trackingCode || '').toLowerCase().includes(q) ||
+                      (p.refId || '').toLowerCase().includes(q) ||
+                      (p.phone || '').includes(q) ||
+                      (p.courseTitle || '').toLowerCase().includes(q))
+                  );
+                });
 
-                  {payments.length === 0 ? (
-                    <div className="py-16 text-center text-[#8996A6] dark:text-gray-400">
-                      <CreditCard className="w-12 h-12 mx-auto mb-3 opacity-30 text-[#B92B3A]" />
-                      <p className="text-[14px] font-bold mb-1">هنوز تراکنشی ثبت نشده است</p>
-                      <p className="text-[12px]">وقتی کاربران شهریه یا بیعانه را پرداخت کنند، رسیدهای شتابی در اینجا آرشیو می‌شوند.</p>
+                const totalRevenue = filteredPayments.reduce(
+                  (sum, item) => sum + (Number(item.amount) || 0),
+                  0
+                );
+                const verifiedCount = filteredPayments.filter((p) => p.verified).length;
+
+                return (
+                  <div className="space-y-4">
+                    {/* Header & Export / Clear Actions */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#E8DFE0] dark:border-white/10">
+                      <h4 className="text-[15px] font-bold text-[#202124] dark:text-white flex items-center gap-2">
+                        <CreditCard className="w-5 h-5 text-[#8E1B26] dark:text-[#E2BE7E]" />
+                        <span>مدیریت تراکنش‌ها و رسیدهای پرداخت آنلاین ({payments.length})</span>
+                      </h4>
+
+                      {payments.length > 0 && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleExportPaymentsCSV}
+                            className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-bold flex items-center gap-1.5 shadow-xs transition-all"
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            <span>خروجی اکسل تراکنش‌ها (CSV)</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleClearPayments}
+                            className="px-3 py-1.5 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 text-[12px] font-bold flex items-center gap-1 transition-all"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            <span>پاکسازی همه</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="overflow-x-auto rounded-2xl border border-[#E8DFE0] dark:border-white/10 bg-white dark:bg-[#1A1D24]">
-                      <table className="w-full text-[13px] text-right">
-                        <thead className="bg-[#FAF0F1] dark:bg-white/5 border-b border-[#E8DFE0] dark:border-white/10 text-[#5a626d] dark:text-[#9ca3af] font-bold">
-                          <tr>
-                            <th className="p-3">شماره پیگیری</th>
-                            <th className="p-3">نام پرداخت‌کننده</th>
-                            <th className="p-3">مبلغ (تومان)</th>
-                            <th className="p-3">بابت دوره</th>
-                            <th className="p-3">نوع پرداخت</th>
-                            <th className="p-3">تاریخ و ساعت</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[#E8DFE0] dark:divide-white/5 font-mono">
-                          {payments.map((p, idx) => (
-                            <tr key={idx} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
-                              <td className="p-3 font-bold text-[#B92B3A] dark:text-[#FFB3BA]">{p.trackingCode || p.refId}</td>
-                              <td className="p-3 font-sans font-bold text-[#202124] dark:text-white">{p.studentName}</td>
-                              <td className="p-3 font-bold text-emerald-600">{p.amount.toLocaleString('fa-IR')}</td>
-                              <td className="p-3 font-sans">{p.courseTitle}</td>
-                              <td className="p-3 font-sans text-[11px]">
-                                {p.flowType === 'tuition' ? 'شهریه ۸ جلسه' : 'بیعانه نوبت'}
-                              </td>
-                              <td className="p-3 text-[11px] text-gray-400 font-sans">{p.date}</td>
-                            </tr>
+
+                    {/* Financial Summary Strip */}
+                    {payments.length > 0 && (
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1A1D24] border border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
+                          <div>
+                            <span className="text-[11px] text-[#8996A6] block">مجموع کل واریزی‌ها</span>
+                            <span className="text-[16px] font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                              {totalRevenue.toLocaleString('fa-IR')} <span className="text-[11px] font-sans">تومان</span>
+                            </span>
+                          </div>
+                          <Coins className="w-6 h-6 text-emerald-600/40" />
+                        </div>
+
+                        <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1A1D24] border border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
+                          <div>
+                            <span className="text-[11px] text-[#8996A6] block">تعداد تراکنش‌های فیلترشده</span>
+                            <span className="text-[16px] font-black text-[#202124] dark:text-white font-mono">
+                              {filteredPayments.length.toLocaleString('fa-IR')} <span className="text-[11px] font-sans">مورد</span>
+                            </span>
+                          </div>
+                          <FileText className="w-6 h-6 text-[#C29B53]/50" />
+                        </div>
+
+                        <div className="p-3.5 rounded-2xl bg-white dark:bg-[#1A1D24] border border-[#E8DFE0] dark:border-white/10 flex items-center justify-between">
+                          <div>
+                            <span className="text-[11px] text-[#8996A6] block">رسیدهای تاییدشده حسابداری</span>
+                            <span className="text-[16px] font-black text-[#8E1B26] dark:text-[#E2BE7E] font-mono">
+                              {verifiedCount.toLocaleString('fa-IR')} از {filteredPayments.length.toLocaleString('fa-IR')}
+                            </span>
+                          </div>
+                          <CheckCircle2 className="w-6 h-6 text-emerald-500/50" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Search & Flow Type Filter Bar */}
+                    {payments.length > 0 && (
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                        <div className="relative flex-1">
+                          <Search className="w-4 h-4 text-gray-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            placeholder="جستجو بر اساس نام هنرجو، کد رهگیری، شماره تماس یا نام ساز..."
+                            className="w-full pr-10 pl-4 py-2 rounded-xl bg-white dark:bg-[#1A1D24] border border-[#E8DFE0] dark:border-white/15 text-[12px] text-[#202124] dark:text-white focus:outline-none focus:border-[#8E1B26]"
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          {[
+                            { id: 'all', label: 'همه' },
+                            { id: 'tuition', label: 'شهریه کامل' },
+                            { id: 'placement_deposit', label: 'بیعانه تعیین سطح' },
+                          ].map((f) => (
+                            <button
+                              key={f.id}
+                              type="button"
+                              onClick={() => setPaymentTypeFilter(f.id as 'all' | 'tuition' | 'placement_deposit')}
+                              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                                paymentTypeFilter === f.id
+                                  ? 'bg-[#8E1B26] text-white'
+                                  : 'bg-white dark:bg-[#1A1D24] text-[#5a626d] dark:text-[#9ca3af] border border-[#E8DFE0] dark:border-white/10'
+                              }`}
+                            >
+                              {f.label}
+                            </button>
                           ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              )}
+                        </div>
+                      </div>
+                    )}
+
+                    {filteredPayments.length === 0 ? (
+                      <div className="py-16 text-center text-[#8996A6] dark:text-gray-400">
+                        <CreditCard className="w-12 h-12 mx-auto mb-3 opacity-30 text-[#8E1B26]" />
+                        <p className="text-[14px] font-bold mb-1">هیچ تراکنشی یافت نشد</p>
+                        <p className="text-[12px]">وقتی کاربران شهریه یا بیعانه تعیین سطح را پرداخت کنند، رسیدهای آن‌ها در این بخش قابل مشاهده و مدیریت است.</p>
+                      </div>
+                    ) : (
+                      <div className="overflow-x-auto rounded-2xl border border-[#E8DFE0] dark:border-white/10 bg-white dark:bg-[#1A1D24]">
+                        <table className="w-full text-[12px] sm:text-[13px] text-right">
+                          <thead className="bg-[#FAF0F1] dark:bg-white/5 border-b border-[#E8DFE0] dark:border-white/10 text-[#5a626d] dark:text-[#9ca3af] font-bold">
+                            <tr>
+                              <th className="p-3">شماره پیگیری / مرجع</th>
+                              <th className="p-3">هنرجو و تماس</th>
+                              <th className="p-3">مبلغ (تومان)</th>
+                              <th className="p-3">دوره و شعبه</th>
+                              <th className="p-3">نوع تراکنش</th>
+                              <th className="p-3">تاریخ</th>
+                              <th className="p-3 text-center">مدیریت</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#E8DFE0] dark:divide-white/5">
+                            {filteredPayments.map((p, idx) => {
+                              const uniqueKey = p.trackingCode || p.refId || String(idx);
+                              return (
+                                <tr key={uniqueKey} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                                  <td className="p-3 font-mono">
+                                    <span className="font-bold text-[#8E1B26] dark:text-[#E2BE7E] block">
+                                      {p.trackingCode || p.refId}
+                                    </span>
+                                    {p.cardPan && (
+                                      <span className="text-[10px] text-gray-400 dir-ltr inline-block">
+                                        {p.cardPan}
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="p-3">
+                                    <span className="font-bold text-[#202124] dark:text-white block">
+                                      {p.studentName}
+                                    </span>
+                                    {p.phone && (
+                                      <a
+                                        href={`tel:${p.phone}`}
+                                        className="font-mono text-[11px] text-[#8E1B26] dark:text-[#E2BE7E] hover:underline dir-ltr inline-block"
+                                      >
+                                        {p.phone}
+                                      </a>
+                                    )}
+                                  </td>
+                                  <td className="p-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                                    {(Number(p.amount) || 0).toLocaleString('fa-IR')}
+                                  </td>
+                                  <td className="p-3">
+                                    <span className="font-semibold text-[#202124] dark:text-white block">
+                                      {p.courseTitle}
+                                    </span>
+                                    {p.branch && (
+                                      <span className="text-[10px] text-gray-400">
+                                        شعبه {p.branch === 'abadan' ? 'آبادان' : 'خرمشهر'}
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="p-3 text-[11px]">
+                                    <span
+                                      className={`px-2 py-0.5 rounded-full font-bold ${
+                                        p.flowType === 'tuition'
+                                          ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300'
+                                          : 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
+                                      }`}
+                                    >
+                                      {p.flowType === 'tuition' ? 'شهریه ۸ جلسه' : 'بیعانه نوبت'}
+                                    </span>
+                                  </td>
+                                  <td className="p-3 text-[11px] text-gray-400 font-mono">
+                                    {p.date}
+                                  </td>
+                                  <td className="p-3">
+                                    <div className="flex items-center justify-center gap-1.5">
+                                      <button
+                                        type="button"
+                                        onClick={() => handleToggleVerifyPayment(uniqueKey)}
+                                        title={p.verified ? 'تایید شده (کلیک برای لغو)' : 'تایید رسید حسابداری'}
+                                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition-all ${
+                                          p.verified
+                                            ? 'bg-emerald-600 text-white'
+                                            : 'bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-emerald-50 hover:text-emerald-700'
+                                        }`}
+                                      >
+                                        <CheckCircle2 className="w-3.5 h-3.5" />
+                                        <span>{p.verified ? 'تاییدشده' : 'تایید'}</span>
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={() => handleDeletePayment(uniqueKey)}
+                                        title="حذف تراکنش"
+                                        className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                                      >
+                                        <Trash2 className="w-3.5 h-3.5" />
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* TAB 4: Raw JSON View */}
               {activeTab === 'json' && (

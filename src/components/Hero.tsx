@@ -32,6 +32,7 @@ export const Hero: React.FC = () => {
 
   const heroRef = useRef<HTMLElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const lastTouchStringRef = useRef<number | null>(null);
 
   // Scroll-triggered & entrance observer to smoothly elevate elements on entry
   useEffect(() => {
@@ -63,6 +64,15 @@ export const Hero: React.FC = () => {
     setActiveString(index);
     setVibratingIndex(index);
     setTimeout(() => setVibratingIndex(null), 900);
+
+    // Subtle tactile haptic feedback on supported mobile devices
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(10);
+      } catch {
+        // Ignore if blocked by browser policy
+      }
+    }
 
     try {
       if (!audioCtxRef.current) {
@@ -112,6 +122,25 @@ export const Hero: React.FC = () => {
     } catch {
       // Audio autoplay gracefully handled if disabled
     }
+  };
+
+  // Continuous finger-swipe Glissando across strings on mobile touchscreens
+  const handleHarpTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    if (!touch) return;
+    const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+    const stringButton = targetEl?.closest('[data-string-idx]') as HTMLElement | null;
+    if (stringButton) {
+      const idx = Number(stringButton.dataset.stringIdx);
+      if (!Number.isNaN(idx) && lastTouchStringRef.current !== idx) {
+        lastTouchStringRef.current = idx;
+        pluckString(idx);
+      }
+    }
+  };
+
+  const handleHarpTouchEnd = () => {
+    lastTouchStringRef.current = null;
   };
 
   const playChordCadence = () => {
@@ -226,8 +255,8 @@ export const Hero: React.FC = () => {
         {/* Main Split Hero Canvas (Grid: Right High-Impact Typography / Left Resonant Chang) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
-          {/* Right Column: Typography-Focused Editorial Hero */}
-          <div className="lg:col-span-7 text-right order-2 lg:order-1">
+          {/* Right Column (First on Mobile, Right in RTL Desktop): Typography-Focused Editorial Hero */}
+          <div className="lg:col-span-7 text-right">
             
             {/* Academy Name with Iconic Lacquer Accent (Reveal step 1) */}
             <div 
@@ -236,8 +265,8 @@ export const Hero: React.FC = () => {
               }`}
               style={{ transitionDelay: '0.1s' }}
             >
-              <span className="w-10 h-[2.5px] bg-[#B92B3A] rounded-full" />
-              <span className="text-[13px] sm:text-[15px] font-extrabold text-[#B92B3A] dark:text-[#FFB3BA] tracking-wider uppercase">
+              <span className="w-10 h-[2.5px] bg-[#8E1B26] dark:bg-[#C29B53] rounded-full" />
+              <span className="text-[13px] sm:text-[15px] font-extrabold text-[#8E1B26] dark:text-[#E2BE7E] tracking-wider uppercase">
                 کنسرواتوار و آکادمی موسیقی چنگ خوزستان
               </span>
             </div>
@@ -250,7 +279,7 @@ export const Hero: React.FC = () => {
               }`}
               style={{ transitionDelay: '0.18s' }}
             >
-              <span className="block text-[#181412] dark:text-[#F7F4F0]">
+              <span className="block text-[#0B0909] dark:text-[#F7F4F0]">
                 طنینِ اصالت، آموزش آکادمیک
               </span>
               
@@ -262,16 +291,16 @@ export const Hero: React.FC = () => {
 
             {/* CREATIVE EDITORIAL SUBTITLE & ACCENT BLOCK (Reveal step 3) */}
             <div 
-              className={`relative mb-8 pr-4 sm:pr-5 border-r-3 border-[#B92B3A] dark:border-[#FFB3BA] space-y-3 hero-reveal-base ${
+              className={`relative mb-8 pr-4 sm:pr-5 border-r-3 border-[#8E1B26] dark:border-[#C29B53] space-y-3 hero-reveal-base ${
                 isVisible ? 'hero-reveal-active' : ''
               }`}
               style={{ transitionDelay: '0.26s' }}
             >
-              <p className="text-[17px] sm:text-[20px] font-bold text-[#202124] dark:text-white leading-[1.6] tracking-[-0.015em] [text-wrap:pretty]">
+              <p className="text-[17px] sm:text-[20px] font-bold text-[#0B0909] dark:text-white leading-[1.6] tracking-[-0.015em] [text-wrap:pretty]">
                 نخستین مرکز تخصصی آموزش سازهای ایرانی و جهانی در منطقه آزاد اروند با اعطای مدرک رسمی و معتبر فرهنگ و ارشاد اسلامی.
               </p>
               
-              <p className="text-[14px] sm:text-[16px] text-[#555E6B] dark:text-[#CBD5E1] font-normal leading-[1.75] max-w-xl">
+              <p className="text-[14px] sm:text-[16px] text-[#544D49] dark:text-[#B8B0A6] font-normal leading-[1.75] max-w-xl">
                 یادگیری گام‌به‌گام اصول تکنیک، سلفژ، همنوازی و ورود مستقیم به ارکستر زیر نظر اساتید برجسته کنسرواتواری.
               </p>
             </div>
@@ -285,61 +314,63 @@ export const Hero: React.FC = () => {
             >
               <a
                 href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-[#B92B3A] hover:bg-[#A32230] active:scale-98 text-white font-extrabold text-[15px] sm:text-[16px] shadow-lg shadow-[#B92B3A]/25 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-[#8E1B26] hover:bg-[#74141E] active:scale-98 text-white font-extrabold text-[15px] sm:text-[16px] shadow-lg shadow-[#8E1B26]/25 border border-[#C29B53]/30 transition-all"
               >
                 <span>رزرو نوبت تعیین سطح حضوری</span>
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4 text-[#E2BE7E]" />
               </a>
 
-              <a
-                href="#teachers"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white dark:bg-[#15181F] text-[#202124] dark:text-white border border-[#D5C6C8] dark:border-white/15 hover:border-[#B92B3A] dark:hover:border-[#FFB3BA] font-bold text-[15px] transition-all"
-              >
-                <GraduationCap className="w-4 h-4 text-[#B92B3A] dark:text-[#FFB3BA]" />
-                <span>رزومه و سابقه اساتید</span>
-              </a>
+              <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                <a
+                  href="#teachers"
+                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white dark:bg-[#141110] text-[#0B0909] dark:text-white border border-[#E5DDD2] dark:border-[#C29B53]/25 hover:border-[#C29B53] font-bold text-[14px] sm:text-[15px] transition-all"
+                >
+                  <GraduationCap className="w-4 h-4 text-[#C29B53]" />
+                  <span>رزومه اساتید</span>
+                </a>
 
-              {/* Sound Chord Preview Button */}
-              <button
-                type="button"
-                onClick={playChordCadence}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-4 rounded-2xl text-[13px] font-bold text-[#6a7380] dark:text-[#A6B0BE] hover:text-[#B92B3A] dark:hover:text-white transition-colors"
-                title="لمس پرده‌های چنگ و پخش هارمونی"
-              >
-                <Volume2 className="w-4 h-4 text-[#B92B3A]" />
-                <span>طنین چنگ (کوک شور)</span>
-              </button>
+                {/* Sound Chord Preview Button (Visible on both mobile & desktop) */}
+                <button
+                  type="button"
+                  onClick={playChordCadence}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-4 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B1614] border border-[#E5DDD2] dark:border-[#C29B53]/25 text-[13px] font-bold text-[#0B0909] dark:text-[#E2BE7E] hover:border-[#C29B53] active:scale-95 transition-all shrink-0"
+                  title="لمس پرده‌های چنگ و پخش هارمونی"
+                >
+                  <Volume2 className="w-4 h-4 text-[#8E1B26] dark:text-[#C29B53]" />
+                  <span>طنین چنگ</span>
+                </button>
+              </div>
             </div>
 
             {/* Verified Accreditation Badges (Reveal step 5) */}
             <div 
-              className={`pt-6 border-t border-[#E8DFE0] dark:border-white/10 flex flex-wrap items-center gap-y-3 gap-x-6 text-[13px] text-[#5a626d] dark:text-[#9ca3af] hero-reveal-base ${
+              className={`pt-6 border-t border-[#E5DDD2] dark:border-white/10 flex flex-wrap items-center gap-y-3 gap-x-6 text-[13px] text-[#544D49] dark:text-[#B8B0A6] hero-reveal-base ${
                 isVisible ? 'hero-reveal-active' : ''
               }`}
               style={{ transitionDelay: '0.42s' }}
             >
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                <span className="font-bold text-[#202124] dark:text-white">مجوز رسمی درجه یک</span>
+                <span className="font-bold text-[#0B0909] dark:text-white">مجوز رسمی درجه یک</span>
                 <span>از اداره کل فرهنگ و ارشاد</span>
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-[#B92B3A] dark:text-[#FFB3BA] shrink-0" />
-                <span className="font-bold text-[#202124] dark:text-white">کادر آکادمیک</span>
+                <Award className="w-4 h-4 text-[#C29B53] shrink-0" />
+                <span className="font-bold text-[#0B0909] dark:text-white">کادر آکادمیک</span>
                 <span>فارغ‌التحصیلان کنسرواتوار تهران</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
-                <span className="font-bold text-[#202124] dark:text-white">کنسرت‌های فصلی</span>
+                <Users className="w-4 h-4 text-[#8E1B26] dark:text-[#E2BE7E] shrink-0" />
+                <span className="font-bold text-[#0B0909] dark:text-white">کنسرت‌های فصلی</span>
                 <span>استیج اختصاصی سینما نفت و تالارها</span>
               </div>
             </div>
 
           </div>
 
-          {/* Left Column: KASE-YE TANIN (کاسه طنین و پرده‌های سیمین چنگ) */}
+          {/* Left Column (Second on Mobile, Left in RTL Desktop): KASE-YE TANIN (کاسه طنین و پرده‌های سیمین چنگ) */}
           <div 
-            className={`lg:col-span-5 order-1 lg:order-2 hero-reveal-base ${
+            className={`lg:col-span-5 hero-reveal-base ${
               isVisible ? 'hero-reveal-active' : ''
             }`}
             style={{ transitionDelay: '0.28s' }}
@@ -357,7 +388,7 @@ export const Hero: React.FC = () => {
                       <span>کاسه طنین و پرده‌های سیمین چنگ</span>
                     </h2>
                     <span className="text-[11px] text-[#5C534B] dark:text-[#B8B0A6]">
-                      سیم‌ها را لمس کنید تا طنین آکوستیک کوک ایرانی شنیده شود
+                      سیم‌ها را لمس کنید یا انگشت خود را روی آن‌ها بکشید (گلیساندو)
                     </span>
                   </div>
                 </div>
@@ -372,10 +403,13 @@ export const Hero: React.FC = () => {
                 </button>
               </div>
 
-              {/* The Physical Chang Instrument Simulation (Walnut & Brass Harp Strings) */}
+              {/* The Physical Chang Instrument Simulation (Walnut & Brass Harp Strings with Touch Glissando) */}
               <div 
-                className="relative h-[250px] sm:h-[280px] rounded-2xl bg-gradient-to-b from-[#1C110D] via-[#150C09] to-[#0E0706] border border-[#C29B53]/35 overflow-hidden flex items-center justify-around px-3 sm:px-6 shadow-inner group cursor-pointer"
-                title="کلیک روی هر سیم برای لمس صدای زنده ساز"
+                onTouchMove={handleHarpTouchMove}
+                onTouchEnd={handleHarpTouchEnd}
+                onTouchCancel={handleHarpTouchEnd}
+                className="relative h-[240px] sm:h-[280px] rounded-2xl bg-gradient-to-b from-[#1C110D] via-[#150C09] to-[#0E0706] border border-[#C29B53]/35 overflow-hidden flex items-center justify-around px-2 sm:px-6 shadow-inner group cursor-pointer touch-pan-y select-none"
+                title="کلیک یا کشیدن انگشت روی سیم‌ها برای لمس صدای زنده ساز"
               >
                 {/* Wood Grain Texture Overlay */}
                 <div 
@@ -399,16 +433,21 @@ export const Hero: React.FC = () => {
                     <button
                       key={str.id}
                       type="button"
+                      data-string-idx={idx}
                       onClick={() => pluckString(idx)}
                       onMouseEnter={() => pluckString(idx)}
+                      onTouchStart={() => {
+                        lastTouchStringRef.current = idx;
+                        pluckString(idx);
+                      }}
                       aria-label={`نواختن سیم ${str.note}`}
-                      className="relative h-full flex flex-col items-center justify-between py-3.5 focus:outline-none focus:ring-1 focus:ring-amber-400 group/str px-1 sm:px-1.5 transition-transform"
+                      className="relative h-full flex-1 flex flex-col items-center justify-between py-3.5 focus:outline-none focus:ring-1 focus:ring-amber-400 group/str px-1 sm:px-1.5 transition-transform"
                     >
                       {/* Peg Top Marker */}
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 shadow-[0_0_6px_rgba(251,191,36,0.6)]" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 shadow-[0_0_6px_rgba(251,191,36,0.6)] pointer-events-none" />
 
                       {/* The String Line with physical dynamic wave motion */}
-                      <div className="relative flex-1 w-full flex items-center justify-center my-1.5">
+                      <div className="relative flex-1 w-full flex items-center justify-center my-1.5 pointer-events-none">
                         <span 
                           style={{ height: `${heightPercent}%` }}
                           className={`w-[2.5px] rounded-full transition-all duration-150 ${
@@ -422,7 +461,7 @@ export const Hero: React.FC = () => {
                       </div>
 
                       {/* Note Fret Label at Bottom */}
-                      <span className={`text-[10px] font-mono transition-colors ${
+                      <span className={`text-[10px] font-mono transition-colors pointer-events-none ${
                         isHovered ? 'text-amber-300 font-bold' : 'text-amber-200/60'
                       }`}>
                         {str.id.toUpperCase()}
@@ -433,13 +472,13 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Bottom Quick Branch Nav Bar */}
-              <div className="mt-4 pt-3.5 border-t border-[#E8DFE0] dark:border-white/10 flex items-center justify-between text-[11px] text-[#717b88] dark:text-[#9ca3af] px-1">
+              <div className="mt-4 pt-3.5 border-t border-[#E5DDD2] dark:border-white/10 flex items-center justify-between text-[11px] text-[#5C534B] dark:text-[#B8B0A6] px-1">
                 <span className="flex items-center gap-1 font-medium">
-                  <MapPin className="w-3.5 h-3.5 text-[#B92B3A]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#8E1B26] dark:text-[#C29B53]" />
                   <span>شعبه ۱: خرمشهر، خلیج فارس</span>
                 </span>
                 <span className="flex items-center gap-1 font-medium">
-                  <MapPin className="w-3.5 h-3.5 text-[#B92B3A]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#8E1B26] dark:text-[#C29B53]" />
                   <span>شعبه ۲: آبادان، شاملو</span>
                 </span>
               </div>

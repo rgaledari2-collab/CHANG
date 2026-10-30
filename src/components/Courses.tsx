@@ -14,6 +14,7 @@ import { useRevealOnScroll } from '../hooks/useRevealOnScroll';
 import { InstrumentMatcher } from './InstrumentMatcher';
 
 interface CoursesProps {
+  courses?: Course[];
   onSelectCourse: (courseTitle: string) => void;
   onPayTuition: (course: Course) => void;
 }
@@ -79,7 +80,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={parallaxStyle}
-      className="conservatory-card relative border border-[#E5DDD2] dark:border-[#C29B53]/20 rounded-[22px] overflow-hidden flex flex-col justify-between group"
+      className="conservatory-card relative min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center shrink-0 border border-[#E5DDD2] dark:border-[#C29B53]/20 rounded-[22px] overflow-hidden flex flex-col justify-between group"
     >
       {/* Interactive Specular Bronze Sheen Following Cursor */}
       <div
@@ -223,7 +224,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   );
 };
 
-export const Courses: React.FC<CoursesProps> = ({ onSelectCourse, onPayTuition }) => {
+export const Courses: React.FC<CoursesProps> = ({ courses = COURSES_DATA, onSelectCourse, onPayTuition }) => {
   const sectionRef = useRevealOnScroll<HTMLElement>();
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [expandedCourseId, setExpandedCourseId] = useState<string | null>(null);
@@ -240,8 +241,8 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourse, onPayTuition }
   ];
 
   const filteredCourses = selectedFilter === 'all' 
-    ? COURSES_DATA 
-    : COURSES_DATA.filter(c => c.instrumentType === selectedFilter);
+    ? courses 
+    : courses.filter(c => c.instrumentType === selectedFilter);
 
   const handleConsultationClick = (courseTitle: string) => {
     onSelectCourse(courseTitle);
@@ -308,8 +309,17 @@ export const Courses: React.FC<CoursesProps> = ({ onSelectCourse, onPayTuition }
           ))}
         </div>
 
-        {/* Courses Grid with Interactive Parallax & Soft Brass Shadow Micro-Animations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+        {/* Mobile Swipe Hint */}
+        <div className="md:hidden flex items-center justify-between text-[11px] font-medium text-[#5C534B] dark:text-[#B8B0A6] mb-2.5 px-1">
+          <span>برای مشاهده سایر دوره‌ها به طرفین بکشید</span>
+          <span className="text-[#8E1B26] dark:text-[#E2BE7E] font-bold flex items-center gap-1">
+            <span>{filteredCourses.length.toLocaleString('fa-IR')} دوره</span>
+            <ArrowLeft className="w-3 h-3" />
+          </span>
+        </div>
+
+        {/* Courses Horizontal Snap Carousel on Mobile / Multi-Column Grid on Tablet & Desktop */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-7 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none">
           {filteredCourses.map((course) => (
             <CourseCard
               key={course.id}

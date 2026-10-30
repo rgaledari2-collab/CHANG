@@ -10,12 +10,45 @@
   <meta property="og:description" content="آموزش تخصصی پیانو، تار، سه‌تار، موسیقی کودک (ارف)، آواز و گیتار با نیم قرن سابقه.">
   <meta property="og:type" content="website">
 
-  <!-- DNS Prefetch & Preconnect for Typography -->
+  <!-- 1. Early DNS Prefetch & Preconnect for Critical Origins -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- 2. High-Priority Preload for Primary Display Fonts & Critical Stylesheets -->
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Black.woff2"
+    fetchpriority="high"
+    crossorigin
+  >
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2"
+    fetchpriority="high"
+    crossorigin
+  >
+  <link
+    rel="preload"
+    as="style"
+    href="/src/index.css"
+    fetchpriority="high"
+  >
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+    fetchpriority="high"
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+    fetchpriority="high"
+  >
 
   <script type="application/ld+json">
   {

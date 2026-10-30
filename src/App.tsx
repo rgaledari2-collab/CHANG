@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useMemo, Suspense, lazy } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { SiteConfigProvider } from './config/SiteConfigContext';
 import { Header } from './components/Header';
@@ -11,14 +11,49 @@ import { BackToTop } from './components/BackToTop';
 import { QuickActionBar } from './components/QuickActionBar';
 import type { LightboxData } from './components/Lightbox';
 import type { PaymentReceipt, PaymentFlowMode } from './components/PaymentModal';
+import { COURSES_DATA } from './data';
 import { Course } from './types';
 
+// Client-side static courses cache configuration (24-hour TTL + versioned key)
+const COURSES_CACHE_KEY = 'chang_static_courses_cache_v2';
+const COURSES_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+
+interface CachedCoursesPayload {
+  version: string;
+  timestamp: number;
+  data: Course[];
+}
+
+function getClientCachedCourses(): Course[] {
+  if (typeof window === 'undefined') return COURSES_DATA;
+
+  try {
+    const raw = localStorage.getItem(COURSES_CACHE_KEY);
+    if (raw) {
+      const parsed: CachedCoursesPayload = JSON.parse(raw);
+      const isFresh = Date.now() - parsed.timestamp < COURSES_CACHE_TTL_MS;
+      if (isFresh && Array.isArray(parsed.data) && parsed.data.length > 0) {
+        return parsed.data;
+      }
+    }
+
+    // Populate cache for subsequent visits
+    const payload: CachedCoursesPayload = {
+      version: 'v2',
+      timestamp: Date.now(),
+      data: COURSES_DATA,
+    };
+    localStorage.setItem(COURSES_CACHE_KEY, JSON.stringify(payload));
+  } catch {
+    // Fallback to in-memory static data if storage is unavailable
+  }
+
+  return COURSES_DATA;
+}
+
 // Lazy-loaded below-the-fold sections & interactive modals for sub-second initial paint
-const BranchesStudioTour = lazy(() =>
-  import('./components/BranchesStudioTour').then((m) => ({ default: m.BranchesStudioTour }))
-);
-const HeritageTimeline = lazy(() =>
-  import('./components/HeritageTimeline').then((m) => ({ default: m.HeritageTimeline }))
+const Story = lazy(() =>
+  import('./components/Story').then((m) => ({ default: m.Story }))
 );
 const Stats = lazy(() =>
   import('./components/Stats').then((m) => ({ default: m.Stats }))
@@ -31,9 +66,6 @@ const Manifesto = lazy(() =>
 );
 const Events = lazy(() =>
   import('./components/Events').then((m) => ({ default: m.Events }))
-);
-const ConcertPassGenerator = lazy(() =>
-  import('./components/ConcertPassGenerator').then((m) => ({ default: m.ConcertPassGenerator }))
 );
 const ContactForm = lazy(() =>
   import('./components/ContactForm').then((m) => ({ default: m.ContactForm }))
@@ -66,6 +98,32 @@ function MainApp() {
   const [lightboxData, setLightboxData] = useState<LightboxData | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
+  // Memoized client-side cached courses data + background image cache warming
+  const cachedCourses = useMemo<Course[]>(() => getClientCachedCourses(), []);
+
+  useEffect(() => {
+    // Warm browser cache for course thumbnails during idle browser time
+    const warmCourseAssets = () => {
+      if ('caches' in window) {
+        caches.open('chang-courses-assets-v1').then((cache) => {
+          cachedCourses.forEach((course) => {
+            if (course.image && !course.image.startsWith('http')) {
+              cache.add(course.image).catch(() => {});
+            }
+          });
+        }).catch(() => {});
+      }
+    };
+
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(warmCourseAssets);
+      return () => window.cancelIdleCallback(id);
+    } else {
+      const timer = setTimeout(warmCourseAssets, 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [cachedCourses]);
+
   // Allow opening admin dashboard directly via #admin hash in URL
   useEffect(() => {
     const checkHash = () => {
@@ -86,8 +144,14 @@ function MainApp() {
 
   const handlePaymentSuccess = (receipt: PaymentReceipt) => {
     try {
-      const existing = JSON.parse(localStorage.getItem('chang_payment_receipts') || '[]');
-      localStorage.setItem('chang_payment_receipts', JSON.stringify([receipt, ...existing]));
+      const existing = JSON.parse(
+        localStorage.getItem('chang_payment_receipts') ||
+        localStorage.getItem('chang_payment_records') ||
+        '[]'
+      );
+      const updated = [receipt, ...existing];
+      localStorage.setItem('chang_payment_receipts', JSON.stringify(updated));
+      localStorage.setItem('chang_payment_records', JSON.stringify(updated));
     } catch {
       // Ignore storage quota errors
     }
@@ -114,24 +178,21 @@ function MainApp() {
         <Hero />
         <ProofStrip />
 
-        {/* Dedicated Courses & Instruments Department */}
+        {/* Dedicated Courses & Instruments Department (Fed from Client Cache Layer) */}
         <Courses 
+          courses={cachedCourses}
           onSelectCourse={setSelectedCourseForConsultation} 
           onPayTuition={(course) => handleOpenPayment(course, 'tuition')}
         />
 
         {/* Lazy-loaded Below-the-Fold Sections */}
         <Suspense fallback={<SectionFallback />}>
-          {/* Dual Branch Architectural & Acoustic Studio Tour */}
-          <BranchesStudioTour />
-
-          {/* Decorative Wave Divider into Heritage Timeline */}
+          {/* Decorative Wave Divider into Story Section */}
           <SectionDivider preset="courses-to-story" />
 
-          {/* Archival Museum Timeline (1350 to Present) */}
-          <HeritageTimeline />
+          <Story />
 
-          {/* Decorative Architectural Slant Divider from Timeline into Stats Section */}
+          {/* Decorative Architectural Slant Divider from Story into Stats Section */}
           <SectionDivider preset="story-to-stats" />
 
           <Stats />
@@ -142,9 +203,6 @@ function MainApp() {
           <Teachers onOpenLightbox={setLightboxData} />
           <Manifesto />
           <Events onOpenLightbox={setLightboxData} />
-
-          {/* Luxury Concert Pass & Student Recital Ticket Generator */}
-          <ConcertPassGenerator />
           
           {/* Contact, Level Assessment Booking, and Direct Tuition Payment Form */}
           <ContactForm 
@@ -171,7 +229,7 @@ function MainApp() {
             course={payingCourse} 
             mode={paymentFlowMode}
             onClose={() => setPayingCourse(null)}
-            onPaymentSuccess={handlePaymentSuccess}
+            onSuccess={handlePaymentSuccess}
           />
         )}
 

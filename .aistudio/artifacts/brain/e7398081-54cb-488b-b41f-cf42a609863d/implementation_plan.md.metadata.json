@@ -1,6 +1,6 @@
 {
-  "summary":  "تکمیل بهینه‌سازی حداکثری سرعت و عملکرد (Core Web Vitals) وب‌سایت آموزشگاه موسیقی چنگ:\n- کاهش حجم فایل اولیه index.html از ۹۹۳ کیلوبایت به ۲.۶۳ کیلوبایت (۱.۱۵ کیلوبایت Gzip).\n- تفکیک کامل باندل‌ها و بارگذاری تنبل (React.lazy) برای تمامی بخش‌های پایین صفحه و مودال‌های سنگین.\n- افزودن content-visibility: auto و پیش‌بارگذاری فونت‌ها (Preload) در index.html.",
-  "updatedAt":  "2026-10-30T11:59:59.072581683Z",
+  "summary":  "Completed mobile UX upgrade plan for Chang Music Academy including Touch Glissando + Haptic vibration on the Hero Chang harp, mobile-first Hero hierarchy, Horizontal Snap Carousels for Courses and Teachers on mobile, and Conservatory Ebony & Burnished Brass styling for the mobile FAB and fullscreen drawer.",
+  "updatedAt":  "2026-10-30T13:30:55.092960675Z",
   "requestFeedback":  true,
   "userFacing":  true
 }

@@ -72,45 +72,54 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
   };
 
   return (
-    <section ref={sectionRef} id="teachers" className="py-20 lg:py-24 bg-[#FCF8F8] dark:bg-[#0E1013] border-b border-[#E8DFE0] dark:border-white/10 transition-colors">
+    <section ref={sectionRef} id="teachers" className="py-20 lg:py-24 bg-[#FBF9F6] dark:bg-[#0B0909] border-b border-[#E5DDD2] dark:border-white/10 transition-colors">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Section Header with Numbering */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal-on-scroll">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-4 reveal-on-scroll">
           <div className="max-w-xl text-right">
-            <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] mb-2 tracking-tight">
+            <div className="inline-flex items-center gap-2 text-[13px] font-bold text-[#8E1B26] dark:text-[#E2BE7E] mb-2 tracking-tight">
               <span className="font-mono text-[14px]">۰۳</span>
               <span>/</span>
               <span>اساتید راهنما و نوازندگان صحنه</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#202124] dark:text-white leading-[1.10] tracking-[-0.025em] mb-3 [text-wrap:balance]">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#0B0909] dark:text-white leading-[1.10] tracking-[-0.025em] mb-3 [text-wrap:balance]">
               آدم‌هایی که در مسیرت همراهت می‌مانند.
             </h2>
-            <p className="text-[17px] text-[#5a626d] dark:text-[#9ca3af] font-normal leading-[1.5] [text-wrap:pretty]">
+            <p className="text-[16px] sm:text-[17px] text-[#544D49] dark:text-[#B8B0A6] font-normal leading-[1.5] [text-wrap:pretty]">
               اساتید چنگ از میان فارغ‌التحصیلان برجسته موسیقی و نوازندگان فعال صحنه، با شیوه تدریس صبورانه و متدهای نوین آکادمیک برگزیده شده‌اند.
             </p>
           </div>
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 hover:border-[#B92B3A] text-[14px] font-semibold text-[#202124] dark:text-white hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] transition-all active:scale-95 shadow-sm self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white dark:bg-[#141110] border border-[#E5DDD2] dark:border-[#C29B53]/30 hover:border-[#C29B53] text-[14px] font-semibold text-[#0B0909] dark:text-white hover:text-[#8E1B26] dark:hover:text-[#E2BE7E] transition-all active:scale-95 shadow-sm self-start md:self-auto"
           >
             <span>مشاوره و تعیین استاد راهنما</span>
-            <ArrowLeft className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#F3C7CA]" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[#C29B53]" />
           </a>
         </div>
 
-        {/* Card Grid for Teachers */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Mobile Swipe Hint */}
+        <div className="md:hidden flex items-center justify-between text-[11px] font-medium text-[#5C534B] dark:text-[#B8B0A6] mb-2.5 px-1">
+          <span>ورق بزنید و با اساتید دپارتمان‌ها آشنا شوید</span>
+          <span className="text-[#8E1B26] dark:text-[#E2BE7E] font-bold flex items-center gap-1">
+            <span>{TEACHERS_DATA.length.toLocaleString('fa-IR')} استاد</span>
+            <ArrowLeft className="w-3 h-3" />
+          </span>
+        </div>
+
+        {/* Horizontal Snap Carousel on Mobile / 4-Column Grid on Desktop */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none">
           {TEACHERS_DATA.map((teacher) => (
             <div
               key={teacher.id}
-              className="teacher-card bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 hover:border-[#B92B3A] dark:hover:border-[#B92B3A]/60 rounded-[18px] p-5 flex flex-col justify-between transition-all duration-200 group apple-soft-shadow"
+              className="teacher-card conservatory-card min-w-[80vw] sm:min-w-[300px] md:min-w-0 snap-center shrink-0 border border-[#E5DDD2] dark:border-[#C29B53]/20 hover:border-[#C29B53] rounded-[20px] p-5 flex flex-col justify-between transition-all duration-300 group"
             >
               <div>
                 {/* Selective Portrait Frame with Responsive Image */}
                 <div
-                  className="aspect-[4/5] relative rounded-[11px] overflow-hidden bg-[#FCF8F8] dark:bg-[#0E1013] border border-[#E8DFE0] dark:border-white/10 cursor-zoom-in mb-4"
+                  className="aspect-[4/5] relative rounded-[14px] overflow-hidden bg-[#F4EFE6] dark:bg-[#0B0909] border border-[#E5DDD2] dark:border-white/10 cursor-zoom-in mb-4"
                   onClick={() => openTeacherLightbox(teacher)}
                   role="button"
                   tabIndex={0}
@@ -128,20 +137,20 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                     width={400}
                     height={500}
                     aspectRatio="4/5"
-                    sizes="(max-width: 640px) 94vw, (max-width: 1024px) 46vw, 280px"
+                    sizes="(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 280px"
                     className="w-full h-full object-cover filter contrast-115 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500 ease-out"
                   />
                   
-                  {/* Badge in high-contrast styling: 6.8:1 contrast in light mode and 8.5:1 in dark mode */}
-                  <div className="absolute top-2.5 right-2.5 bg-[#FAF0F1]/95 dark:bg-[#1A1216]/95 backdrop-blur-sm border border-[#B92B3A]/30 dark:border-[#FFB3BA]/30 text-[#9C1C29] dark:text-[#FFB3BA] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
-                    <Award className="w-3 h-3 text-[#9C1C29] dark:text-[#FFB3BA]" />
+                  {/* Conservatory Badge */}
+                  <div className="absolute top-2.5 right-2.5 bg-[#0B0909]/85 backdrop-blur-md border border-[#C29B53]/45 text-[#E5C787] text-[11px] px-2.5 py-1 rounded-full font-bold flex items-center gap-1 shadow-sm">
+                    <Award className="w-3 h-3 text-[#C29B53]" />
                     <span>{teacher.experienceYears} سال سابقه</span>
                   </div>
 
                   {/* Hover Cue */}
-                  <div className="absolute inset-0 bg-[#3B1720]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                    <span className="bg-[#FCF8F8]/95 dark:bg-[#171A21]/95 backdrop-blur-md text-[#202124] dark:text-white text-[12px] font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#E8DFE0] dark:border-white/10">
-                      <ZoomIn className="w-3.5 h-3.5 text-[#B92B3A] dark:text-[#F3C7CA]" />
+                  <div className="absolute inset-0 bg-[#0B0909]/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                    <span className="bg-[#FBF9F6]/95 dark:bg-[#141110]/95 backdrop-blur-md text-[#0B0909] dark:text-white text-[12px] font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md border border-[#E5DDD2] dark:border-[#C29B53]/30">
+                      <ZoomIn className="w-3.5 h-3.5 text-[#8E1B26] dark:text-[#C29B53]" />
                       <span>مشاهده پرتره کامل</span>
                     </span>
                   </div>
@@ -151,28 +160,28 @@ export const Teachers: React.FC<TeachersProps> = ({ onOpenLightbox }) => {
                 <div className="text-right">
                   <h3
                     onClick={() => setSelectedTeacher(teacher)}
-                    className="text-[19px] font-bold text-[#202124] dark:text-white hover:text-[#B92B3A] dark:hover:text-[#FFB3BA] cursor-pointer transition-colors mb-1"
+                    className="text-[19px] font-bold text-[#0B0909] dark:text-white hover:text-[#8E1B26] dark:hover:text-[#E2BE7E] cursor-pointer transition-colors mb-1"
                   >
                     {teacher.name}
                   </h3>
-                  <p className="text-[13px] text-[#B92B3A] dark:text-[#F3C7CA] font-semibold mb-2">
+                  <p className="text-[13px] text-[#8E1B26] dark:text-[#E2BE7E] font-semibold mb-2">
                     {teacher.role}
                   </p>
-                  <p className="text-[14px] text-[#5a626d] dark:text-[#9ca3af] leading-relaxed line-clamp-2">
+                  <p className="text-[14px] text-[#544D49] dark:text-[#B8B0A6] leading-relaxed line-clamp-2">
                     {teacher.specialty}
                   </p>
                 </div>
               </div>
 
-              {/* Action Link in Lacquer Red */}
-              <div className="pt-4 border-t border-[#E8DFE0]/60 dark:border-white/10 mt-4 flex items-center justify-between">
+              {/* Action Link */}
+              <div className="pt-4 border-t border-[#E5DDD2] dark:border-white/10 mt-4 flex items-center justify-between">
                 <button
                   type="button"
                   onClick={() => setSelectedTeacher(teacher)}
-                  className="text-[14px] font-semibold text-[#B92B3A] dark:text-[#FFB3BA] hover:text-[#A52432] dark:hover:text-white transition-colors flex items-center gap-1"
+                  className="text-[14px] font-semibold text-[#8E1B26] dark:text-[#E2BE7E] hover:text-[#74141E] dark:hover:text-white transition-colors flex items-center gap-1"
                 >
                   <span>رزومه و سوابق هنری</span>
-                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-[#C29B53]" />
                 </button>
               </div>
             </div>

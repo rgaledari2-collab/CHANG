@@ -78,13 +78,6 @@ export const Header: React.FC = () => {
       tag: 'دپارتمان‌ها'
     },
     { 
-      name: 'استودیوها و شعب', 
-      href: '#studios', 
-      icon: Building2,
-      description: 'کلاس‌های آکوستیک چوب و گرند پیانو در خرمشهر و آبادان',
-      tag: 'دو شعبه'
-    },
-    { 
       name: 'اساتید و کادر آموزشی', 
       href: '#teachers', 
       icon: GraduationCap,
@@ -227,10 +220,10 @@ export const Header: React.FC = () => {
 
       </div>
 
-      {/* FULLSCREEN MOBILE DRAWER WITH SMOOTH ANIMATIONS & LARGE READABLE LIST */}
+      {/* FULLSCREEN MOBILE DRAWER WITH CONSERVATORY EBONY & BURNISHED BRASS PALETTE */}
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div 
-          className={`fixed inset-0 z-[100] lg:hidden flex flex-col bg-[#0F0508]/98 dark:bg-[#07090D]/98 backdrop-blur-2xl text-white select-none overflow-hidden will-change-transform ${
+          className={`fixed inset-0 z-[100] lg:hidden flex flex-col bg-[#0B0909]/98 backdrop-blur-2xl text-[#F7F4F0] select-none overflow-hidden will-change-transform ${
             isClosing ? 'drawer-exit' : 'drawer-enter'
           }`} 
           role="dialog" 
@@ -238,21 +231,21 @@ export const Header: React.FC = () => {
           id="mobile-fullscreen-drawer"
         >
           {/* Background Ambient Glow */}
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#B92B3A]/20 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" />
-          <div className="absolute bottom-10 left-1/4 w-80 h-80 bg-purple-900/15 rounded-full blur-3xl pointer-events-none -z-10" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8E1B26]/20 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse" />
+          <div className="absolute bottom-10 left-1/4 w-80 h-80 bg-[#C29B53]/12 rounded-full blur-3xl pointer-events-none -z-10" />
 
           {/* 1. Fullscreen Drawer Top Bar */}
-          <div className="h-16 sm:h-20 px-4 sm:px-6 flex items-center justify-between border-b border-white/10 shrink-0 bg-white/[0.02]">
+          <div className="h-16 sm:h-20 px-4 sm:px-6 flex items-center justify-between border-b border-[#C29B53]/20 shrink-0 bg-[#141110]/80">
             {/* Logo and Brand Title */}
             <div className="flex items-center gap-3">
               <div className="h-11 sm:h-12 w-20 flex items-center justify-center shrink-0">
                 <ChangLogo className="w-full h-full" variant="white" />
               </div>
               <div className="text-right">
-                <span className="block font-brand-title text-[17px] sm:text-[20px] text-white leading-tight">
+                <span className="block font-brand-title text-[17px] sm:text-[20px] text-[#F7F4F0] leading-tight">
                   آموزشگاه موسیقی چنگ
                 </span>
-                <span className="block text-[11px] text-[#F3C7CA] font-medium mt-0.5">
+                <span className="block text-[11px] text-[#E5C787] font-medium mt-0.5">
                   خرمشهر و آبادان · نیم قرن اصالت
                 </span>
               </div>
@@ -263,18 +256,18 @@ export const Header: React.FC = () => {
               type="button"
               onClick={() => closeMenu()}
               aria-label="بستن منو"
-              className="w-11 h-11 rounded-2xl bg-white/10 hover:bg-white/20 active:scale-90 border border-white/15 flex items-center justify-center text-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B92B3A] cursor-pointer"
+              className="w-11 h-11 rounded-2xl bg-white/5 hover:bg-[#C29B53]/20 active:scale-90 border border-[#C29B53]/30 flex items-center justify-center text-[#E5C787] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C29B53] cursor-pointer"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6" />
             </button>
           </div>
 
           {/* 2. Scrollable Body: Large Readable Nav List + Contact Quick Cards */}
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-6">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
             
             {/* Primary Large Links List */}
             <div className="space-y-2.5">
-              <span className="text-[12px] font-bold text-[#F3C7CA] uppercase tracking-wider px-2 block text-right">
+              <span className="text-[12px] font-bold text-[#E5C787] uppercase tracking-wider px-2 block text-right">
                 صفحات و بخش‌های اصلی وب‌سایت
               </span>
 
@@ -286,35 +279,35 @@ export const Header: React.FC = () => {
                       key={link.href}
                       href={link.href}
                       onClick={(e) => handleLinkClick(e, link.href)}
-                      className="group flex items-center justify-between p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.1] active:bg-white/[0.15] border border-white/10 hover:border-white/20 transition-all duration-200 active:scale-[0.98]"
+                      className="group flex items-center justify-between p-4 rounded-2xl bg-gradient-to-l from-[#171311] to-[#120F0E] hover:from-[#1E1815] hover:to-[#161210] border border-[#C29B53]/20 hover:border-[#C29B53]/50 transition-all duration-200 active:scale-[0.98]"
                       style={{ animationDelay: `${idx * 50}ms` }}
                     >
                       <div className="flex items-center gap-4 min-w-0">
                         {/* Big Icon Container */}
-                        <div className="w-12 h-12 rounded-2xl bg-[#B92B3A]/30 border border-[#B92B3A]/40 text-[#FFB3BA] flex items-center justify-center shrink-0 group-hover:bg-[#B92B3A] group-hover:text-white transition-all shadow-sm">
+                        <div className="w-12 h-12 rounded-2xl bg-[#8E1B26]/25 border border-[#C29B53]/35 text-[#E5C787] flex items-center justify-center shrink-0 group-hover:bg-[#8E1B26] group-hover:text-white transition-all shadow-sm">
                           <Icon className="w-6 h-6" />
                         </div>
                         
                         {/* Title and Description with Large Typography */}
                         <div className="text-right min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-[17px] sm:text-[19px] font-extrabold text-white group-hover:text-[#FFB3BA] transition-colors">
+                            <span className="text-[17px] sm:text-[19px] font-extrabold text-[#F7F4F0] group-hover:text-[#E5C787] transition-colors">
                               {link.name}
                             </span>
                             {link.tag && (
-                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/10 text-[#E8DFE0]">
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#C29B53]/15 text-[#E5C787] border border-[#C29B53]/30">
                                 {link.tag}
                               </span>
                             )}
                           </div>
-                          <p className="text-[12px] text-[#A6AFBD] truncate mt-1">
+                          <p className="text-[12px] text-[#B8B0A6] truncate mt-1">
                             {link.description}
                           </p>
                         </div>
                       </div>
 
                       {/* Arrow indicator */}
-                      <ChevronLeft className="w-5 h-5 text-white/40 group-hover:text-white group-hover:-translate-x-1.5 transition-all shrink-0" />
+                      <ChevronLeft className="w-5 h-5 text-[#C29B53]/60 group-hover:text-[#E5C787] group-hover:-translate-x-1.5 transition-all shrink-0" />
                     </a>
                   );
                 })}
@@ -344,24 +337,24 @@ export const Header: React.FC = () => {
               <a
                 href="#contact"
                 onClick={(e) => handleLinkClick(e, '#contact')}
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-l from-[#B92B3A] to-[#D9384A] text-white hover:brightness-110 active:scale-95 transition-all shadow-md group"
+                className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-l from-[#8E1B26] to-[#6E121B] border border-[#C29B53]/40 text-white hover:brightness-110 active:scale-95 transition-all shadow-md group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/20 text-white flex items-center justify-center shadow-xs">
+                  <div className="w-10 h-10 rounded-xl bg-[#C29B53]/25 text-[#E5C787] flex items-center justify-center shadow-xs">
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <div className="text-right">
                     <span className="block text-[14px] font-extrabold">رزرو برای تعیین سطح</span>
-                    <span className="block text-[11px] text-[#FFB3BA]">مشاوره حضوری دو شعبه</span>
+                    <span className="block text-[11px] text-[#E5C787]">مشاوره حضوری دو شعبه</span>
                   </div>
                 </div>
-                <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft className="w-4 h-4 text-[#E5C787] group-hover:-translate-x-1 transition-transform" />
               </a>
             </div>
 
             {/* Social Channels: Instagram Khorramshahr, Instagram Abadan, Eitaa */}
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-3">
-              <span className="text-[12px] font-bold text-[#F3C7CA] block text-right">
+            <div className="p-4 rounded-2xl bg-[#141110] border border-[#C29B53]/20 space-y-3">
+              <span className="text-[12px] font-bold text-[#E5C787] block text-right">
                 شبکه‌های رسمی و پیام‌رسان‌ها
               </span>
               
