@@ -8,10 +8,16 @@ export interface Course {
   id: string;
   title: string;
   category: string;
-  description: string;
+  shortDesc?: string;
+  bullets?: string[];
+  audience?: string;
+  ageRange?: string;
+  instruments?: string[];
+  syllabus?: CourseMilestone[];
+  description?: string;
   image?: string;
   ageGroup?: string;
-  instrumentType: 'keyboard' | 'string' | 'child' | 'vocal' | 'wind' | 'percussion' | 'guitar' | 'violin';
+  instrumentType?: 'keyboard' | 'string' | 'child' | 'vocal' | 'wind' | 'percussion' | 'guitar' | 'violin';
   level?: string;
   milestones?: CourseMilestone[];
   tuitionFee?: number; // Tuition in Tomans per term
@@ -54,15 +60,19 @@ export interface ConsultationFormData {
 
 export interface Testimonial {
   id: string;
-  author: string;
-  role: 'student' | 'parent';
-  roleTitle: string;
-  course: string;
+  author?: string;
+  authorName?: string;
+  authorRole?: string;
+  role?: 'student' | 'parent' | string;
+  roleTitle?: string;
+  course?: string;
+  courseName?: string;
+  tag?: string;
   quote: string;
   duration?: string;
   highlight?: string;
   rating: number;
-  avatarInitials: string;
-  avatarBg: string;
-  dateSolar: string;
+  avatarInitials?: string;
+  avatarBg?: string;
+  dateSolar?: string;
 }

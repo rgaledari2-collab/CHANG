@@ -178,25 +178,50 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
             </p>
 
             <dl className="space-y-4">
-              {/* Direct Phone */}
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 shadow-xs flex items-start gap-4 group hover:border-[#B92B3A]/40 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-[#F3C7CA]/40 dark:bg-[#B92B3A]/20 border border-[#E8DFE0] dark:border-white/10 text-[#B92B3A] dark:text-[#F3C7CA] flex items-center justify-center shrink-0 shadow-xs">
-                  <PhoneCall className="w-5 h-5" />
+              {/* Direct Phone & Quick WhatsApp Row */}
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#171A21] border border-[#E8DFE0] dark:border-white/10 shadow-xs flex flex-col gap-3.5 group hover:border-[#B92B3A]/40 transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-[#F3C7CA]/40 dark:bg-[#B92B3A]/20 border border-[#E8DFE0] dark:border-white/10 text-[#B92B3A] dark:text-[#F3C7CA] flex items-center justify-center shrink-0 shadow-xs">
+                    <PhoneCall className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium mb-0.5">شماره تماس مستقیم و مشاوره</dt>
+                    <dd className="text-[18px] font-extrabold text-[#202124] dark:text-white flex items-center justify-between">
+                      <a href={`tel:${configPhone}`} className="hover:text-[#B92B3A] dark:hover:text-[#F3C7CA] transition-colors dir-ltr font-mono tabular-nums">
+                        {phoneDisplay}
+                      </a>
+                      <a 
+                        href={`tel:${configPhone}`} 
+                        className="inline-flex items-center gap-1 text-[12px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] hover:underline"
+                      >
+                        <span>تماس تلفنی</span>
+                        <ArrowLeft className="w-3.5 h-3.5" />
+                      </a>
+                    </dd>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <dt className="text-[12px] text-[#8996A6] dark:text-[#9ca3af] font-medium mb-0.5">شماره تماس و مشاوره</dt>
-                  <dd className="text-[18px] font-extrabold text-[#202124] dark:text-white flex items-center justify-between">
-                    <a href={`tel:${configPhone}`} className="hover:text-[#B92B3A] dark:hover:text-[#F3C7CA] transition-colors dir-ltr font-mono">
-                      {phoneDisplay}
-                    </a>
-                    <a 
-                      href={`tel:${configPhone}`} 
-                      className="inline-flex items-center gap-1 text-[12px] font-bold text-[#B92B3A] dark:text-[#F3C7CA] hover:underline"
-                    >
-                      <span>تماس مستقیم</span>
-                      <ArrowLeft className="w-3.5 h-3.5" />
-                    </a>
-                  </dd>
+
+                <div className="pt-3 border-t border-[#E8DFE0] dark:border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <a
+                    href={`https://wa.me/${configPhone.replace(/^0/, '98')}?text=${encodeURIComponent('سلام، برای مشاوره ثبت‌نام و تعیین سطح در آموزشگاه موسیقی چنگ (شعبه خرمشهر) پیام می‌دهم.')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-bold transition-colors whitespace-nowrap"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>واتساپ مشاور خرمشهر</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={`https://wa.me/${configPhone.replace(/^0/, '98')}?text=${encodeURIComponent('سلام، برای مشاوره ثبت‌نام و تعیین سطح در آموزشگاه موسیقی چنگ (شعبه آبادان) پیام می‌دهم.')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-[12px] font-bold transition-colors whitespace-nowrap"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>واتساپ مشاور آبادان</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </div>
 
@@ -207,26 +232,28 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <dt className="text-[12px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] bg-[#FAF0F1] dark:bg-[#B92B3A]/15 px-2.5 py-0.5 rounded-md inline-block">
+                    <dt className="text-[13px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA]">
                       {branches.khorramshahr.name}
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">دفتر مرکزی</span>
                   </div>
-                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
+                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-3">
                     {branches.khorramshahr.address}
                   </dd>
-                  {branches.khorramshahr.instagram && (
-                    <a
-                      href={branches.khorramshahr.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
-                    >
-                      <Instagram className="w-3.5 h-3.5" />
-                      <span>پیج اینستاگرام شعبه خرمشهر ({branches.khorramshahr.instagramId}@)</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  )}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {branches.khorramshahr.instagram && (
+                      <a
+                        href={branches.khorramshahr.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                      >
+                        <Instagram className="w-3.5 h-3.5" />
+                        <span>اینستاگرام خرمشهر ({branches.khorramshahr.instagramId}@)</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -237,26 +264,28 @@ export const ContactForm: React.FC<ContactFormProps> = ({ selectedCourse, onOpen
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <dt className="text-[12px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA] bg-[#FAF0F1] dark:bg-[#B92B3A]/15 px-2.5 py-0.5 rounded-md inline-block">
+                    <dt className="text-[13px] font-extrabold text-[#B92B3A] dark:text-[#F3C7CA]">
                       {branches.abadan.name}
                     </dt>
                     <span className="text-[11px] text-[#8996A6] dark:text-[#9ca3af]">شعبه فعال</span>
                   </div>
-                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-2">
+                  <dd className="text-[14px] sm:text-[15px] font-bold text-[#202124] dark:text-white leading-relaxed mb-3">
                     {branches.abadan.address}
                   </dd>
-                  {branches.abadan.instagram && (
-                    <a
-                      href={branches.abadan.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
-                    >
-                      <Instagram className="w-3.5 h-3.5" />
-                      <span>پیج اینستاگرام شعبه آبادان ({branches.abadan.instagramId}@)</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  )}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {branches.abadan.instagram && (
+                      <a
+                        href={branches.abadan.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#B92B3A] dark:text-[#FFB3BA] hover:underline"
+                      >
+                        <Instagram className="w-3.5 h-3.5" />
+                        <span>اینستاگرام آبادان ({branches.abadan.instagramId}@)</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 

@@ -109,7 +109,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             className="w-full h-full will-change-transform"
           >
             <ResponsiveImage
-              src={course.image}
+              src={course.image || ''}
               alt={course.title}
               width={480}
               height={300}

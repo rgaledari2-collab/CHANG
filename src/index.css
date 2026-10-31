@@ -1,9 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* =========================================================================
-   KALAMEH FONT FAMILY DEFINITION
-   Kalameh Black is renowned for modern geometric, bold, prestigious titles.
-   We define @font-face with web font sources and clean fallback stack.
+   KALAMEH & VAZIRMATN EDITORIAL TYPOGRAPHY SYSTEM
+   Harmonized with the Chang Motion Header (#FBF9F6 / #141414 / #BF1C2C)
    ========================================================================= */
 @font-face {
   font-family: 'Kalameh';
@@ -30,8 +30,8 @@
 
 @layer base {
   :root {
-    --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Tahoma, Arial, sans-serif;
-    --font-brand-title: 'Kalameh', 'Kalameh Black', 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Vazirmatn', Tahoma, sans-serif;
+    --font-brand-title: 'Vazirmatn', 'Kalameh', Tahoma, sans-serif;
     --color-antique-ebony: #0B0909;
     --color-burnished-brass: #C29B53;
     --color-brass-glow: rgba(194, 155, 83, 0.22);
@@ -398,7 +398,7 @@ html.dark .shadow-xl {
   position: absolute;
   width: 90%;
   height: 1.5px;
-  background: rgba(253, 246, 236, 0.12);
+  background: linear-gradient(90deg, rgba(191, 28, 44, 0.25), rgba(194, 155, 83, 0.45), rgba(191, 28, 44, 0.25));
   overflow: hidden;
   transform: scaleX(0);
   animation: drawStaff 0.8s ease-out forwards;
@@ -413,7 +413,7 @@ html.dark .shadow-xl {
   position: absolute;
   top: 0; bottom: 0;
   width: 32%;
-  background: linear-gradient(90deg, transparent, rgba(232, 194, 122, 0.7), transparent);
+  background: linear-gradient(90deg, transparent, rgba(194, 155, 83, 0.75), rgba(191, 28, 44, 0.65), transparent);
   animation: staffShimmer 3.2s ease-in-out infinite;
   animation-delay: 1.2s;
   opacity: 0;
@@ -437,6 +437,109 @@ html.dark .shadow-xl {
   60% { opacity: 0.9; }
   85% { opacity: 0; }
   100% { transform: translateX(350%); opacity: 0; }
+}
+
+/* =========================================================================
+   HERO CALM-SEA STAFF LINES (GPU-Accelerated CSS Keyframes)
+   Brand Colors: #BF1C2C (Chang Crimson) & #C29B53 (Burnished Brass/Gold)
+   ========================================================================= */
+@keyframes calmSeaWaveDrift {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes calmSeaWaveDriftReverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes calmSeaSwell {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0) scaleY(1);
+  }
+  33% {
+    transform: translate3d(0, -2.5px, 0) scaleY(1.08);
+  }
+  66% {
+    transform: translate3d(0, 2.2px, 0) scaleY(0.94);
+  }
+}
+
+@keyframes calmSeaBrandTide {
+  0%, 100% {
+    opacity: 0.86;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes calmSeaGoldCrest {
+  0%, 100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+.hero-sea-staff-row {
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  height: 22px;
+  margin-left: -50vw;
+  margin-top: -11px;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: transform, opacity;
+  animation:
+    calmSeaSwell var(--sea-swell-duration, 7.5s) ease-in-out infinite,
+    calmSeaBrandTide var(--sea-tide-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--sea-delay, 0s);
+}
+
+.hero-sea-staff-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  display: block;
+  will-change: transform;
+  animation: calmSeaWaveDrift var(--sea-drift-duration, 14s) linear infinite;
+  animation-delay: var(--sea-delay, 0s);
+}
+
+.hero-sea-staff-track-gold {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  display: block;
+  will-change: transform, opacity;
+  animation:
+    calmSeaWaveDriftReverse var(--sea-gold-duration, 18s) linear infinite,
+    calmSeaGoldCrest var(--sea-tide-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--sea-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-sea-staff-row,
+  .hero-sea-staff-track,
+  .hero-sea-staff-track-gold {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 .animate-aura-pulse {
@@ -593,21 +696,140 @@ html.dark .conservatory-card:hover {
 }
 
 /* =========================================================================
-   CORE WEB VITALS: OFF-SCREEN RENDERING OPTIMIZATION
-   Skips layout/paint work for off-screen sections until scrolled near
+   CORE WEB VITALS & 3D MULTI-VIEW STAGE SYSTEM
+   Perspective 3D Hall Transitions, Spatial Depth & Elevated Surfaces
    ========================================================================= */
-#studios,
-#story,
-#stats,
-#teachers,
-#events,
-#contact {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 750px;
+.stage-3d-viewport {
+  perspective: 1400px;
+  perspective-origin: 50% 24%;
+  transform-style: preserve-3d;
 }
 
+@keyframes portal3DEnter {
+  0% {
+    opacity: 0;
+    transform: perspective(1400px) translate3d(0, 34px, -110px) rotateX(6.5deg) scale(0.955);
+    filter: blur(4px);
+  }
+  65% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1400px) translate3d(0, 0, 0) rotateX(0deg) scale(1);
+    filter: blur(0px);
+  }
+}
 
+@keyframes home3DEnter {
+  0% {
+    opacity: 0;
+    transform: perspective(1400px) translate3d(0, -22px, -85px) rotateX(-4.5deg) scale(0.965);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1400px) translate3d(0, 0, 0) rotateX(0deg) scale(1);
+  }
+}
 
+.stage-3d-portal {
+  animation: portal3DEnter 0.68s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
 
+.stage-3d-home {
+  animation: home3DEnter 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
 
+/* Ensure cards and reveal blocks inside an active 3D stage are immediately visible */
+.stage-3d-portal .teacher-card,
+.stage-3d-portal .reveal-on-scroll {
+  animation: sectionFadeIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
+/* 3D Elevated Architectural Frame for Dedicated Section Stages */
+.stage-3d-frame {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.96) 0%, rgba(251, 249, 246, 0.98) 60%, rgba(243, 235, 221, 0.92) 100%);
+  box-shadow:
+    0 30px 70px -18px rgba(11, 9, 9, 0.16),
+    0 12px 26px -8px rgba(194, 155, 83, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(194, 155, 83, 0.34);
+  transform: translateZ(0);
+}
+
+html.dark .stage-3d-frame {
+  background: linear-gradient(165deg, rgba(22, 18, 16, 0.96) 0%, rgba(13, 11, 10, 0.98) 65%, rgba(26, 18, 15, 0.95) 100%) !important;
+  box-shadow:
+    0 34px 80px -16px rgba(0, 0, 0, 0.82),
+    0 0 36px -6px rgba(194, 155, 83, 0.16),
+    inset 0 1px 0 0 rgba(194, 155, 83, 0.22) !important;
+  border-color: rgba(194, 155, 83, 0.28) !important;
+}
+
+/* Elevated 3D Navigation Buttons in Header */
+.nav-3d-btn {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 100%);
+  box-shadow:
+    0 4px 10px -2px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(194, 155, 83, 0.22);
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.nav-3d-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: rgba(194, 155, 83, 0.55);
+  box-shadow:
+    0 10px 20px -4px rgba(0, 0, 0, 0.6),
+    0 0 14px -2px rgba(194, 155, 83, 0.28),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.24);
+}
+
+.nav-3d-btn-active {
+  background: linear-gradient(135deg, #8E1B26 0%, #681119 60%, #4A0B11 100%) !important;
+  border-color: #E5C787 !important;
+  box-shadow:
+    0 8px 22px -4px rgba(142, 27, 38, 0.65),
+    0 0 16px -2px rgba(194, 155, 83, 0.42),
+    inset 0 1px 1px 0 rgba(255, 232, 185, 0.38) !important;
+  transform: translateY(-1.5px);
+}
+
+/* 3D Resonator Card Depth in Main Hall */
+.harp-3d-chamber {
+  transform: perspective(1200px) rotateY(2.5deg) rotateX(1.5deg);
+  box-shadow:
+    -18px 26px 52px -14px rgba(11, 9, 9, 0.22),
+    0 0 28px -4px rgba(194, 155, 83, 0.18),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.harp-3d-chamber:hover {
+  transform: perspective(1200px) rotateY(0deg) rotateX(0deg) translateY(-4px);
+}
+
+html.dark .harp-3d-chamber {
+  box-shadow:
+    -20px 30px 60px -12px rgba(0, 0, 0, 0.85),
+    0 0 34px -6px rgba(194, 155, 83, 0.26),
+    inset 0 1px 0 0 rgba(194, 155, 83, 0.25) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-3d-portal,
+  .stage-3d-home,
+  .harp-3d-chamber {
+    animation: none !important;
+    transform: none !important;
+  }
+}

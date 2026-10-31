@@ -22,7 +22,11 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     try {
       const local = localStorage.getItem(STORAGE_KEY);
       if (local) {
-        const parsed = JSON.parse(local);
+        const sanitizedRaw = local.replace(/طنین/g, 'چنگ');
+        if (sanitizedRaw !== local) {
+          localStorage.setItem(STORAGE_KEY, sanitizedRaw);
+        }
+        const parsed = JSON.parse(sanitizedRaw);
         return {
           ...SITE_CONFIG,
           ...parsed,
@@ -94,8 +98,14 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         ...prev,
         ...newPartial,
         pricing: {
-          ...prev.pricing,
-          ...(newPartial.pricing || {})
+          placementDeposit:
+            newPartial.pricing?.placementDeposit ??
+            prev.pricing?.placementDeposit ??
+            150000,
+          regularTuition:
+            newPartial.pricing?.regularTuition ??
+            prev.pricing?.regularTuition ??
+            1650000,
         },
         branches: {
           ...prev.branches,

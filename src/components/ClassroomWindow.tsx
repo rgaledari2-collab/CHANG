@@ -391,7 +391,7 @@ export const ClassroomWindow: React.FC<ClassroomWindowProps> = ({
                     ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' 
                     : 'bg-white/5 text-gray-400 border border-white/10'
                 }`}
-                title="غیرفعال کردن نویزگیر تلفنی جهت شفافیت کامل طنین ساز"
+                title="غیرفعال کردن نویزگیر تلفنی جهت شفافیت کامل صدای ساز"
               >
                 <Music className="w-3.5 h-3.5" />
                 <span>حالت صدای ساز (High-Fi): {highFidelityAudio ? 'روشن' : 'خاموش'}</span>
