@@ -275,14 +275,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       const T = now / 1000;
       const sc = logoHeight / 450;
 
-      const isDark =
-        document.documentElement.classList.contains('dark') ||
-        document.documentElement.getAttribute('data-theme') === 'dark';
-
-      // Brand palette: #BF1C2C (Chang Crimson) & #C29B53 (Burnished Gold)
-      const I = isDark ? [245, 240, 234] : [20, 20, 20];
-      const Rr = [191, 28, 44]; // #BF1C2C
-
       cx.setTransform(dpr, 0, 0, dpr, 0, 0);
       cx.clearRect(0, 0, W, H);
       cx.lineCap = 'round';
@@ -378,15 +370,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             it.el.style.transform = `scale(${1 - 0.7 * it.p})`;
             it.o.style.transform = `translate3d(0, ${-bob}px, 0) rotate(${(it.s || 1) * e * 4}deg)`;
           }
-
-          const f = Math.min(1, e * 1.5);
-          it.el.style.background = `rgb(${Math.round(I[0] + (Rr[0] - I[0]) * f)},${Math.round(
-            I[1] + (Rr[1] - I[1]) * f
-          )},${Math.round(I[2] + (Rr[2] - I[2]) * f)})`;
-        });
-      } else {
-        items.forEach((it) => {
-          it.el.style.background = `rgb(${I[0]},${I[1]},${I[2]})`;
         });
       }
 
