@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import {
   Menu,
   X,
-  PhoneCall,
   Phone,
   GraduationCap,
   History,
@@ -138,15 +137,6 @@ export const Header: React.FC<HeaderProps> = ({ activeView, onNavigate }) => {
       description: 'رسیتال‌های صحنه‌ای و تجربه استیج زنده',
       tag: 'استیج هنرجویی',
     },
-    {
-      id: 'contact',
-      name: 'تماس و تعیین سطح حضوری',
-      shortName: 'تعیین سطح و تماس',
-      href: '#contact',
-      icon: PhoneCall,
-      description: 'مشاوره حضوری و تعیین سطح هنرجو در دو شعبه',
-      tag: 'رزرو وقت',
-    },
   ];
 
   const handleViewSelect = (e: React.MouseEvent, viewId: ConservatoryViewId) => {
@@ -204,7 +194,7 @@ export const Header: React.FC<HeaderProps> = ({ activeView, onNavigate }) => {
             <button
               type="button"
               onClick={(e) => handleViewSelect(e, 'home')}
-              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-[12px] font-extrabold text-[#0B0909] bg-gradient-to-l from-[#E5C787] via-[#D4AF63] to-[#C29B53] hover:brightness-110 active:scale-95 shadow-[0_6px_18px_-3px_rgba(194,155,83,0.45)] border border-white/40 transition-all shrink-0 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-[12px] font-extrabold text-[#0B0909] bg-gradient-to-l from-[#E5C787] via-[#D4AF63] to-[#C29B53] hover:brightness-110 active:scale-95 shadow-[0_6px_18px_-3px_rgba(194,155,83,0.45)] border border-white/40 transition-all shrink-0 cursor-pointer whitespace-nowrap"
               title="بازگشت به تالار اصلی (صفحه نخست)"
             >
               <Home className="w-3.5 h-3.5 text-[#0B0909]" />
@@ -222,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({ activeView, onNavigate }) => {
             type="button"
             onClick={(e) => handleViewSelect(e, 'home')}
             aria-current={activeView === 'home' ? 'page' : undefined}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] xl:text-[13px] font-bold cursor-pointer ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] xl:text-[13px] font-bold cursor-pointer whitespace-nowrap ${
               activeView === 'home'
                 ? 'nav-3d-btn nav-3d-btn-active text-white'
                 : 'nav-3d-btn text-[#E8DFE0] hover:text-white'
@@ -241,7 +231,7 @@ export const Header: React.FC<HeaderProps> = ({ activeView, onNavigate }) => {
                 type="button"
                 onClick={(e) => handleViewSelect(e, link.id)}
                 aria-current={isActive ? 'page' : undefined}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] xl:text-[13px] font-bold cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[12px] xl:text-[13px] font-bold cursor-pointer whitespace-nowrap ${
                   isActive
                     ? 'nav-3d-btn nav-3d-btn-active text-white'
                     : 'nav-3d-btn text-[#E8DFE0] hover:text-white'
